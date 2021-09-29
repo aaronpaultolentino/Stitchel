@@ -71,7 +71,6 @@ class RouteServiceProvider extends ServiceProvider
      */
    protected function mapApiV1Routes()
     {
-
         foreach (glob(base_path('routes/api/v1/modules/*.php')) as $filename) {
             $moduleName = explode('/', $filename);
             $moduleName = explode('.', end($moduleName))[0];

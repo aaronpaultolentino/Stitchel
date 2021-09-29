@@ -14,6 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => []], function(){
-
 	Route::get('', 'SearchController@index')->name('index');
 });

@@ -2,21 +2,25 @@
 
 namespace App\Http\Controllers\API\v1\Modules\Search;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Stitchel\Services\SearchProviders\SearchProviderFactory;
 
 class SearchController extends Controller
 {
-
     /**
      * Search By ID details.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-     public function searchById() {
+    public function search($query = '')
+    {
+    	$searchItems = [];
+    	$providers = SearchProviderFactory::$providers;
 
+    	foreach ($providers as $key => $provider) {
+    		$searchItems[] = SearchProviderFactory::make($key)->search($query);
+    	}
 
-	return view('modules.Search.index');
-
-	}
+    	return $searchItems;
+    }
 }
