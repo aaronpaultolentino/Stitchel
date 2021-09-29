@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="author" content="colorlib.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" />
-    <link href="css/main.css" rel="stylesheet" />
+    <link href="{{ url('css/main.css')}}" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="{{ url('css/main.css')}}"/>
 
@@ -42,7 +42,7 @@
               </form>
             </div>
         </div>
-    <script src="js/extention/choices.js"></script>
+    <script src="{{url('js/extension/choices.js')}}"></script>
     <script async src="https://cse.google.com/cse.js?cx=b74fbed8e135246af"></script>
     <script>
       const choices = new Choices('[data-trigger]',
