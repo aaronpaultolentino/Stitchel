@@ -49,7 +49,7 @@ class Gmail implements SearchProviderInteface
     	$response = Http::post(config('stitchel.gmail.get_token_url'), [
 		    'client_id' => config('stitchel.gmail.client_id'),
 		    'client_secret' => config('stitchel.gmail.client_secret'),
-		    'refresh_token' => 'ya29.a0ARrdaM8MRgYlby5nURmkIsg41d6c0FtRJ2KNtiWTAtlVjKkCDIqmTxwb6aVwwLPoaCcczcI0fqgJqBzuQW3o_lrUPcRvQdTTke64AdczUqn1wKtSylKPwtJJHEaOQsorh3G0UwFrFPfzyC4CQy7QZD7iJ8DT',
+		    'refresh_token' => '1//0dpjGJZKgsJwnCgYIARAAGA0SNwF-L9Ir6xnQwO5K_7aefelPJiHJL1lRgG4HeRAU0Y9wGcPcTZEufKz01-mN213Y6rQy46sJFPo',
 		    'grant_type' => self::GRANT_TYPE_REFRESH_TOKEN,
 		]);
 
