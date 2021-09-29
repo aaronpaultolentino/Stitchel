@@ -7,7 +7,7 @@ use Stitchel\Services\SearchProviders\SearchProviderFactory;
 /**
  *
  */
-class Slack implements SearchProviderInteface
+class Jira implements SearchProviderInteface
 {
     public function search($search): array
     {
@@ -15,7 +15,7 @@ class Slack implements SearchProviderInteface
 
     	$searchItems[] = [
     		'body' => 'test',
-    		'type' => SearchProviderFactory::SLACK
+    		'type' => SearchProviderFactory::JIRA
     	];
 
     	return $searchItems;

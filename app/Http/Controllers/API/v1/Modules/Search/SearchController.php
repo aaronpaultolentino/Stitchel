@@ -18,7 +18,7 @@ class SearchController extends Controller
     	$providers = SearchProviderFactory::$providers;
 
     	foreach ($providers as $key => $provider) {
-    		$searchItems[] = SearchProviderFactory::make($key)->search($query);
+    		$searchItems = array_merge($searchItems, SearchProviderFactory::make($key)->search($query));
     	}
 
     	return $searchItems;

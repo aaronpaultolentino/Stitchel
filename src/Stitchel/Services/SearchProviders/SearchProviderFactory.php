@@ -2,6 +2,7 @@
 
 namespace Stitchel\Services\SearchProviders;
 
+use Stitchel\Services\SearchProviders\Providers\Jira;
 use Stitchel\Services\SearchProviders\Providers\Gmail;
 use Stitchel\Services\SearchProviders\Providers\Slack;
 use Stitchel\Services\SearchProviders\Providers\SearchProviderInteface;
@@ -13,6 +14,7 @@ class SearchProviderFactory
 {
     const GMAIL = 'gmail';
     const SLACK = 'slack';
+    const JIRA = 'jira';
 
     /**
      * @var array
@@ -20,6 +22,7 @@ class SearchProviderFactory
     public static $providers = [
         self::GMAIL => Gmail::class,
         self::SLACK => Slack::class,
+        self::JIRA => Jira::class,
     ];
 
     /**

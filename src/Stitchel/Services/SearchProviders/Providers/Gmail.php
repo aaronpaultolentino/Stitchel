@@ -2,18 +2,57 @@
 
 namespace Stitchel\Services\SearchProviders\Providers;
 
+use Illuminate\Support\Facades\Http;
+use Stitchel\Services\SearchProviders\SearchProviderFactory;
+
 /**
  *
  */
 class Gmail implements SearchProviderInteface
 {
+	const GRANT_TYPE_REFRESH_TOKEN = 'refresh_token';
+
     /**
      * @param $search
      */
     public function search($search): array
     {
-        return [
-        	'gmail search'
-        ];
+    	$token = $this->getToken();
+    	$email = 'stitchel.test1@gmail.com';
+
+    	$messages = Http::withHeaders([
+		    'Authorization' => 'Bearer '.$token['access_token'],
+		])->get('https://gmail.googleapis.com/gmail/v1/users/'. $email .'/messages?q='.$search)->json();
+
+		$searchItems = [];
+
+		if($messages['resultSizeEstimate'] == 0){
+			return [];
+		}
+
+		foreach ($messages['messages'] as $key => $message) {
+			$messageBody = Http::withHeaders([
+			    'Authorization' => 'Bearer '.$token['access_token'],
+			])->get('https://gmail.googleapis.com/gmail/v1/users/'. $email .'/messages/'.$message['id'])->json();
+
+			$searchItems[] = [
+				'body' => $messageBody['snippet'],
+				'type' => SearchProviderFactory::GMAIL,
+			];
+		}
+
+        return $searchItems;
+    }
+
+    public function getToken()
+    {
+    	$response = Http::post(config('stitchel.gmail.get_token_url'), [
+		    'client_id' => config('stitchel.gmail.client_id'),
+		    'client_secret' => config('stitchel.gmail.client_secret'),
+		    'refresh_token' => 'ya29.a0ARrdaM8MRgYlby5nURmkIsg41d6c0FtRJ2KNtiWTAtlVjKkCDIqmTxwb6aVwwLPoaCcczcI0fqgJqBzuQW3o_lrUPcRvQdTTke64AdczUqn1wKtSylKPwtJJHEaOQsorh3G0UwFrFPfzyC4CQy7QZD7iJ8DT',
+		    'grant_type' => self::GRANT_TYPE_REFRESH_TOKEN,
+		]);
+
+		return $response->json();
     }
 }
