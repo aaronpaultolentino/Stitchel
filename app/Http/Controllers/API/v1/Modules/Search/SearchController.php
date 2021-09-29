@@ -9,18 +9,6 @@ class SearchController extends Controller
 {
 
     /**
-     * Search details.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function search() {
-
-        
-         return view('modules.Search.index');
-
-    }
-
-    /**
      * Search By ID details.
      *
      * @return \Illuminate\Contracts\Support\Renderable

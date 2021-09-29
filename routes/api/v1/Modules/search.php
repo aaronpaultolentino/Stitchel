@@ -16,6 +16,5 @@ use\App\Http\Controller\SearchController;
 
 Route::group(['middleware' => [], 'prefix' => 'search', 'namespace' => 'Search'], function(){
 
-	Route::get('', 'SearchController@search')->name('api.search');
 	Route::get('{id}', 'SearchController@searchById')->name('api.searchById');
 });

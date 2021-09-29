@@ -29,7 +29,7 @@
                     </div>
                   </div>
                   <div class="input-field second-wrap">
-                    <input class="gcse-search" id="search" type="text" placeholder="Enter Keywords?" />
+                    <input class="gcse-search" id="search" type="text" placeholder="Enter Keywords" />
                   </div>
                   <div class="input-field third-wrap">
                     <button class="btn-search" type="button">
