@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use\App\Http\Controller\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,18 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => [], 'prefix' => 'search', 'namespace' => 'Search'], function(){
+
+	Route::get('', 'SearchController@search')->name('api.search');
+	Route::get('{id}', 'SearchController@searchById')->name('api.searchById');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
