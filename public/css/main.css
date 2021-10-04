@@ -1033,3 +1033,13 @@ legend {
   }
   
 }
+
+.media-body{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-rows:hover {
+    background-color: #f3f3f3;
+}

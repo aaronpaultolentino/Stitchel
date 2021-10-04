@@ -48,6 +48,7 @@ class Gmail implements SearchProviderInteface
 				'id' => $messageBody['id'],
 				'body' => $messageBody['snippet'],
 				'type' => SearchProviderFactory::GMAIL,
+				'url' => 'https://mail.google.com/mail/u/0/#inbox/'.$messageBody['id'],
 			];
 		}
 
