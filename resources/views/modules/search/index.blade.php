@@ -8,14 +8,67 @@
     <link href="{{ url('css/main.css')}}" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="{{ url('css/main.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url('argon/assets/css/argon-dashboard.min.css') }}">
+    <script src="https://kit.fontawesome.com/2a3479ee76.js" crossorigin="anonymous"></script>
 
+    <style type="text/css">
+      #global-search-result{
+          background-color: #FFF;
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
+          box-shadow: 0 10px 10px rgba(0,0,0,.1);
+          width: 100%
+      }
+
+      #global-search-result table tr.global-search-result-item:hover{
+          background-color: rgb(241 241 241 / 87%);
+      }
+
+      #global-search-result table tr.global-search-result-item{
+          cursor: pointer;
+      }
+
+      #global-search-cancel{
+          cursor: pointer;
+      }
+
+      .navbar-search .form-control {
+          width: 350px;
+          background-color: transparent;
+      }
+
+      .navbar-search .input-group {
+          border-radius: 50px;
+          border: 2px solid;
+          background-color: rgb(255 255 255 / 87%);
+          border-color: rgba(255, 255, 255, 0.6);
+      }
+
+      .navbar-search-active{
+          /*border-radius: 10px 10px 0px 0px;*/
+          background-color: #FFF !important;
+      }
+
+      .navbar-search-searching{
+          border-radius: 10px 10px 0px 0px !important;
+      }
+
+      .list-rows{
+        padding: 1rem;
+        vertical-align: top;
+        border-top: 1px solid #e9ecef;
+        vertical-align: middle;
+      }
+    </style>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="url" content="{{ url('') }}">
   </head>
   <body>
         <div class="content container">
             <div class="s003"> 
               <form>
-                <h1>Search</h1>
-                <div class="inner-form">
+                <h1>Stitchel</h1>
+                <div class="inner-form mt-5">
                   <div class="input-field first-wrap">
                     <div class="input-select">
                       <select data-trigger="" name="choices-single-defaul">
@@ -28,8 +81,12 @@
                       </select>
                     </div>
                   </div>
-                  <div class="input-field second-wrap">
-                    <input class="gcse-search" id="search" type="text" placeholder="Enter Keywords" />
+                  <div id="global-search-container" style="width: 80%;">
+                    <div class="input-field second-wrap">
+                      <input class="gcse-search" id="search" type="text" placeholder="Enter Keywords" />
+                    </div>
+                  
+                    
                   </div>
                   <div class="input-field third-wrap">
                     <button class="btn-search" type="button">
@@ -39,17 +96,34 @@
                     </button>
                   </div>
                 </div>
+                <div class="tab-pane tab-example-result fade show active d-none" role="tabpanel" aria-labelledby="table-component-tab" id="global-search-result">
+                    <div class="table-responsive">
+                      <div>
+                        <div class="table align-items-center">
+                          
+                          <div id="search-list-body" style="overflow: hidden;">
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
               </form>
             </div>
         </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{url('js/extension/choices.js')}}"></script>
     <script async src="https://cse.google.com/cse.js?cx=b74fbed8e135246af"></script>
+    <script type="text/javascript" src="{{ url('js/global.js') }}"></script>
+    <script type="text/javascript" src="{{ url('js/Foundation/Search.js') }}"></script>
     <script>
-      const choices = new Choices('[data-trigger]',
-      {
-        searchEnabled: false,
-        itemSelectText: '',
-      });
+      $(document).ready(function(){
+        const choices = new Choices('[data-trigger]',
+        {
+          searchEnabled: false,
+          itemSelectText: '',
+        });
+      })
 
     </script>
   </body>

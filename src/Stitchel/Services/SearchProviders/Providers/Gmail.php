@@ -17,6 +17,15 @@ class Gmail implements SearchProviderInteface
      */
     public function search($search): array
     {
+    	$searchItems = [];
+
+    	$searchItems[] = [
+    		'body' => 'test gmail',
+    		'type' => SearchProviderFactory::GMAIL
+    	];
+
+    	return $searchItems;
+
     	$token = $this->getToken();
     	$email = 'stitchel.test1@gmail.com';
 
@@ -36,6 +45,7 @@ class Gmail implements SearchProviderInteface
 			])->get('https://gmail.googleapis.com/gmail/v1/users/'. $email .'/messages/'.$message['id'])->json();
 
 			$searchItems[] = [
+				'id' => $messageBody['id'],
 				'body' => $messageBody['snippet'],
 				'type' => SearchProviderFactory::GMAIL,
 			];

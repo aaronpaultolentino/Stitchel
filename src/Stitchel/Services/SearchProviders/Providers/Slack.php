@@ -14,7 +14,7 @@ class Slack implements SearchProviderInteface
     	$searchItems = [];
 
     	$searchItems[] = [
-    		'body' => 'test',
+    		'body' => 'test slack',
     		'type' => SearchProviderFactory::SLACK
     	];
 

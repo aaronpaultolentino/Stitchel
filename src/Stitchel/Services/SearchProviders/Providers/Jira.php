@@ -14,7 +14,7 @@ class Jira implements SearchProviderInteface
     	$searchItems = [];
 
     	$searchItems[] = [
-    		'body' => 'test',
+    		'body' => 'test jira',
     		'type' => SearchProviderFactory::JIRA
     	];
 
