@@ -19,12 +19,12 @@ class Gmail implements SearchProviderInteface
     {
     	$searchItems = [];
 
-    	$searchItems[] = [
-    		'body' => 'test gmail',
-    		'type' => SearchProviderFactory::GMAIL
-    	];
+    	// $searchItems[] = [
+    	// 	'body' => 'test gmail',
+    	// 	'type' => SearchProviderFactory::GMAIL
+    	// ];
 
-    	return $searchItems;
+    	// return $searchItems;
 
     	$token = $this->getToken();
     	$email = 'stitchel.test1@gmail.com';
