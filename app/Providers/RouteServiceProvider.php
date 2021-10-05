@@ -46,6 +46,8 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->mapAdminRoutes();
+
     }
 
     /**
@@ -62,6 +64,25 @@ class RouteServiceProvider extends ServiceProvider
             ->group(base_path('routes/web.php'));
     }
 
+    /**
+     * Define the "web" routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapAdminRoutes()
+    {
+        foreach (glob(base_path('routes/admin/modules/*.php')) as $filename) {
+            $moduleName = explode('/', $filename);
+            $moduleName = explode('.', end($moduleName))[0];
+
+            Route::middleware('web')
+                ->namespace($this->namespace . '\Admin\Modules')
+                ->prefix('admin')
+                ->group($filename);
+        }
+    }
     /**
      * Define the "api" routes for the application.
      *
