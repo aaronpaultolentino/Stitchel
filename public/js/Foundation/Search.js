@@ -97,7 +97,7 @@ GlobalSearch = {
 		}
 		let template = '<div class="'+ resultItemClass +'" data=\''+ JSON.stringify(data) +'\'>'+
 			        '<div scope="row" class="list-rows">'+
-			          '<div class="media align-items-center">';
+			          '<a href="'+ data['url'] +'" style="color: #565665;" target="_blank"><div class="media align-items-center">';
 			          if(data['type'] == 'gmail'){
 			          	template += '<div class="icon icon-shape bg-danger text-white rounded-circle shadow">'+
 					              '<i class="fa fa-google" aria-hidden="true"></i>'+
@@ -116,6 +116,7 @@ GlobalSearch = {
 			              '<span class="name mb-0 text-sm">'+ data['body'] +'</span>'+
 			            '</div>'+
 			          '</div>'+
+			          '</a>'+
 			        '</div>'+
 		      	'</div>';
 

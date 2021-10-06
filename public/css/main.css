@@ -831,7 +831,7 @@ legend {
   width: 100%;
   max-width: 790px;
   margin-bottom: 0;
-  padding-top: 20%;
+  padding-top: 10%;
 }
 
 .s003 form .inner-form {
@@ -1047,4 +1047,14 @@ legend {
       margin-right: auto;
       margin-left: auto;
   } 
+}
+
+.media-body{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-rows:hover {
+    background-color: #f3f3f3;
 }

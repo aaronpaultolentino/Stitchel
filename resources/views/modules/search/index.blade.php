@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="author" content="colorlib.com">
+    <title>{{ config('app.name', 'Laravel') }}</title>
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" />
     <link href="{{ url('css/main.css')}}" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet"/>
@@ -97,7 +98,7 @@
                   </div>
                 </div>
                 <div class="tab-pane tab-example-result fade show active d-none" role="tabpanel" aria-labelledby="table-component-tab" id="global-search-result">
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="max-height: 400px;">
                       <div>
                         <div class="table align-items-center">
                           
