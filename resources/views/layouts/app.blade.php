@@ -1,27 +1,398 @@
+<!--
+
+=========================================================
+* Argon Dashboard - v1.1.0
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard
+* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
 <!DOCTYPE html>
-<script src="https://use.fontawesome.com/87500529be.js"></script>
-<html>
+<html lang="en">
+
 <head>
-  <title></title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js">
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js">
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/duotone.css" integrity="sha384-R3QzTxyukP03CMqKFe0ssp5wUvBPEyy9ZspCB+Y01fEjhMwcXixTyeot+S40+AjZ" crossorigin="anonymous"/>
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/fontawesome.css" integrity="sha384-eHoocPgXsiuZh+Yy6+7DsKAerLXyJmu2Hadh4QYyt+8v86geixVYwFqUvMU8X90l" crossorigin="anonymous"/>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>
+    Stitchel
+  </title>
+  <!-- Favicon -->
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+  <!-- Icons -->
+  <link href="{{ url('argon/assets/js/plugins/nucleo/css/nucleo.css') }}" rel="stylesheet" />
+<script src="https://kit.fontawesome.com/2a3479ee76.js" crossorigin="anonymous"></script>
+  <!-- CSS Files -->
+  <link href="{{ url('argon/assets/css/argon-dashboard.css?v=1.1.0&ev_version=1&ev_version=1') }}" rel="stylesheet" />
+  <link href="{{ url('argon/assets/css/main.css?v='.config('eventleap.asset_version')) }}" rel="stylesheet" />
+  <link href="{{ url('css/global.css?v='.config('eventleap.asset_version')) }}" rel="stylesheet" />
+  <link href="{{ url('plugins/jquery.loading/jquery.loading.css?v='.config('eventleap.asset_version')) }}" rel="stylesheet" />
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"> -->
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="url" content="{{ url('') }}">
+  <meta name="theme-color" content="#5e72e4">
+  @yield('style')
+  @stack('styles')
+
+  <style type="text/css">
+    #myBtn {
+      display: none;
+      position: fixed;
+      bottom: 10px;
+      right: 20px;
+      z-index: 99;
+      cursor: pointer;
+      padding: 15px;
+      border-radius: 4px;
+    }
+
+    .accordion-button{
+    position:relative;
+    display:flex;
+    align-items:center;
+    width:100%;
+    padding:1rem 1.25rem;
+    font-size:1rem;
+    color:#212529;
+    text-align:left;
+    background-color:#fff;
+    border:0;
+    border-radius:0;
+    overflow-anchor:none;
+    transition:color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,border-radius .15s ease
+}
+@media (prefers-reduced-motion:reduce){
+    .accordion-button{
+        transition:none
+    }
+}
+.accordion-button:not(.collapsed){
+    color:#0c63e4;
+    background-color:#e7f1ff;
+    box-shadow:inset 0 -1px 0 rgba(0,0,0,.125)
+}
+.accordion-button:not(.collapsed)::after{
+    background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%230c63e4'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    transform:rotate(-180deg)
+}
+.accordion-button::after{
+    flex-shrink:0;
+    width:1.25rem;
+    height:1.25rem;
+    margin-left:auto;
+    content:"";
+    background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    background-repeat:no-repeat;
+    background-size:1.25rem;
+    transition:transform .2s ease-in-out
+}
+@media (prefers-reduced-motion:reduce){
+    .accordion-button::after{
+        transition:none
+    }
+}
+.accordion-button:hover{
+    z-index:2
+}
+.accordion-button:focus{
+    z-index:3;
+    border-color:#86b7fe;
+    outline:0;
+    box-shadow:0 0 0 .25rem rgba(13,110,253,.25)
+}
+.accordion-header{
+    margin-bottom:0
+}
+.accordion-item{
+    background-color:#fff;
+    border:1px solid rgba(0,0,0,.125)
+}
+.accordion-item:first-of-type{
+    border-top-left-radius:.25rem;
+    border-top-right-radius:.25rem
+}
+.accordion-item:first-of-type .accordion-button{
+    border-top-left-radius:calc(.25rem - 1px);
+    border-top-right-radius:calc(.25rem - 1px)
+}
+.accordion-item:not(:first-of-type){
+    border-top:0
+}
+.accordion-item:last-of-type{
+    border-bottom-right-radius:.25rem;
+    border-bottom-left-radius:.25rem
+}
+.accordion-item:last-of-type .accordion-button.collapsed{
+    border-bottom-right-radius:calc(.25rem - 1px);
+    border-bottom-left-radius:calc(.25rem - 1px)
+}
+.accordion-item:last-of-type .accordion-collapse{
+    border-bottom-right-radius:.25rem;
+    border-bottom-left-radius:.25rem
+}
+.accordion-body{
+    padding:1rem 1.25rem
+}
+.accordion-flush .accordion-collapse{
+    border-width:0
+}
+.accordion-flush .accordion-item{
+    border-right:0;
+    border-left:0;
+    border-radius:0
+}
+.accordion-flush .accordion-item:first-child{
+    border-top:0
+}
+.accordion-flush .accordion-item:last-child{
+    border-bottom:0
+}
+.accordion-flush .accordion-item .accordion-button{
+    border-radius:0
+}
+  </style>
 </head>
-<body>
-   @include('layouts.navigation.admin.admin')
-   <footer class="footer" style="padding-top: 450px;">
-      <div class="row align-items-center justify-content-xl-between">
-         <div class="col-xl-6">
-            <div class="copyright text-center text-xl-left text-muted">
-               © Copyright 2021, Stitchel, LLC. All rights reserved. 
+
+<body class="">
+  <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main" style="z-index: 5">
+    <div class="container-fluid">
+      <!-- Toggler -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Brand -->
+      <a class="navbar-brand navbar-brand-dashboard" href="{{ url('/admin') }}">
+        <x-logo color="#566BD9"></x-logo>
+      </a>
+      <!-- User -->
+      <ul class="nav align-items-center d-md-none">
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="media align-items-center">
+              <span class="avatar avatar-sm rounded-circle">
+                <i class="fa fa-user"></i>
+              </span>
             </div>
-         </div>
+          </a>
+          <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+            <div class=" dropdown-header noti-title">
+              <h6 class="text-overflow m-0">Welcome!</h6>
+            </div>
+            <a href="" class="dropdown-item">
+              <i class="fas fa-fw fa-id-badge"></i>
+              <span>My profile</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#!" class="dropdown-item">
+              <i class="fas fa-fw fa-sign-out-alt"></i>
+              <span>Logout</span>
+            </a>
+          </div>
+        </li>
+      </ul>
+      <!-- Collapse -->
+      <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+        <!-- Collapse header -->
+        <div class="navbar-collapse-header d-md-none">
+          <div class="row">
+            <div class="col-6 collapse-brand">
+              <!-- <a href="./index.html">
+                <img src="{{ url('argon/assets/img/brand/blue.png') }}">
+              </a> -->
+            </div>
+            <div class="col-6 collapse-close">
+              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Form -->
+        <form class="mt-4 mb-3 d-md-none">
+          <div class="input-group input-group-rounded input-group-merge">
+            <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <span class="fa fa-search"></span>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- Navigation -->
+        @include('layouts.navigation.admin.admin')
       </div>
-   </footer>
+    </div>
+  </nav>
+  <div class="main-content">
+    <!-- Navbar -->
+    <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+      <div class="container-fluid">
+        <form class="navbar-search navbar-search-dark form-inline mr-3 d-md-flex">
+          <div class="form-group mb-0">
+            <div class="tab-pane tab-example-result fade show active object-hidden" role="tabpanel" aria-labelledby="table-component-tab" id="global-search-result">
+              <div class="table-responsive">
+                <div>
+                  <table class="table align-items-center">
+                    
+                    <tbody class="list">
+                      
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- User -->
+        <ul class="navbar-nav align-items-center d-none d-md-flex">
+          <li class="nav-item dropdown">
+            <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div class="media align-items-center">
+                <span class="avatar avatar-sm rounded-circle">
+                    <i class="fas fa-user"></i>
+                </span>
+                <div class="media-body ml-2 d-none d-lg-block">
+                  <span class="mb-0 text-sm  font-weight-bold">
+                    Test Users
+                    <br />
+                    <!-- <p style="font-size:12px;text-align: center;margin-bottom: 0px;"></p> -->
+                  </span>
+                </div>
+              </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+              <div class=" dropdown-header noti-title">
+                <h6 class="text-overflow m-0">Welcome!</h6>
+              </div>
+              <a href="" class="dropdown-item">
+                <i class="fas fa-fw fa-id-badge"></i>
+                <span>My profile</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href=""
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                <i class="fas fa-fw fa-sign-out-alt"></i>
+                <form id="logout-form" action="" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                <span>Logout</span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- End Navbar -->
+    <!-- Header -->
+    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+      <div class="container-fluid">
+        <div class="header-body mt--4">
+          <hr class="mb-3 mt-1" style="border-top: 2px solid rgb(255 255 255 / 10%);">
+          <div class="row align-items-center">
+              <div class="col-6">
+                @php
+                  $routeNameIndex = 0;
+                  if(count(explode('.', \Request::route()->getName())) > 2){
+                    $routeNameIndex = count(explode('.', \Request::route()->getName())) - 2;
+                  }
+                @endphp
+                
+                @isset($client) 
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mr-3">
+                      <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                      @if(is_core_user())
+                          <li class="breadcrumb-item"><a href="{{ url('/admin') }}"><i class="fas fa-home"></i></a></li>
+                      @endif
+                        @isset($event)
+                        <li class="breadcrumb-item"><a href="{{ route('clients.events.index', ['client_id' => $client->id]) }}">{{ $client->client_name }}</a></li>
+                        <li class="breadcrumb-item">{{ $event->event_name }}</li> 
+
+                        @else
+                        <li class="breadcrumb-item">{{ $client->client_name }}</li>
+                      @endisset 
+                    </ol>
+                  </nav>
+                @endisset
+                <h6 class="h2 text-white d-inline-block mb-0 ">{{ isset($pageName) ? $pageName : ucwords(str_replace('_', ' ',str_replace('-',' ',explode('.', \Request::route()->getName())[$routeNameIndex])))}}</h6>
+                
+              </div>
+              <div class="col-6 text-right">
+                @yield('form_button')          
+              </div>
+          </div>
+          @yield('header')
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid mt--7">
+      @yield('content')
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="row align-items-center justify-content-xl-between">
+          <div class="col-xl-6">
+            <div class="copyright text-center text-xl-left text-muted">
+              <x-copyright-text></x-copyright-text>
+            </div>
+      </footer>
+    </div>
+  </div>
+  <button onclick="topFunction()" id="myBtn" class="btn btn-info" title="Go to top">
+  <i class="fa fa-arrow-up"></i>
+    Top
+  </button>
+
+  <script>
+  //Get the button
+
+  // When the user scrolls down 20px from the top of the document, show the button
+  window.onscroll = function() {scrollFunction()};
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+      $('#myBtn').fadeIn();
+    } else {
+      $('#myBtn').fadeOut();
+    }
+  }
+
+  // When the user clicks on the button, scroll to the top of the document
+  function topFunction() {
+    // document.body.scrollTop = 0;
+    // document.documentElement.scrollTop = 0;
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+  </script>
+  <!--   Core   -->
+  <script src="{{ url('argon/assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
+  <script src="{{ url('plugins/jquery.loading/jquery.loading.min.js?v='.config('eventleap.asset_version')) }}"></script>
+  <script src="{{ url('argon/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+  <!--   Optional JS   -->
+  @stack('optional_scripts')
+ 
+  <script src="{{ url('js/global.js?v='.time()) }}"></script>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script src="{{ url('Foundation/GlobalSearch/GlobalSearch.js?v='.time()) }}"></script>
+  <script src="{{ url('Foundation/Datatable/ViewRecord.js?v='.time()) }}"></script>
+  @include('components.delete-confirmation')
+  @include('components.image-modal')
+  @yield('script')
+  <script>
+    window.TrackJS &&
+      TrackJS.install({
+        token: "ee6fab19c5a04ac1a32a645abde4613a",
+        application: "argon-dashboard-free"
+      });
+  </script>
+  @stack('scripts')
 </body>
+
 </html>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>

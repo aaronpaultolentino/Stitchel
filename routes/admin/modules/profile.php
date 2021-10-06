@@ -12,10 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('login', 'LoginController@index')->name('login');
-Route::get('registration', 'LoginController@registration')->name('register-user');
-Route::get('signout', 'LoginController@signout')->name('signout');
 
-Route::group(['prefix' => 'dashboard'], function(){
-	Route::get('', 'AdminDashboardController@index')->name('home');
-	});
+Route::group(['prefix' => 'profile'], function(){
+	Route::get('', 'ProfileController@index')->name('profile.index');
+	// Route::post('profile', 'ProfileController@update')->name('profile.update');
+});

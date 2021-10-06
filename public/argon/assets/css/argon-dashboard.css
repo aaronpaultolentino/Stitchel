@@ -13764,7 +13764,7 @@ button.section-darker:focus {
 }
 
 .bg-gradient-primary {
-  background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
+  background: linear-gradient(87deg, #11998e 0, #1eae98 100%) !important;
 }
 
 .bg-gradient-secondary {
@@ -15591,7 +15591,7 @@ a.btn-icon-only {
   top: 0;
   width: 100%;
   z-index: 1;
-  background-color: transparent;
+  background-color:transparent ;
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
