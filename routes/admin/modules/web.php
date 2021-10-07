@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get('login', 'LoginController@index')->name('login');
-Route::get('registration', 'LoginController@registration')->name('register-user');
+Route::get('registration', 'RegistrationController@index')->name('register-user');
 Route::get('signout', 'LoginController@signout')->name('signout');
 
 Route::group(['prefix' => 'dashboard'], function(){

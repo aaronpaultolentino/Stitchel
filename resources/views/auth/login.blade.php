@@ -6,58 +6,83 @@
 
 @section('content')
 <div class="col-lg-5 col-md-7">
-    <div class="card bg-secondary shadow border-0">
+    <div class="card bg-secondary shadow border-0" style="margin-top: -6rem;">
         <div class="card-body px-lg-5 py-lg-5">
-            <div class="text-center text-muted mb-4">
-            </div>
-            <form method="POST" action="{{ route('login') }}">
-                @csrf
-                <div class="form-group mb-3">
-                    <div class="input-group input-group-alternative">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+             <form method="POST" action="{{ route('login') }}">
+                @csrf 
+                <div class="form-group">
+                    <label class="label">Email</label>
+                    <div class="input-group">
+                        <input id="email" type="email"
+                            class="form-control @error('email') is-invalid @enderror" name="email"
+                            value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <i class="fas fa-user"></i>
+                            </span>
                         </div>
-                        <input class="form-control" placeholder="Email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
-                    @error('email')
-                    <span class="invalid-feedback d-block" role="alert">
-                    <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
                 </div>
                 <div class="form-group">
-                    <div class="input-group input-group-alternative">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                    <label class="label">Password</label>
+                    <div class="input-group">
+                        <input id="password" type="password"
+                            class="form-control @error('password') is-invalid @enderror" name="password"
+                            required autocomplete="current-password">
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                               <i class="fas fa-key"></i>
+                            </span>
                         </div>
-                        <input placeholder="Password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
-                    @error('password')
-                    <span class="invalid-feedback d-block" role="alert">
-                    <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
                 </div>
-                <div class="custom-control custom-control-alternative custom-checkbox">
-                    <input class="custom-control-input" id=" customCheckLogin" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                    <label class="custom-control-label" for=" customCheckLogin">
-                    <span class="text-muted">Remember me</span>
-                    </label>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary submit-btn btn-block">
+                        {{ __('Login') }}
+                    </button>
+
                 </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary my-4">
-                    {{ __('Login') }}
-                    </button>
-                    <button type="submit" class="btn btn-primary my-4">
-                    {{ __('Register') }}
-                    </button>
+                <div class="form-group d-flex justify-content-between">
+                    <div class="form-check form-check-flat mt-0">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" name="remember" id="remember"
+                                {{ old('remember') ? 'checked' : '' }}> Remember me
+                        </label>
+                    </div>
+                    @if (Route::has('password.request'))
+                        <a class="text-small forgot-password text-black"
+                            href="{{ route('password.request') }}">
+                            {{ __('Forgot Your Password?') }}
+                        </a>
+                    @endif
+                </div>
+                <div class="text-block text-center my-3">
+                    <span class="text-small font-weight-semibold">Not a member ?</span>
+                    <a href="" class="text-black text-small">Create new account</a>
                 </div>
             </form>
+            <div class="text-center social-btn">
+                <h3 class="title">Or</h3>
+                    <p class="text">Sign In with social media</p>
+            <a href="#" class="btn btn-primary rounded-circle"><i class="fa fa-facebook"></i></a>
+            <a href="#" class="btn btn-info rounded-circle"><i class="fa fa-twitter"></i></a>
+            <a href="#" class="btn btn-danger rounded-circle"><i class="fa fa-google"></i></a>
+        </div>
         </div>
     </div>
     <div class="row mt-3">
         <div class="col-6">
-            <a href="" class="text-light"><small>Forgot password?</small></a>
+            <a href="{{ route('login') }}" class="text-light"><small>Forgot password?</small></a>
         </div>
     </div>
 </div>
