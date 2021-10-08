@@ -69,7 +69,7 @@
               <li><i class="fas fa-times" aria-hidden="true"></i> Lorem ipsum dolor sit amet</li>
               <li><i class="fas fa-times" aria-hidden="true"></i> Lorem ipsum dolor sit amet</li>
             </ul>
-            <button type="button" class="btn btn-danger btn-lg btn-block"><i class="fas fa-times" aria-hidden="true"></i> Upgrade to premium</button>
+            <button type="button" class="btn btn-warning btn-lg btn-block"><i class="fas fa-times" aria-hidden="true"></i> Upgrade to premium</button>
           </div>
         </div>
       </div>
