@@ -185,7 +185,7 @@
             <div class=" dropdown-header noti-title">
               <h6 class="text-overflow m-0">Welcome!</h6>
             </div>
-            <a href="" class="dropdown-item">
+            <a href="{{ url('admin/profile') }}" class="dropdown-item">
               <i class="fas fa-fw fa-id-badge"></i>
               <span>My profile</span>
             </a>
@@ -261,9 +261,9 @@
                 </span>
                 <div class="media-body ml-2 d-none d-lg-block">
                   <span class="mb-0 text-sm  font-weight-bold">
-                    Test Users
+                    {{ auth()->user()->name }}
                     <br />
-                    <!-- <p style="font-size:12px;text-align: center;margin-bottom: 0px;"></p> -->
+                    <!-- <p style="font-size:12px;text-align: center;margin-bottom: 0px;">{{ auth()->user()[0] }}</p> -->
                   </span>
                 </div>
               </div>
@@ -272,16 +272,16 @@
               <div class=" dropdown-header noti-title">
                 <h6 class="text-overflow m-0">Welcome!</h6>
               </div>
-              <a href="" class="dropdown-item">
+              <a href="{{ url('admin/profile') }}" class="dropdown-item">
                 <i class="fas fa-fw fa-id-badge"></i>
                 <span>My profile</span>
               </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href=""
+              <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                 <i class="fas fa-fw fa-sign-out-alt"></i>
-                <form id="logout-form" action="" method="POST" style="display: none;">
+                <form id="logout-form" action="{{ route('logout') }}" method="" style="display: none;">
                     @csrf
                 </form>
                 <span>Logout</span>

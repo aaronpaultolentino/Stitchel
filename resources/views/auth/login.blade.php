@@ -8,6 +8,11 @@
 <div class="col-lg-5 col-md-7">
     <div class="card bg-secondary shadow border-0" style="margin-top: -6rem;">
         <div class="card-body px-lg-5 py-lg-5">
+            @if(session()->has('error'))
+                   <div class="alert alert-danger">
+                        {{ session()->get('error') }}
+                    </div>
+                @endif
              <form method="POST" action="{{ route('login') }}">
                 @csrf 
                 <div class="form-group">
@@ -68,7 +73,7 @@
                 </div>
                 <div class="text-block text-center my-3">
                     <span class="text-small font-weight-semibold">Not a member ?</span>
-                    <a href="" class="text-black text-small">Create new account</a>
+                    <a href="{{ route('register') }}" class="text-black text-small">Create new account</a>
                 </div>
             </form>
             <div class="text-center social-btn">
@@ -82,7 +87,7 @@
     </div>
     <div class="row mt-3">
         <div class="col-6">
-            <a href="{{ route('login') }}" class="text-light"><small>Forgot password?</small></a>
+            <a href="" class="text-light"><small>Forgot password?</small></a>
         </div>
     </div>
 </div>

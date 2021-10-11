@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'profiles'], function(){
-	Route::get('', 'AdminProfilesController@index')->name('profiles.index');
+	Route::get('', 'AdminProfilesController@index')
+			->name('profiles.index')
+			->middleware('auth');
 	});

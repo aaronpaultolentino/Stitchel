@@ -10,7 +10,12 @@
         <div class="card-body px-lg-5 py-lg-5">
             <div class="text-center text-muted mb-4">
             </div>
-                <form method="POST" action="">
+             @if(session('success'))
+                            <div class="alert alert-success" role="alert">
+                                <strong>Success!</strong> You successfully created your account. Please check your email to confirm your account.
+                            </div>
+                            @endif
+                     <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <div class="form-group">
                     <div class="input-group">
@@ -38,7 +43,7 @@
                             value="{{ old('email') }}" required autocomplete="email" placeholder="Email">
                         <div class="input-group-append">
                             <span class="input-group-text">
-                                <i class="fas fa-user"></i>
+                                <i class="fas fa-paper-plane"></i>
                             </span>
                         </div>
                         @error('email')
@@ -51,10 +56,9 @@
                 </div>
                 <div class="form-group">
                     <div class="input-group">
-                        <input id="password" type="password"
-                            class="form-control @error('password') is-invalid @enderror" name="password"
-                            required autocomplete="new-password" placeholder="**********">
-
+                        <input id="password-confirm" type="password" class="form-control"
+                            name="password" required autocomplete="new-password"
+                            placeholder="**********">
                         <div class="input-group-append">
                             <span class="input-group-text">
                                 <i class="fas fa-key"></i>
@@ -89,6 +93,7 @@
                     <a href="{{ route('login') }}" class="text-black text-small">{{ __('Login') }}</a>
                 </div>
             </form>
+            </div>
         </div>
     </div>
 </div>

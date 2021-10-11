@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'integrations'], function(){
-	Route::get('', 'AdminIntegrationsController@index')->name('integrations.index');
+	Route::get('', 'AdminIntegrationsController@index')
+	->name('integrations.index')
+	->middleware('auth');;
 	});

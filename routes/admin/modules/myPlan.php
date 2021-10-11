@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['prefix' => 'myplan'], function(){
-	Route::get('', 'AdminMyPlanController@index')->name('myplan.index');
+	Route::get('', 'AdminMyPlanController@index')
+			->name('myplan.index')
+			->middleware('auth');
 	});
