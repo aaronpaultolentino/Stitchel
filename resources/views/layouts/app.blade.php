@@ -220,7 +220,7 @@
           </div>
         </form>
         <!-- Navigation -->
-        @include('layouts.navigation.admin')
+        @include('layouts.navigation.navigation')
       </div>
     </div>
   </nav>
