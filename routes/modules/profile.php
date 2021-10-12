@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'integrations'], function(){
-	Route::get('', 'AdminIntegrationsController@index')
-	->name('integrations.index')
-	->middleware('auth');;
+Route::group(['prefix' => 'profile'], function(){
+	Route::get('', 'ProfileController@index')
+			->name('profile')
+			->middleware('auth');
 	});

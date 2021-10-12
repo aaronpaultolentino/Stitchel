@@ -30,10 +30,7 @@
 <script src="https://kit.fontawesome.com/2a3479ee76.js" crossorigin="anonymous"></script>
   <!-- CSS Files -->
   <link href="{{ url('argon/assets/css/argon-dashboard.css?v=1.1.0&ev_version=1&ev_version=1') }}" rel="stylesheet" />
-  <link href="{{ url('argon/assets/css/main.css?v='.config('eventleap.asset_version')) }}" rel="stylesheet" />
-  <link href="{{ url('css/global.css?v='.config('eventleap.asset_version')) }}" rel="stylesheet" />
-  <link href="{{ url('plugins/jquery.loading/jquery.loading.css?v='.config('eventleap.asset_version')) }}" rel="stylesheet" />
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"> -->
+  <link href="{{ url('argon/assets/css/main.css') }}" rel="stylesheet" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="url" content="{{ url('') }}">
   <meta name="theme-color" content="#5e72e4">
@@ -185,10 +182,6 @@
             <div class=" dropdown-header noti-title">
               <h6 class="text-overflow m-0">Welcome!</h6>
             </div>
-            <a href="{{ url('admin/profile') }}" class="dropdown-item">
-              <i class="fas fa-fw fa-id-badge"></i>
-              <span>My profile</span>
-            </a>
             <div class="dropdown-divider"></div>
             <a href="#!" class="dropdown-item">
               <i class="fas fa-fw fa-sign-out-alt"></i>
@@ -272,10 +265,6 @@
               <div class=" dropdown-header noti-title">
                 <h6 class="text-overflow m-0">Welcome!</h6>
               </div>
-              <a href="{{ url('admin/profile') }}" class="dropdown-item">
-                <i class="fas fa-fw fa-id-badge"></i>
-                <span>My profile</span>
-              </a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
@@ -305,23 +294,6 @@
                     $routeNameIndex = count(explode('.', \Request::route()->getName())) - 2;
                   }
                 @endphp
-                
-                @isset($client) 
-                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block mr-3">
-                      <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-                      @if(is_core_user())
-                          <li class="breadcrumb-item"><a href="{{ url('/admin') }}"><i class="fas fa-home"></i></a></li>
-                      @endif
-                        @isset($event)
-                        <li class="breadcrumb-item"><a href="{{ route('clients.events.index', ['client_id' => $client->id]) }}">{{ $client->client_name }}</a></li>
-                        <li class="breadcrumb-item">{{ $event->event_name }}</li> 
-
-                        @else
-                        <li class="breadcrumb-item">{{ $client->client_name }}</li>
-                      @endisset 
-                    </ol>
-                  </nav>
-                @endisset
                 <h6 class="h2 text-white d-inline-block mb-0 ">{{ isset($pageName) ? $pageName : ucwords(str_replace('_', ' ',str_replace('-',' ',explode('.', \Request::route()->getName())[$routeNameIndex])))}}</h6>
                 
               </div>
@@ -373,17 +345,13 @@
   </script>
   <!--   Core   -->
   <script src="{{ url('argon/assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
-  <script src="{{ url('plugins/jquery.loading/jquery.loading.min.js?v='.config('eventleap.asset_version')) }}"></script>
   <script src="{{ url('argon/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
   <!--   Optional JS   -->
   @stack('optional_scripts')
  
   <script src="{{ url('js/global.js?v='.time()) }}"></script>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
-  <script src="{{ url('Foundation/GlobalSearch/GlobalSearch.js?v='.time()) }}"></script>
-  <script src="{{ url('Foundation/Datatable/ViewRecord.js?v='.time()) }}"></script>
-  @include('components.delete-confirmation')
-  @include('components.image-modal')
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
   @yield('script')
   <script>
     window.TrackJS &&

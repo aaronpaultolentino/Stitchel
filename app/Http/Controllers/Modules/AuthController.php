@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Modules;
+namespace App\Http\Controllers\Modules;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -33,7 +33,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect('admin/login');
+        return redirect('login');
     }
 
     public function login()
@@ -52,15 +52,15 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('admin/dashboard');
+            return redirect()->intended('dashboard');
         }
 
-        return redirect('admin/login')->with('error', 'Opps! You have entered invalid credentials');
+        return redirect('login')->with('error', 'Opps! You have entered invalid credentials');
     }
 
     public function logout() {
       Auth::logout();
 
-      return redirect('admin/login');
+      return redirect('login');
     }
 }

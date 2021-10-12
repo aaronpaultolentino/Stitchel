@@ -13,9 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'profile'], function(){
-	Route::get('', 'ProfileController@index')
-			->name('profile.index')
+Route::group(['prefix' => 'integrations'], function(){
+	Route::get('', 'IntegrationsController@index')
+			->name('integrations')
 			->middleware('auth');;
-	// Route::post('profile', 'ProfileController@update')->name('profile.update');
-});
+	});

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Modules;
+namespace App\Http\Controllers\Modules;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class AdminMyPlanController extends Controller
+class MyPlanController extends Controller
 {
     /**
      * Show the application dashboard.

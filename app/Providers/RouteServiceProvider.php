@@ -46,7 +46,7 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        $this->mapAdminRoutes();
+        $this->mapRoutes();
 
     }
 
@@ -71,15 +71,15 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapAdminRoutes()
+    protected function mapRoutes()
     {
-        foreach (glob(base_path('routes/admin/modules/*.php')) as $filename) {
+        foreach (glob(base_path('routes/modules/*.php')) as $filename) {
             $moduleName = explode('/', $filename);
             $moduleName = explode('.', end($moduleName))[0];
 
             Route::middleware('web')
-                ->namespace($this->namespace . '\Admin\Modules')
-                ->prefix('admin')
+                ->namespace($this->namespace . '\Modules')
+                // ->prefix('admin')
                 ->group($filename);
         }
     }

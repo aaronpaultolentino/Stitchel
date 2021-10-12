@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Modules;
+namespace App\Http\Controllers\Modules;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class AdminProfilesController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Show the application dashboard.
@@ -14,6 +14,6 @@ class AdminProfilesController extends Controller
     public function index()
     {
 
-       return view('modules.profiles.index');
+       return view('modules.profile.index');
     }
 }
