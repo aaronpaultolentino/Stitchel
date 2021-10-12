@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class MyPlanController extends Controller
 {
     /**
-     * Show the application dashboard.
+     * Show the application my plan.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -15,5 +15,6 @@ class MyPlanController extends Controller
     {
 
        return view('modules.myplan.index');
+       
     }
 }

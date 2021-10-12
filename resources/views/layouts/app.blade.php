@@ -20,7 +20,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>
-    Stitchel
+    {{ config('app.name') }}
   </title>
   <!-- Favicon -->
   <!-- Fonts -->
@@ -164,7 +164,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <a class="navbar-brand navbar-brand-dashboard" href="{{ url('/admin') }}">
+      <a class="navbar-brand navbar-brand-dashboard" href="{{ url('') }}">
         <x-logo color="#566BD9"></x-logo>
       </a>
       <!-- User -->
@@ -220,7 +220,7 @@
           </div>
         </form>
         <!-- Navigation -->
-        @include('layouts.navigation.admin.admin')
+        @include('layouts.navigation.admin')
       </div>
     </div>
   </nav>

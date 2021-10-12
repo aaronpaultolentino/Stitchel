@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class ProfileController extends Controller
 {
     /**
-     * Show the application dashboard.
+     * Show the application profile.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
@@ -15,5 +15,6 @@ class ProfileController extends Controller
     {
 
        return view('modules.profile.index');
+       
     }
 }

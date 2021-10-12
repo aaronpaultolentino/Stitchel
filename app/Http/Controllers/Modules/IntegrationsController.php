@@ -7,14 +7,14 @@ use Illuminate\Http\Request;
 class IntegrationsController extends Controller
 {
     /**
-     * Show the application dashboard.
+     * Show the application integrations.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
 
-    	// return 123;
        return view('modules.integrations.index');
+       
     }
 }
