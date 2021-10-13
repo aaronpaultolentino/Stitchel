@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'integrations'], function(){
-	Route::get('', 'IntegrationsController@index')
-			->name('integrations')
-			->middleware('auth');
-	// Route::get('{type}', 'IntegrationsController@store');
-	});
+Route::group(['middleware' => [], 'prefix' => 'integration', 'namespace' => 'Integration\Gmail'], function(){
+	Route::get('{type}', 'IntegrationController@getCode')->name('api.integration');
+});

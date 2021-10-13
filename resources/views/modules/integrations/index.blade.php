@@ -23,10 +23,10 @@
                            </button>
                         </h2>
                         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                           <div class="accordion-body">Gmail Account 1<button type="button" class="btn btn-danger float-right" style="margin-bottom: 15px; "><i class="fal fa-trash-alt"></i> Delete</button>
-                           </div>
-                           <button type="button" class="btn btn-primary btn-lg btn-block"><i class="fal fa-plus-square"></i> Add
-                           </button>
+                           <div class="accordion-body">{{auth()->user()->name}}<button type="button" class="btn btn-danger float-right" style="margin-bottom: 15px; "><i class="fal fa-trash-alt"></i> Delete</button>
+                           </div><br>
+                           <a type="button" class="btn btn-primary btn-lg btn-block" href="https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com&access_type=offline&redirect_uri=http://localhost/api/v1/integration/type&response_type=code&client_id=382106922048-jc5cjs40rm925vhasu1a1gcp1ee8jvc2.apps.googleusercontent.com"><i class="fal fa-plus-square"></i> Add
+                           </a>
                         </div>
                      </div>
                      <div class="accordion-item">
