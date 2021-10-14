@@ -26,7 +26,7 @@ class Gmail implements SearchProviderInteface
     	// ];
 
     	// return $searchItems;
-    	$gmailIntegrations = Integrations::whereType('gmail')->whereUserId(auth()->user()->id)->get();
+    	// $gmailIntegrations = Integrations::whereType('gmail')->whereUserId(auth()->user()->id)->get();
 
     	// foreach ($gmailIntegrations as $key => $gmailIntegration) {
 
@@ -39,7 +39,7 @@ class Gmail implements SearchProviderInteface
 	    	$messages = Http::withHeaders([
 			    'Authorization' => 'Bearer '.$token['access_token'],
 			])->get('https://gmail.googleapis.com/gmail/v1/users/'. $email .'/messages?q='.$search)->json();
-
+	    	var_dump($messages);exit;
 			if($messages['resultSizeEstimate'] == 0){
 				return [];
 			}
@@ -70,7 +70,7 @@ class Gmail implements SearchProviderInteface
 		    'refresh_token' => $code,
 		    'grant_type' => self::GRANT_TYPE_REFRESH_TOKEN,
 		]);
-    	var_dump($response->json());exit;
+    	// var_dump($response->json());exit;
 		return $response->json();
     }
 }
