@@ -1031,7 +1031,22 @@ legend {
     margin-bottom: 0;
     width: 100%;
   }
-  
+  .fa-btn {
+      margin-right: 6px;
+  }
+
+  .navbar-default {
+      background-color: #f8f8f8;
+      border-color: #e7e7e7;
+      margin-left: 264px;
+  }
+
+  .container-fluid {
+      padding-right: 15px;
+      padding-left: 250px;
+      margin-right: auto;
+      margin-left: auto;
+  } 
 }
 
 .media-body{
