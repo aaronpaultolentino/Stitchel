@@ -29,17 +29,15 @@
                         </h2>
                         <br>
                         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                           @foreach($integrations as $integration)
-
-                              <tr>
-                                 <td>{{ $integration->id }}</td>
-                                 <td>{{ $integration->user_id}}</td>
-                                 <td>{{ $integration->type }}</td>
-                                 <td>{{ $integration->data }}}</td>
-                              </tr>
-                           @endforeach
-                           <div class="accordion-body">{{auth()->user()->name}}<a type="button" class="btn btn-danger float-right" href="{{ url('api/v1/integration/delete/'.$integration->id) }}" name="id" style="margin-bottom: 15px; "><i class="fal fa-trash-alt"></i> Delete</a>
+                          @if(count($integrations) == 0)
+                            No record found
+                          @else
+                           @foreach($integrations as $key => $integration)
+                            <div class="accordion-body">Gmail Account {{ $key }}<a type="button" class="btn btn-danger btn-sm float-right delete-integration" delete-url="{{ route('api.revokeToken', $integration->id) }}" href="#" name="id" style="margin-bottom: 15px; "><i class="fal fa-trash-alt"></i> Delete</a>
                            </div><br>
+                              
+                           @endforeach
+                           @endif
                            <a type="button" class="btn btn-primary btn-lg btn-block" href="https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com&access_type=offline&redirect_uri=http://localhost/api/v1/integration/type&response_type=code&client_id=382106922048-jc5cjs40rm925vhasu1a1gcp1ee8jvc2.apps.googleusercontent.com"><i class="fal fa-plus-square"></i> Add
                            </a>
                         </div>
@@ -77,3 +75,29 @@
       </div>
    </div>
 @endsection
+
+@push('scripts')
+
+
+   <script type="text/javascript">
+     $(document).ready(function(){
+      $('.delete-integration').click(function(e){
+        e.preventDefault();
+        let delete_url = $(this).attr('delete-url');
+        var delete_confirm = confirm("Are you sure you want to delete this integration?");
+        if(delete_confirm){
+          $.ajax({
+                'url'    : delete_url,
+                'method' : 'POST',
+                'data'   : {
+                    '_token' : token()
+                }
+            })
+            .done(function(){
+              window.location.reload(true);
+            });
+        }
+      });
+     })
+   </script>
+@endpush
