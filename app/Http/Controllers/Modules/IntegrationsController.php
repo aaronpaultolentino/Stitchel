@@ -21,9 +21,11 @@ class IntegrationsController extends Controller
     public function index()
     {
 
-        $integrations = Integrations::all();
+        $gmailIntegrations = Integrations::whereType('gmail')->whereUserId(auth()->user()->id)->get();
+        $slackIntegration = Integrations::whereType('slack')->whereUserId(auth()->user()->id)->get();
+        $jiraIntegration = Integrations::whereType('gmail')->whereUserId(auth()->user()->id)->get();
 
-       return view('modules.integrations.index',compact('integrations', $integrations));
+        return view('modules.integrations.index', compact('gmailIntegrations', 'slackIntegration', 'jiraIntegration'));
        
     }
 

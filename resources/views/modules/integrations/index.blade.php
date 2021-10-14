@@ -29,11 +29,11 @@
                         </h2>
                         <br>
                         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                          @if(count($integrations) == 0)
+                          @if(count($gmailIntegrations) == 0)
                             No record found
                           @else
-                           @foreach($integrations as $key => $integration)
-                            <div class="accordion-body">Gmail Account {{ $key }}<a type="button" class="btn btn-danger btn-sm float-right delete-integration" delete-url="{{ route('api.revokeToken', $integration->id) }}" href="#" name="id" style="margin-bottom: 15px; "><i class="fal fa-trash-alt"></i> Delete</a>
+                           @foreach($gmailIntegrations as $key => $gmailIntegration)
+                            <div class="accordion-body">Gmail Account {{ $key }}<a type="button" class="btn btn-danger btn-sm float-right delete-gmailIntegration" delete-url="{{ route('api.revokeToken', $gmailIntegration->id) }}" href="#" name="id" style="margin-bottom: 15px; "><i class="fal fa-trash-alt"></i> Delete</a>
                            </div><br>
                               
                            @endforeach
