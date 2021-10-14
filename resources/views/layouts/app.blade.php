@@ -164,7 +164,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <a class="navbar-brand navbar-brand-dashboard" href="{{ url('') }}">
+      <a class="navbar-brand navbar-brand-dashboard" href="{{ url('/') }}">
         <x-logo color="#566BD9"></x-logo>
       </a>
       <!-- User -->

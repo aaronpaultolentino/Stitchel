@@ -5,6 +5,11 @@
       <div class="col">
          <div class="card shadow">
             <div class="card-body">
+               @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    <strong>Success!</strong> Integration has been saved!
+                </div>
+                @endif
                <h1>Integrations</h1>
                <div class="col-lg-6">
                <div class="input-group rounded">
@@ -22,8 +27,18 @@
                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne"><i class="fab fa-google" style="margin-right: 5px;"></i>GMAIL
                            </button>
                         </h2>
+                        <br>
                         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                           <div class="accordion-body">{{auth()->user()->name}}<button type="button" class="btn btn-danger float-right" style="margin-bottom: 15px; "><i class="fal fa-trash-alt"></i> Delete</button>
+                           @foreach($integrations as $integration)
+
+                              <tr>
+                                 <td>{{ $integration->id }}</td>
+                                 <td>{{ $integration->user_id}}</td>
+                                 <td>{{ $integration->type }}</td>
+                                 <td>{{ $integration->data }}}</td>
+                              </tr>
+                           @endforeach
+                           <div class="accordion-body">{{auth()->user()->name}}<a type="button" class="btn btn-danger float-right" href="{{ url('api/v1/integration/delete/'.$integration->id) }}" name="id" style="margin-bottom: 15px; "><i class="fal fa-trash-alt"></i> Delete</a>
                            </div><br>
                            <a type="button" class="btn btn-primary btn-lg btn-block" href="https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com&access_type=offline&redirect_uri=http://localhost/api/v1/integration/type&response_type=code&client_id=382106922048-jc5cjs40rm925vhasu1a1gcp1ee8jvc2.apps.googleusercontent.com"><i class="fal fa-plus-square"></i> Add
                            </a>

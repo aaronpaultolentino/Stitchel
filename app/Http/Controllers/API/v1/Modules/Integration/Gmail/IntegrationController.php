@@ -16,16 +16,23 @@ class IntegrationController extends Controller
 
         $user = Auth::user();
         $integrations = Integrations::create([
-        // $integrations = ([
             'data' => $request->code,
             'type' => SearchProviderFactory::GMAIL,
             'user_id' => $user->id,
         ]);
 
-        // dd($integrations);
         $integrations->save();
 
-        return view ('modules.integrations.index');
+        return redirect()->route('integrations');
     	
+    }
+
+    public function revokeToken($id)
+    {
+        $integrations = Integrations::findOrFail($id);
+        $integrations->delete();
+
+         return redirect()->route('integrations')
+                        ->with('success','Integrations deleted successfully');
     }
 }

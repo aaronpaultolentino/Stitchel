@@ -21,7 +21,9 @@ class IntegrationsController extends Controller
     public function index()
     {
 
-       return view('modules.integrations.index');
+        $integrations = Integrations::all();
+
+       return view('modules.integrations.index',compact('integrations', $integrations));
        
     }
 
@@ -29,17 +31,5 @@ class IntegrationsController extends Controller
     {
 
 
-        // $user = Auth::user();
-        // $integrations = Integrations::create([
-        // // $integrations = ([
-        //     'data' => $request->code,
-        //     'type' => SearchProviderFactory::GMAIL,
-        //     'user_id' => $user->id,
-        // ]);
-
-        // // dd($integrations);
-        // $integrations->save();
-
-        // return view ('modules.integrations.index');
     }
 }
