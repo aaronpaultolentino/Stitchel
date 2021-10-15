@@ -1,6 +1,6 @@
-      <ul class="nav {{ request()->is('home*') ? 'active' : '' }}">
+      <ul class="navbar-nav {{ request()->is('home*') ? 'active' : '' }}">
           <li class="nav-item {{ request()->is('home*') ? 'active' : '' }}">
-          <a class=" nav-link" href="{{ route('Dashboard') }}"> <i class="fa-fw text-left fas fa-desktop text-primary"></i> Dashboard
+          <a class=" nav-link" href="{{ url('/') }}"> <i class="fa-fw text-left fa fa-search text-orange"></i> Search
             </a>
           </li>
          <li class="nav-item {{ request()->is('integrations*') ? 'active' : '' }}">
