@@ -17,5 +17,4 @@ Route::group(['prefix' => 'integrations'], function(){
 	Route::get('', 'IntegrationsController@index')
 			->name('integrations')
 			->middleware('auth');
-	// Route::get('{type}', 'IntegrationsController@store');
 	});

@@ -33,13 +33,18 @@
                             No record found
                           @else
                            @foreach($gmailIntegrations as $key => $gmailIntegration)
-                            <div class="accordion-body">Gmail Account {{ $key }}<a type="button" class="btn btn-danger btn-sm float-right delete-gmailIntegration" delete-url="{{ route('api.revokeToken', $gmailIntegration->id) }}" href="#" name="id" style="margin-bottom: 15px; "><i class="fal fa-trash-alt"></i> Delete</a>
+                            <div class="accordion-body">Gmail Account {{ $key }}<a type="button" class="btn btn-danger btn-sm float-right delete-integration" delete-url="{{ route('api.revokeToken', $gmailIntegration->id) }}" href="#" name="id" style="margin-bottom: 15px; "><i class="fal fa-trash-alt"></i> Delete</a>
                            </div><br>
                               
                            @endforeach
                            @endif
-                           <a type="button" class="btn btn-primary btn-lg btn-block" href="https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com&access_type=offline&redirect_uri=http://localhost/api/v1/integration/type&response_type=code&client_id=382106922048-jc5cjs40rm925vhasu1a1gcp1ee8jvc2.apps.googleusercontent.com"><i class="fal fa-plus-square"></i> Add
+
+                          @if(count($gmailIntegrations) >= 1)
+                            {{-- Add Button Not Show --}}
+                          @else
+                           <a type="button" class="btn btn-primary btn-lg btn-block add-gmailIntegration" href="https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com&access_type=offline&redirect_uri=http://localhost/api/v1/integration/type&response_type=code&client_id=382106922048-jc5cjs40rm925vhasu1a1gcp1ee8jvc2.apps.googleusercontent.com"><i class="fal fa-plus-square"></i> Add
                            </a>
+                           @endif
                         </div>
                      </div>
                      <div class="accordion-item">
