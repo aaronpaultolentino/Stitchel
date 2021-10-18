@@ -27,12 +27,11 @@ class Gmail implements SearchProviderInteface
 
     		$code = $gmailIntegration->data;
 	    	$token = $this->getToken($gmailIntegration);
-	    	$email = 'aaron@eventleap.com';
+	    	$email = $this->getEMail($gmailIntegration);
 
 	    	$messages = Http::withHeaders([
 			    'Authorization' => 'Bearer '.$token['access_token'],
 			])->get('https://gmail.googleapis.com/gmail/v1/users/'. $email .'/messages?q='.$search)->json();
-	    	var_dump($messages);exit;
 			if($messages['resultSizeEstimate'] == 0){
 				return [];
 			}
@@ -77,6 +76,27 @@ class Gmail implements SearchProviderInteface
 		    'client_secret' => config('stitchel.gmail.client_secret'),
 		    'refresh_token' => $refresh_token,
 		    'grant_type' => self::GRANT_TYPE_REFRESH_TOKEN,
+		]);
+
+		return $response->json();
+    }
+
+    public function getEMail($gmailIntegration)
+    {
+    	$email = json_decode($gmailIntegration->data)->email;
+
+    	return $email;
+    }
+
+    public function getCodeUrl()
+    {
+    	return 'https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com https://www.googleapis.com/auth/userinfo.email&access_type=offline&redirect_uri='.url('integrations/type/gmail/&response_type=code&client_id='.config('stitchel.gmail.client_id'));
+    }
+
+    public function getUserInfo($access_token)
+    {
+    	$response = Http::get(config('stitchel.gmail.get_userinfo_url'), [
+		    'access_token' => $access_token,
 		]);
 
 		return $response->json();

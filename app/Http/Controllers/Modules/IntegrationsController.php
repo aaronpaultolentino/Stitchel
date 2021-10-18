@@ -21,12 +21,12 @@ class IntegrationsController extends Controller
      */
     public function index()
     {
-
+        $gmail = new Gmail();
         $gmailIntegrations = Integrations::whereType('gmail')->whereUserId(auth()->user()->id)->get();
         $slackIntegration = Integrations::whereType('slack')->whereUserId(auth()->user()->id)->get();
         $jiraIntegration = Integrations::whereType('gmail')->whereUserId(auth()->user()->id)->get();
 
-        $gmailIntegrationUrl = 'https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com&access_type=offline&redirect_uri='.url('integrations/type/gmail/&response_type=code&client_id='.config('stitchel.gmail.client_id'));
+        $gmailIntegrationUrl = $gmail->getCodeUrl();
 
         return view('modules.integrations.index', compact('gmailIntegrations', 'slackIntegration', 'jiraIntegration', 'gmailIntegrationUrl'));
        
@@ -36,10 +36,11 @@ class IntegrationsController extends Controller
     {
         $gmail = new Gmail();
         $tokens = $gmail->getRefreshToken($request->code);
+        $userInfo = $gmail->getUserInfo($tokens['access_token']);
         $tokens['code'] = $request->code;
 
         $integrations = Integrations::create([
-            'data' => json_encode($tokens),
+            'data' => json_encode(array_merge($tokens, $userInfo)),
             'type' => SearchProviderFactory::GMAIL,
             'user_id' => auth()->user()->id,
         ]);
