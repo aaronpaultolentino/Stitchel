@@ -30,20 +30,14 @@
                         <br>
                         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                           @if(count($gmailIntegrations) == 0)
-                            No record found
+                          <a type="button" class="btn btn-primary btn-lg btn-block add-gmailIntegration" href="{{ $gmailIntegrationUrl }}" target="_blank"><i class="fal fa-plus-square"></i> Add
+                           </a>
                           @else
                            @foreach($gmailIntegrations as $key => $gmailIntegration)
-                            <div class="accordion-body">Gmail Account {{ $key }}<a type="button" class="btn btn-danger btn-sm float-right delete-integration" delete-url="{{ route('api.revokeToken', $gmailIntegration->id) }}" href="#" name="id" style="margin-bottom: 15px; "><i class="fal fa-trash-alt"></i> Delete</a>
+                            <div class="accordion-body">Gmail Account<a type="button" class="btn btn-danger btn-sm float-right delete-integration" delete-url="{{ route('gmail.revokeToken', $gmailIntegration->id) }}" href="#" name="id" style="margin-bottom: 15px; "><i class="fal fa-trash-alt"></i> Delete</a>
                            </div><br>
                               
                            @endforeach
-                           @endif
-
-                          @if(count($gmailIntegrations) >= 1)
-                            {{-- Add Button Not Show --}}
-                          @else
-                           <a type="button" class="btn btn-primary btn-lg btn-block add-gmailIntegration" href="https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com&access_type=offline&redirect_uri=http://localhost/api/v1/integration/type&response_type=code&client_id=382106922048-jc5cjs40rm925vhasu1a1gcp1ee8jvc2.apps.googleusercontent.com"><i class="fal fa-plus-square"></i> Add
-                           </a>
                            @endif
                         </div>
                      </div>

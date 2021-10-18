@@ -12,6 +12,7 @@ use Stitchel\Services\SearchProviders\SearchProviderFactory;
 class Gmail implements SearchProviderInteface
 {
 	const GRANT_TYPE_REFRESH_TOKEN = 'refresh_token';
+	const GRANT_TYPE_AUTHORIZATION_CODE = 'authorization_code';
 
     /**
      * @param $search
@@ -20,20 +21,12 @@ class Gmail implements SearchProviderInteface
     {
     	$searchItems = [];
 
-    	// $searchItems[] = [
-    	// 	'body' => 'test gmail',
-    	// 	'type' => SearchProviderFactory::GMAIL
-    	// ];
+    	$gmailIntegrations = Integrations::whereType('gmail')->whereUserId(auth()->user()->id)->get();
 
-    	// return $searchItems;
-    	// $gmailIntegrations = Integrations::whereType('gmail')->whereUserId(auth()->user()->id)->get();
+    	foreach ($gmailIntegrations as $key => $gmailIntegration) {
 
-    	// foreach ($gmailIntegrations as $key => $gmailIntegration) {
-
-    	// 	$code = $gmailIntegration->data;
-    		$code =  '1//0dYEyIBn8zOgRCgYIARAAGA0SNwF-L9IriSjxkLlNty5e8CzACLLScwfFxtILXeEHLwBq1HVSTAsfpQfWyJ0fN8FJXp70UlTPbsI';
-    		// $code =  '4/0AX4XfWjuDd-xtVR6Z6OaslkAobRr7g4Ez8brhJrk0_Hdh6pqEPp6nAfEh8O-8b239dAgBg';
-	    	$token = $this->getToken($code);
+    		$code = $gmailIntegration->data;
+	    	$token = $this->getToken($gmailIntegration);
 	    	$email = 'aaron@eventleap.com';
 
 	    	$messages = Http::withHeaders([
@@ -57,20 +50,35 @@ class Gmail implements SearchProviderInteface
 				];
 			}
 
-		// }
+		}
 
         return $searchItems;
     }
 
-    public function getToken($code)
+    public function getRefreshToken($code)
     {
+    	$response = Http::post(config('stitchel.gmail.get_token_url'), [
+		    'code' => $code,
+		    'client_id' => config('stitchel.gmail.client_id'),
+		    'client_secret' => config('stitchel.gmail.client_secret'),
+		    'redirect_uri' => url('integrations/type/gmail').'/',
+		    'grant_type' => self::GRANT_TYPE_AUTHORIZATION_CODE,
+		]);
+
+		return $response->json();
+    }
+
+    public function getToken($gmailIntegration)
+    {
+    	$refresh_token = json_decode($gmailIntegration->data)->refresh_token;
+
     	$response = Http::post(config('stitchel.gmail.get_token_url'), [
 		    'client_id' => config('stitchel.gmail.client_id'),
 		    'client_secret' => config('stitchel.gmail.client_secret'),
-		    'refresh_token' => $code,
+		    'refresh_token' => $refresh_token,
 		    'grant_type' => self::GRANT_TYPE_REFRESH_TOKEN,
 		]);
-    	// var_dump($response->json());exit;
+
 		return $response->json();
     }
 }

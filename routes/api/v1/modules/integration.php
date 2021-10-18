@@ -14,6 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => [], 'prefix' => 'integration', 'namespace' => 'Integration\Gmail'], function(){
-	Route::get('{type}', 'IntegrationController@getCode')->name('api.getCode');
-	Route::post('delete/{id}', 'IntegrationController@revokeToken')->name('api.revokeToken');
+	
 });
