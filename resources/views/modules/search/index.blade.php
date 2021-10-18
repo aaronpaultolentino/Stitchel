@@ -78,20 +78,6 @@
          <a class="navbar-brand-dashboard" href="{{ url('/') }}">
             <x-logo color="#566BD9"></x-logo>
          </a>
-         <form class="navbar-search navbar-search-dark form-inline mr-3 d-md-flex">
-            <div class="form-group mb-0">
-               <div class="tab-pane tab-example-result fade show active object-hidden" role="tabpanel" aria-labelledby="table-component-tab" id="global-search-result">
-                  <div class="table-responsive">
-                     <div>
-                        <table class="table align-items-center">
-                           <tbody class="list">
-                           </tbody>
-                        </table>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </form>
          <!-- User -->
          <ul class="navbar-nav align-items-center d-none d-md-flex">
             <li class="nav-item dropdown">
