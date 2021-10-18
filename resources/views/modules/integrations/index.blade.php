@@ -34,7 +34,7 @@
                            </a>
                           @else
                            @foreach($gmailIntegrations as $key => $gmailIntegration)
-                            <div class="accordion-body">Gmail Account<a type="button" class="btn btn-danger btn-sm float-right delete-integration" delete-url="{{ route('gmail.revokeToken', $gmailIntegration->id) }}" href="#" name="id" style="margin-bottom: 15px; "><i class="fal fa-trash-alt"></i> Delete</a>
+                            <div class="accordion-body">Gmail Account ({{ json_decode($gmailIntegration->data)->email }})<a type="button" class="btn btn-danger btn-sm float-right delete-integration" delete-url="{{ route('gmail.revokeToken', $gmailIntegration->id) }}" href="#" name="id" style="margin-bottom: 15px; "><i class="fal fa-trash-alt"></i> Delete</a>
                            </div><br>
                               
                            @endforeach
