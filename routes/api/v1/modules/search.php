@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => [], 'prefix' => 'search', 'namespace' => 'Search'], function(){
+Route::group(['middleware' => ['auth'], 'prefix' => 'search', 'namespace' => 'Search'], function(){
 	Route::get('{query?}', 'SearchController@search')->name('api.searchById');
 });
