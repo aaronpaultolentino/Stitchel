@@ -5,6 +5,11 @@
       <div class="col">
          <div class="card shadow">
             <div class="card-body">
+               @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    <strong>Success!</strong> Integration has been saved!
+                </div>
+                @endif
                <h1>Integrations</h1>
                <div class="col-lg-6">
                <div class="input-group rounded">
@@ -22,11 +27,18 @@
                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne"><i class="fab fa-google" style="margin-right: 5px;"></i>GMAIL
                            </button>
                         </h2>
+                        <br>
                         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                           <div class="accordion-body">Gmail Account 1<button type="button" class="btn btn-danger float-right" style="margin-bottom: 15px; "><i class="fal fa-trash-alt"></i> Delete</button>
-                           </div>
-                           <button type="button" class="btn btn-primary btn-lg btn-block"><i class="fal fa-plus-square"></i> Add
-                           </button>
+                          @if(count($gmailIntegrations) == 0)
+                          <a type="button" class="btn btn-primary btn-lg btn-block add-gmailIntegration" href="{{ $gmailIntegrationUrl }}" target="_blank"><i class="fal fa-plus-square"></i> Add
+                           </a>
+                          @else
+                           @foreach($gmailIntegrations as $key => $gmailIntegration)
+                            <div class="accordion-body">Gmail Account ({{ json_decode($gmailIntegration->data)->email }})<a type="button" class="btn btn-danger btn-sm float-right delete-integration" delete-url="{{ route('gmail.revokeToken', $gmailIntegration->id) }}" href="#" name="id" style="margin-bottom: 15px; "><i class="fal fa-trash-alt"></i> Delete</a>
+                           </div><br>
+                              
+                           @endforeach
+                           @endif
                         </div>
                      </div>
                      <div class="accordion-item">
@@ -62,3 +74,29 @@
       </div>
    </div>
 @endsection
+
+@push('scripts')
+
+
+   <script type="text/javascript">
+     $(document).ready(function(){
+      $('.delete-integration').click(function(e){
+        e.preventDefault();
+        let delete_url = $(this).attr('delete-url');
+        var delete_confirm = confirm("Are you sure you want to delete this integration?");
+        if(delete_confirm){
+          $.ajax({
+                'url'    : delete_url,
+                'method' : 'POST',
+                'data'   : {
+                    '_token' : token()
+                }
+            })
+            .done(function(){
+              window.location.reload(true);
+            });
+        }
+      });
+     })
+   </script>
+@endpush

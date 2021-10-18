@@ -2,6 +2,7 @@
 
 namespace Stitchel\Services\SearchProviders\Providers;
 
+use App\Integrations;
 use Illuminate\Support\Facades\Http;
 use Stitchel\Services\SearchProviders\SearchProviderFactory;
 
@@ -11,6 +12,7 @@ use Stitchel\Services\SearchProviders\SearchProviderFactory;
 class Gmail implements SearchProviderInteface
 {
 	const GRANT_TYPE_REFRESH_TOKEN = 'refresh_token';
+	const GRANT_TYPE_AUTHORIZATION_CODE = 'authorization_code';
 
     /**
      * @param $search
@@ -19,49 +21,82 @@ class Gmail implements SearchProviderInteface
     {
     	$searchItems = [];
 
-    	// $searchItems[] = [
-    	// 	'body' => 'test gmail',
-    	// 	'type' => SearchProviderFactory::GMAIL
-    	// ];
+    	$gmailIntegrations = Integrations::whereType('gmail')->whereUserId(auth()->user()->id)->get();
 
-    	// return $searchItems;
+    	foreach ($gmailIntegrations as $key => $gmailIntegration) {
 
-    	$token = $this->getToken();
-    	$email = 'stitchel.test1@gmail.com';
+    		$code = $gmailIntegration->data;
+	    	$token = $this->getToken($gmailIntegration);
+	    	$email = $this->getEMail($gmailIntegration);
 
-    	$messages = Http::withHeaders([
-		    'Authorization' => 'Bearer '.$token['access_token'],
-		])->get('https://gmail.googleapis.com/gmail/v1/users/'. $email .'/messages?q='.$search)->json();
-
-		$searchItems = [];
-
-		if($messages['resultSizeEstimate'] == 0){
-			return [];
-		}
-
-		foreach ($messages['messages'] as $key => $message) {
-			$messageBody = Http::withHeaders([
+	    	$messages = Http::withHeaders([
 			    'Authorization' => 'Bearer '.$token['access_token'],
-			])->get('https://gmail.googleapis.com/gmail/v1/users/'. $email .'/messages/'.$message['id'])->json();
+			])->get('https://gmail.googleapis.com/gmail/v1/users/'. $email .'/messages?q='.$search)->json();
+			if($messages['resultSizeEstimate'] == 0){
+				return [];
+			}
 
-			$searchItems[] = [
-				'id' => $messageBody['id'],
-				'body' => $messageBody['snippet'],
-				'type' => SearchProviderFactory::GMAIL,
-				'url' => 'https://mail.google.com/mail/u/0/#inbox/'.$messageBody['id'],
-			];
+			foreach ($messages['messages'] as $key => $message) {
+				$messageBody = Http::withHeaders([
+				    'Authorization' => 'Bearer '.$token['access_token'],
+				])->get('https://gmail.googleapis.com/gmail/v1/users/'. $email .'/messages/'.$message['id'])->json();
+
+				$searchItems[] = [
+					'id' => $messageBody['id'],
+					'body' => $messageBody['snippet'],
+					'type' => SearchProviderFactory::GMAIL,
+					'url' => 'https://mail.google.com/mail/u/0/#inbox/'.$messageBody['id'],
+				];
+			}
+
 		}
 
         return $searchItems;
     }
 
-    public function getToken()
+    public function getRefreshToken($code)
     {
+    	$response = Http::post(config('stitchel.gmail.get_token_url'), [
+		    'code' => $code,
+		    'client_id' => config('stitchel.gmail.client_id'),
+		    'client_secret' => config('stitchel.gmail.client_secret'),
+		    'redirect_uri' => url('integrations/type/gmail').'/',
+		    'grant_type' => self::GRANT_TYPE_AUTHORIZATION_CODE,
+		]);
+
+		return $response->json();
+    }
+
+    public function getToken($gmailIntegration)
+    {
+    	$refresh_token = json_decode($gmailIntegration->data)->refresh_token;
+
     	$response = Http::post(config('stitchel.gmail.get_token_url'), [
 		    'client_id' => config('stitchel.gmail.client_id'),
 		    'client_secret' => config('stitchel.gmail.client_secret'),
-		    'refresh_token' => '1//0dYEyIBn8zOgRCgYIARAAGA0SNwF-L9IriSjxkLlNty5e8CzACLLScwfFxtILXeEHLwBq1HVSTAsfpQfWyJ0fN8FJXp70UlTPbsI',
+		    'refresh_token' => $refresh_token,
 		    'grant_type' => self::GRANT_TYPE_REFRESH_TOKEN,
+		]);
+
+		return $response->json();
+    }
+
+    public function getEMail($gmailIntegration)
+    {
+    	$email = json_decode($gmailIntegration->data)->email;
+
+    	return $email;
+    }
+
+    public function getCodeUrl()
+    {
+    	return 'https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com https://www.googleapis.com/auth/userinfo.email&access_type=offline&redirect_uri='.url('integrations/type/gmail/&response_type=code&client_id='.config('stitchel.gmail.client_id'));
+    }
+
+    public function getUserInfo($access_token)
+    {
+    	$response = Http::get(config('stitchel.gmail.get_userinfo_url'), [
+		    'access_token' => $access_token,
 		]);
 
 		return $response->json();

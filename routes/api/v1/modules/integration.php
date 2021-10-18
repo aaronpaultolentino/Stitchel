@@ -13,11 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['prefix' => 'integrations'], function(){
-	Route::get('', 'IntegrationsController@index')
-			->name('integrations')
-			->middleware('auth');
-
-	Route::get('type/gmail', 'IntegrationsController@getGmailCode')->name('gmail.getCode');
-	Route::post('delete/{id}', 'IntegrationsController@revokeToken')->name('gmail.revokeToken');
+Route::group(['middleware' => [], 'prefix' => 'integration', 'namespace' => 'Integration\Gmail'], function(){
+	
 });
