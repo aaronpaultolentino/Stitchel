@@ -80,7 +80,7 @@
          </a>
          <form class="navbar-search navbar-search-dark form-inline mr-3 d-md-flex">
             <div class="form-group mb-0">
-               <div class="tab-pane tab-example-result fade show active object-hidden" role="tabpanel" aria-labelledby="table-component-tab" id="global-search-result">
+               <div class="tab-pane tab-example-result fade show active object-hidden" role="tabpanel" aria-labelledby="table-component-tab" id="">
                   <div class="table-responsive">
                      <div>
                         <table class="table align-items-center">
@@ -161,7 +161,7 @@
                      </select>
                   </div>
                </div>
-               <div id="global-search-container" style="width: 80%;">
+               <div id="" style="width: 80%;">
                   <div class="input-field second-wrap">
                      <input class="gcse-search" id="search" type="text" placeholder="Enter Keywords" />
                   </div>

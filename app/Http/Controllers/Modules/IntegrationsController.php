@@ -51,12 +51,19 @@ class IntegrationsController extends Controller
         
     }
 
-    public function revokeToken($id)
+    public function revokeToken($id, Request $request)
     {
         $integrations = Integrations::findOrFail($id);
-        $integrations->delete();
+        $refresh_token = json_decode($integrations->data)->refresh_token;
 
-         return redirect()->route('integrations')
-                        ->with('success','Integrations deleted successfully');
+        // $refresh_token => revokeToken();
+
+
+        dd($refresh_token);
+
+        // $integrations->delete();
+
+         // return redirect()->route('integrations')
+         //                ->with('success','Integrations deleted successfully');
     }
 }

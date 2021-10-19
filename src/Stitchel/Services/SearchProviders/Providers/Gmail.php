@@ -28,6 +28,7 @@ class Gmail implements SearchProviderInteface
     		$code = $gmailIntegration->data;
 	    	$token = $this->getToken($gmailIntegration);
 	    	$email = $this->getEMail($gmailIntegration);
+	    	$refresh_token = $this->revokeToken($gmailIntegration);
 
 	    	$messages = Http::withHeaders([
 			    'Authorization' => 'Bearer '.$token['access_token'],
@@ -101,4 +102,20 @@ class Gmail implements SearchProviderInteface
 
 		return $response->json();
     }
+
+    public function revokeToken($gmailIntegration)
+    {
+    	$refresh_token = json_decode($gmailIntegration->data)->refresh_token;
+
+    	$response = Http::post(config('stitchel.gmail.get_token_url'), [
+		    'refresh_token' => $refresh_token,
+		]);
+
+		// return $response->json();
+
+		dd($response);
+
+
+
+	}
 }
