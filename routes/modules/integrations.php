@@ -19,5 +19,6 @@ Route::group(['prefix' => 'integrations'], function(){
 			->middleware('auth');
 
 	Route::get('type/gmail', 'IntegrationsController@getGmailCode')->name('gmail.getCode');
+	Route::get('type/hira', 'IntegrationsController@getJiraCode')->name('jira.getCode');
 	Route::post('delete/{id}', 'IntegrationsController@revokeToken')->name('gmail.revokeToken');
 });

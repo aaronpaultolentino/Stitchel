@@ -12,8 +12,6 @@ use Stitchel\Services\SearchProviders\Providers\Gmail;
 
 class IntegrationsController extends Controller
 {
-
-    
     /**
      * Show the application integrations.
      *
@@ -51,10 +49,19 @@ class IntegrationsController extends Controller
         
     }
 
-    public function revokeToken($id)
+    public function getJiraCode(Request $request)
     {
-        $integrations = Integrations::findOrFail($id);
-        $integrations->delete();
+           
+    }
+
+    public function revokeToken($id, Request $request)
+    {
+        $integration = Integrations::findOrFail($id);
+        $gmail = new Gmail();
+
+        $gmail->revokeToken($integration);
+
+        $integration->delete();
 
          return redirect()->route('integrations')
                         ->with('success','Integrations deleted successfully');
