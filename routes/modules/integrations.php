@@ -20,6 +20,6 @@ Route::group(['prefix' => 'integrations'], function(){
 
 	Route::get('type/gmail', 'IntegrationsController@getGmailCode')->name('gmail.getCode');
 	Route::get('type/jira', 'IntegrationsController@getJiraCode')->name('jira.getCode');
-	Route::post('delete/{id}', 'IntegrationsController@revokeToken')->name('gmail.revokeToken');
-	Route::post('delete/{id}', 'IntegrationsController@revokeToken')->name('jira.revokeToken');
+	Route::post('gmail/{id}', 'IntegrationsController@revokeToken')->name('gmail.revokeToken');
+	Route::post('jira/{id}', 'IntegrationsController@revokeToken')->name('jira.revokeToken');
 });
