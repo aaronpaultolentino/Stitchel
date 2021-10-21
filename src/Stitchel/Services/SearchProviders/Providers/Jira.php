@@ -20,34 +20,44 @@ class Jira implements SearchProviderInteface
      */
     public function search($search): array
     {
-        // $searchItems = [];
+        $searchItems = [];
 
-        // $jiraIntegrations = Integrations::whereType('jira')->whereUserId(auth()->user()->id)->get();
+        $jiraIntegrations = Integrations::whereType('jira')->whereUserId(auth()->user()->id)->get();
 
-        // foreach ($jiraIntegrations as $key => $jiraIntegration) {
+        foreach ($jiraIntegrations as $key => $jiraIntegration) {
 
-        //     $code = $jiraIntegration->data;
-        //     $token = $this->getToken($jiraIntegration);
-        //     $email = $this->getEmail($jiraIntegration);
+            $code = $jiraIntegration->data;
+            $token = $this->getToken($jiraIntegration);
 
-        //     $messages = Http::withHeaders([
-        //         'Authorization' => 'Bearer '.$token['access_token'],
-        //     ])->get('https://jiratesting12345.atlassian.net/rest/api/3/issue/'. $email .'/comment?q='.$search)->json();
-        //     if($messages['resultSizeEstimate'] == 0){
-        //         return [];
-        //     }
-        // }
 
+            $messages = Http::withHeaders([
+                'Authorization' => 'Basic YWFyb25AZXZlbnRsZWFwLmNvbTpyeXRSc1FEM09CT2pnUllUUkNSZDNDM0M=', //Login Account Jira
+            ])->get('https://jiratesting12345.atlassian.net/rest/api/3/search?q='.$search)->json();
+
+            if($messages == 0){
+                return [];
+            }
+
+            foreach ($messages['issues'] as $key => $message) {
+                $messageBody = Http::withHeaders([
+                    'Accept' => 'application/json',
+                    'Authorization' => 'Basic YWFyb25AZXZlbnRsZWFwLmNvbTpyeXRSc1FEM09CT2pnUllUUkNSZDNDM0M=',
+                ])->get('https://jiratesting12345.atlassian.net/rest/api/3/issue/'.$message['id'])->json();
+
+
+                $searchItems[] = [
+                    'id' => $messageBody['id'],
+                    'body' =>$messageBody['fields']['summary'],
+                    'url' => 'https://jiratesting12345.atlassian.net/jira/software/projects/TP/boards/1?selectedIssue='.$messageBody['key'],
+                    'type' => SearchProviderFactory::JIRA,
+                    'fields' => $messageBody['fields'],
+                ];
+  
+            }
+
+        }
+        
         return $searchItems;
-    	$searchItems = [];
-
-    	$searchItems[] = [
-    		'body' => 'test jira',
-    		'type' => SearchProviderFactory::JIRA,
-    		'url' => '#'
-    	];
-
-    	return $searchItems;
     }
 
     public function getRefreshToken($code)
@@ -87,7 +97,7 @@ class Jira implements SearchProviderInteface
 
     public function getCodeUrl()
     {
-        return 'https://auth.atlassian.com/authorize?audience=api.atlassian.com&scope=read%3Ame%20offline_access&state=${YOUR_USER_BOUND_VALUE}&redirect_uri='.url('integrations/type/jira/&response_type=code&prompt=consent&client_id='.config('stitchel.jira.client_id'));
+        return 'https://auth.atlassian.com/authorize?audience=api.atlassian.com&scope=read%3Ame%20read%3Ajira-work%20offline_access&state=${YOUR_USER_BOUND_VALUE}&redirect_uri='.url('integrations/type/jira/&response_type=code&prompt=consent&client_id='.config('stitchel.jira.client_id'));
     }
 
     public function getUserInfo($access_token)
