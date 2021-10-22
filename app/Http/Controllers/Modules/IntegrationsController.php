@@ -40,13 +40,15 @@ class IntegrationsController extends Controller
         $userInfo = $gmail->getUserInfo($tokens['access_token']);
         $tokens['code'] = $request->code;
 
-        $integrations = Integrations::create([
-            'data' => json_encode(array_merge($tokens, $userInfo)),
-            'type' => SearchProviderFactory::GMAIL,
-            'user_id' => auth()->user()->id,
-        ]);
+        if($tokens['refresh_token']){
+            $integrations = Integrations::create([
+                'data' => json_encode(array_merge($tokens, $userInfo)),
+                'type' => SearchProviderFactory::GMAIL,
+                'user_id' => auth()->user()->id,
+            ]);
 
-        $integrations->save();
+            $integrations->save();
+        }
 
         return redirect()->route('integrations');
         
