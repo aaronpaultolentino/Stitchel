@@ -43,7 +43,7 @@
               </a>
                 <a class="dropdown-item" href="{{ route('integrations') }}">
                 <i class="fa-fw text-left fas fa-users text-yellow"></i>
-                <span>integrations</span>
+                <span>Integrations</span>
               </a>
                 <a class="dropdown-item" href="{{ route('profile') }}">
                 <i class="fa-fw text-left fas fa-user text-success"></i>
