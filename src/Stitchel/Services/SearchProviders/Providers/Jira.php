@@ -97,7 +97,7 @@ class Jira implements SearchProviderInteface
 
     public function getCodeUrl()
     {
-        return 'https://auth.atlassian.com/authorize?audience=api.atlassian.com&scope=read%3Ame%20read%3Ajira-work%20offline_access&state=${YOUR_USER_BOUND_VALUE}&redirect_uri='.url('integrations/type/jira/&response_type=code&prompt=consent&client_id='.config('stitchel.jira.client_id'));
+        return 'https://auth.atlassian.com/authorize?audience=api.atlassian.com&scope=read%3Ame%20read%3Ajira-work%20offline_access&state=${YOUR_USER_BOUND_VALUE}&return_url='.url('integrations/type/jira/&response_type=code&prompt=consent&client_id='.config('stitchel.jira.client_id'));
     }
 
     public function getUserInfo($access_token)
