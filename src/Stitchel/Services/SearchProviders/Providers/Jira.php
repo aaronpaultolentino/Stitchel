@@ -47,10 +47,10 @@ class Jira implements SearchProviderInteface
 
                 $searchItems[] = [
                     'id' => $messageBody['id'],
-                    'body' =>$messageBody['fields']['summary'],
+                    'body' => $messageBody['fields']['issuetype']['name'].' : '.$messageBody['fields']['summary'],
                     'url' => 'https://jiratesting12345.atlassian.net/jira/software/projects/TP/boards/1?selectedIssue='.$messageBody['key'],
-                    'type' => SearchProviderFactory::JIRA,
-                    'fields' => $messageBody['fields'],
+                    'type' => SearchProviderFactory::JIRA, 
+
                 ];
   
             }
@@ -102,10 +102,6 @@ class Jira implements SearchProviderInteface
 
     public function getUserInfo($access_token)
     {
-        // $response = Http::get(config('stitchel.jira.get_userinfo_url'), [
-        //     'Content-Type' =>'application/json',
-        //     'Authorization' => 'Bearer '.$access_token,
-        // ]);
 
         $response = Http::withHeaders([
                 'Content-Type' =>'application/json',
