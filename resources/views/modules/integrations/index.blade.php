@@ -10,17 +10,6 @@
                     <strong>Success!</strong> Integration has been saved!
                 </div>
                 @endif
-               <h1>Integrations</h1>
-               <div class="col-lg-6">
-               <div class="input-group rounded">
-                 <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search"
-                   aria-describedby="search-addon" />
-                 <span class="input-group-text border-0" id="search-addon">
-                   <i class="fas fa-search"></i>
-                 </span>
-               </div>
-            </div>
-            <br><br>
                <div class="accordion accordion-flush" id="accordionFlushExample">
                      <div class="accordion-item">
                         <h2 class="accordion-header" id="flush-headingOne">
@@ -69,7 +58,8 @@
                            <div class="accordion-body">
                               Slack Account 1<button type="button" class="btn btn-danger float-right" style="margin-bottom: 15px;"><i class="fas fa-times"></i> Delete</button>
                            </div>
-                           <button type="button" class="btn btn-primary btn-lg btn-block"><i class="fas fa-plus"></i> Add
+                           <a type="button" class="btn btn-primary btn-lg btn-block add-slackIntegration" href="{{ $slackIntegrationUrl }}" target="_blank"><i class="fas fa-plus"></i> Add
+                           </a>
                            </button>
                         </div>
                      </div>
