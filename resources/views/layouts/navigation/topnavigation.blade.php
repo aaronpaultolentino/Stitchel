@@ -1,19 +1,29 @@
+ <link rel="stylesheet" type="text/css" href="{{ url('css/topnavigation.css') }}">
  <!-- Navbar -->
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
-        <form class="navbar-search navbar-search-dark form-inline mr-3 d-md-flex">
-          <div class="form-group mb-0">
-            <div class="tab-pane tab-example-result fade show active object-hidden" role="tabpanel" aria-labelledby="table-component-tab" id="global-search-result">
-              <div class="table-responsive">
-                <div>
-                  <table class="table align-items-center">
-                    <tbody class="list">
-                    </tbody>
-                  </table>
-                </div>
+        <form class=" navbar-search-active navbar-search mr-3 d-md-flex">
+            <div class="input-group input-group-alternative" id="global-search-container">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-search text-success" aria-hidden="true"></i></span>
+              </div>
+              <input class="form-control" placeholder="Search" type="text" id="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" >
+              <div style="min-width: 38px">
+                <div class="input-group-prepend object-hidden" id="global-search-cancel">
+                  <span class="input-group-text"><i class="fas fa-times mt-2 text-warning" aria-hidden="true"></i></span>
+                </div>  
               </div>
             </div>
-          </div>
+              <div class="tab-pane tab-example-result fade show active d-none" role="tabpanel" aria-labelledby="table-component-tab" id="global-search-result">
+               <div class="table-responsive" style="max-height: 400px;">
+                  <div>
+                     <div class="table align-items-center">
+                        <div id="search-list-body" style="overflow: hidden;">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
         </form>
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
@@ -67,4 +77,9 @@
         </ul>
       </div>
     </nav>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+   <script src="{{url('js/extension/choices.js')}}"></script>
+   <script type="text/javascript" src="{{ url('js/Foundation/Search.js') }}"></script>
+   <script src="{{ url('argon/assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
+   <script src="{{ url('argon/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     <!-- End Navbar -->
