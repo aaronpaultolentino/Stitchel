@@ -58,7 +58,7 @@
                            <div class="accordion-body">
                               Slack Account 1<button type="button" class="btn btn-danger float-right" style="margin-bottom: 15px;"><i class="fas fa-times"></i> Delete</button>
                            </div>
-                           <a type="button" class="btn btn-primary btn-lg btn-block add-slackIntegration" href="{{ $slackIntegrationUrl }}" target="_blank"><i class="fas fa-plus"></i> Add
+                           <a type="button" class="btn btn-primary btn-lg btn-block add-slackIntegration" href=""><i class="fas fa-plus"></i> Add
                            </a>
                            </button>
                         </div>
