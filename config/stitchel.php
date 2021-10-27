@@ -11,6 +11,7 @@ return [
     ],
 
     'jira' => [
+        'app_token' => 'wCax8OkadKFVzp1J30oG31ED',
         'get_token_url' => 'https://auth.atlassian.com/oauth/token',
         'get_userinfo_url' => 'https://api.atlassian.com/me',
     	'client_id' => env('JIRA_CLIENT_ID', 'ZG9PdjJf5QEeTOyBUEakMmKCnHwiLt0B'),
