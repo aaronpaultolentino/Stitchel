@@ -30,24 +30,26 @@ class Jira implements SearchProviderInteface
             $token = $this->getToken($jiraIntegration);
             $email = $this->getEmail($jiraIntegration);
             $appToken = config('stitchel.jira.app_token');
-
+                // $search = 'test';
             $messages = Http::withHeaders([
                 'Authorization' => 'Basic '. base64_encode($email.':'.$appToken),
-            ])->get('https://stitcheljira123.atlassian.net/rest/api/3/search?q='.$search)->json();
+            ])->get('https://stitcheljira123.atlassian.net/rest/api/3/issue/picker?query='.$search)->json();
             if($messages == 0){
                 return [];
             }
+            // dd($messages);
+            foreach ($messages['sections'][0]['issues'] as $key => $message) {
+                // $messageBody = Http::withHeaders([
+                //     'Accept' => 'application/json',
+                //     'Authorization' => 'Basic '. base64_encode($email.':'.$appToken),
+                // ])->get('https://stitcheljira123.atlassian.net/rest/api/3/issue/'.$message['id'])->json();
 
-            foreach ($messages['issues'] as $key => $message) {
-                $messageBody = Http::withHeaders([
-                    'Accept' => 'application/json',
-                    'Authorization' => 'Basic '. base64_encode($email.':'.$appToken),
-                ])->get('https://stitcheljira123.atlassian.net/rest/api/3/issue/'.$message['id'])->json();
-
+            // echo json_encode($message);exit;
                 $searchItems[] = [
-                    'id' => $messageBody['id'],
-                    'body' => $messageBody['fields']['issuetype']['name'].' : '.$messageBody['fields']['summary'],
-                    'url' => 'https://stitcheljira123.atlassian.net/jira/software/projects/TP/boards/1?selectedIssue='.$messageBody['key'],
+                    'id' => $message['id'],
+                    // 'body' => $messageBody['fields']['issuetype']['name'].' : '.$messageBody['fields']['summary'],
+                    'body' => $message['summaryText'],
+                    'url' => 'https://stitcheljira123.atlassian.net/browse/'.$message['key'],
                     'type' => SearchProviderFactory::JIRA, 
 
                 ];
