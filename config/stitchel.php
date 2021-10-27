@@ -17,5 +17,14 @@ return [
         'client_secret' => env('JIRA_CLIENT_SECRET', '1WBY8B-iYr6m9aCZXDSfOM5a8JY2822LywYTG9YI8H1wlDVsF0-kZ17zR9wp8Zb3'),
         'revoke_token_url'=> '',
     	
+    ],
+
+     'slack' => [
+        'get_token_url' => 'https://slack.com/api/oauth.token',
+        'get_userinfo_url' => '',
+        'client_id' => env('SLACK_CLIENT_ID', '2295220621542.2306457300818'),
+        'client_secret' => env('SLACK_CLIENT_SECRET', '59c3a8bd0560913080af7a0f3289d39c'),
+        // 'revoke_token_url'=> '',
+        
     ]
 ];

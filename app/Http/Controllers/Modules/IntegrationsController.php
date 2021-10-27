@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Stitchel\Services\SearchProviders\SearchProviderFactory;
 use Stitchel\Services\SearchProviders\Providers\Gmail;
 use Stitchel\Services\SearchProviders\Providers\Jira;
+use Stitchel\Services\SearchProviders\Providers\Slack;
 
 class IntegrationsController extends Controller
 {
@@ -22,14 +23,16 @@ class IntegrationsController extends Controller
     {
         $gmail = new Gmail();
         $jira = new Jira();
+        $slack = new Slack();
         $gmailIntegrations = Integrations::whereType('gmail')->whereUserId(auth()->user()->id)->get();
-        $slackIntegration = Integrations::whereType('slack')->whereUserId(auth()->user()->id)->get();
+        $slackIntegrations = Integrations::whereType('slack')->whereUserId(auth()->user()->id)->get();
         $jiraIntegrations = Integrations::whereType('jira')->whereUserId(auth()->user()->id)->get();
 
         $gmailIntegrationUrl = $gmail->getCodeUrl();
         $jiraIntegrationUrl = $jira->getCodeUrl();
+        $slackIntegrationUrl = $slack->getCodeUrl();
 
-        return view('modules.integrations.index', compact('gmailIntegrations', 'slackIntegration', 'jiraIntegrations', 'gmailIntegrationUrl', 'jiraIntegrationUrl'));
+        return view('modules.integrations.index', compact('gmailIntegrations', 'slackIntegration', 'jiraIntegrations', 'gmailIntegrationUrl', 'jiraIntegrationUrl', 'slackIntegrationUrl'));
        
     }
 
@@ -71,6 +74,15 @@ class IntegrationsController extends Controller
 
         return redirect()->route('integrations');
            
+    }
+
+     public function getSlackCode(Request $request)
+    {
+        $slack = new Slack();
+        $tokens = $slack->getRefreshToken($request->code);
+
+        dd($tokens);
+        
     }
 
     public function revokeToken($id, Request $request)
