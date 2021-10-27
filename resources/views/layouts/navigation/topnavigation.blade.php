@@ -15,7 +15,7 @@
               </div>
             </div>
               <div class="tab-pane tab-example-result fade show active d-none" role="tabpanel" aria-labelledby="table-component-tab" id="global-search-result">
-               <div class="table-responsive" style="max-height: 400px;">
+               <div class="table-responsive" style="max-height: 400px;width: 351px;overflow: auto;">
                   <div>
                      <div class="table align-items-center">
                         <div id="search-list-body" style="overflow: hidden;">
