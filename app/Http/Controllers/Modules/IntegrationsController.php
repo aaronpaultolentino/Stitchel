@@ -80,8 +80,17 @@ class IntegrationsController extends Controller
     {
         $slack = new Slack();
         $tokens = $slack->getRefreshToken($request->code);
+        $tokens['code'] = $request->code;
 
-        dd($tokens);
+         $integrations = Integrations::create([
+            'data' => json_encode($tokens),
+            'type' => SearchProviderFactory::SLACK,
+            'user_id' => auth()->user()->id,
+        ]);
+
+        $integrations->save();
+
+        return redirect()->route('integrations');
         
     }
 
