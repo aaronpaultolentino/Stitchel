@@ -31,7 +31,7 @@ class Slack implements SearchProviderInteface
 
      public function getRefreshToken($code)
     {
-        $response = Http::post(config('stitchel.slack.get_token_url'), [
+        $response = Http::asForm()->post(config('stitchel.slack.get_token_url'), [
             'client_id' => config('stitchel.slack.client_id'),
             'client_secret' => config('stitchel.slack.client_secret'),
             'code' => $code,

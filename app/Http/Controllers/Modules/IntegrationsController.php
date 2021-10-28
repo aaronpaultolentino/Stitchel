@@ -32,7 +32,7 @@ class IntegrationsController extends Controller
         $jiraIntegrationUrl = $jira->getCodeUrl();
         $slackIntegrationUrl = $slack->getCodeUrl();
 
-        return view('modules.integrations.index', compact('gmailIntegrations', 'slackIntegration', 'jiraIntegrations', 'gmailIntegrationUrl', 'jiraIntegrationUrl', 'slackIntegrationUrl'));
+        return view('modules.integrations.index', compact('gmailIntegrations', 'slackIntegrations', 'jiraIntegrations', 'gmailIntegrationUrl', 'jiraIntegrationUrl', 'slackIntegrationUrl'));
        
     }
 
