@@ -20,11 +20,11 @@ return [
     ],
 
      'slack' => [
-        'get_token_url' => 'https://slack.com/api/oauth.token',
+        'get_token_url' => 'https://slack.com/api/oauth.v2.access',
         'get_userinfo_url' => '',
-        'client_id' => env('SLACK_CLIENT_ID', '2295220621542.2306457300818'),
-        'client_secret' => env('SLACK_CLIENT_SECRET', '59c3a8bd0560913080af7a0f3289d39c'),
-        // 'revoke_token_url'=> '',
+        'client_id' => env('SLACK_CLIENT_ID', '2295220621542.2643163578183'),
+        'client_secret' => env('SLACK_CLIENT_SECRET', '90863d2f7e379f1364fe7481363fe5f6'),
+        'revoke_token_url'=> '',
         
     ]
 ];
