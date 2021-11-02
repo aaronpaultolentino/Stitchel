@@ -78,12 +78,14 @@ class IntegrationsController extends Controller
 
      public function getSlackCode(Request $request)
     {
+
         $slack = new Slack();
         $tokens = $slack->getRefreshToken($request->code);
+        $userInfo = $slack->getUserInfo($tokens['authed_user']['access_token']);
         $tokens['code'] = $request->code;
 
          $integrations = Integrations::create([
-            'data' => json_encode($tokens),
+            'data' => json_encode(array_merge($tokens, $userInfo)),
             'type' => SearchProviderFactory::SLACK,
             'user_id' => auth()->user()->id,
         ]);
@@ -100,6 +102,19 @@ class IntegrationsController extends Controller
         $gmail = new Gmail();
 
         $gmail->revokeToken($integration);
+
+        $integration->delete();
+
+         return redirect()->route('integrations')
+                        ->with('success','Integrations deleted successfully');
+    }
+
+     public function slackRevokeToken($id, Request $request)
+    {
+        $integration = Integrations::findOrFail($id);
+        $slack = new Slack();
+
+        $slack->slackRevokeToken($integration);
 
         $integration->delete();
 

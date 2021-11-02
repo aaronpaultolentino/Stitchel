@@ -23,7 +23,8 @@
                            </a>
                           @else
                            @foreach($gmailIntegrations as $key => $gmailIntegration)
-                            <div class="accordion-body">Gmail Account ({{ json_decode($gmailIntegration->data)->email }})<a type="button" class="btn btn-danger btn-sm float-right delete-integration" delete-url="{{ route('gmail.revokeToken', $gmailIntegration->id) }}" href="#" name="id" style="margin-bottom: 15px; "><i class="fas fa-times"></i> Delete</a>
+                            <div class="accordion-body">Gmail Account ({{ json_decode($gmailIntegration->data)->email }})
+                              <a type="button" class="btn btn-danger btn-sm float-right delete-integration" delete-url="{{ route('gmail.revokeToken', $gmailIntegration->id) }}" href="#" name="id" style="margin-bottom: 15px; "><i class="fas fa-times"></i> Delete</a>
                            </div><br>
    
                            @endforeach
@@ -42,7 +43,8 @@
                            </a>
                           @else
                            @foreach($jiraIntegrations as $key => $jiraIntegration)
-                            <div class="accordion-body">Jira Account ({{ json_decode($jiraIntegration->data)->email }})<a type="button" class="btn btn-danger btn-sm float-right delete-integration" delete-url="{{ route('jira.revokeToken', $jiraIntegration->id) }}" href="#" name="id" style="margin-bottom: 15px; "><i class="fas fa-times"></i> Delete</a>
+                            <div class="accordion-body">Jira Account ({{ json_decode($jiraIntegration->data)->email }})
+                              <a type="button" class="btn btn-danger btn-sm float-right delete-integration" delete-url="{{ route('jira.revokeToken', $jiraIntegration->id) }}" href="#" name="id" style="margin-bottom: 15px; "><i class="fas fa-times"></i> Delete</a>
                            </div><br>
                               
                            @endforeach
@@ -56,15 +58,22 @@
                         </h2>
                         <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                            <div class="accordion-body">
-                              Slack Account 1<button type="button" class="btn btn-danger float-right" style="margin-bottom: 15px;"><i class="fas fa-times"></i> Delete</button>
                            </div>
+                           @if(count($slackIntegrations) == 0)
                            <a type="button" class="btn btn-primary btn-lg btn-block add-slackIntegration" href="{{ $slackIntegrationUrl }}" target="_blank"><i class="fas fa-plus"></i> Add
                            </a>
-                           </button>
+                           @else
+                           @foreach($slackIntegrations as $key => $slackIntegration)
+                            <div class="accordion-body">Slack Account ({{ json_decode($slackIntegration->data)->profile->email }})
+                              <a type="button" class="btn btn-danger btn-sm float-right delete-integration" delete-url="{{ route('slack.slackRevokeToken', $slackIntegration->id) }}" href="#" name="id" style="margin-bottom: 15px; "><i class="fas fa-times"></i> Delete</a>
+                           </div><br>
+                              
+                           @endforeach
+                           @endif
                         </div>
                      </div>
                   </div>
-               <hr />
+               <hr/>
             </div>
          </div>
       </div>

@@ -21,10 +21,10 @@ return [
 
      'slack' => [
         'get_token_url' => 'https://slack.com/api/oauth.v2.access',
-        'get_userinfo_url' => '',
+        'get_userinfo_url' => 'https://slack.com/api/users.profile.get',
         'client_id' => env('SLACK_CLIENT_ID', '2295220621542.2643163578183'),
         'client_secret' => env('SLACK_CLIENT_SECRET', '90863d2f7e379f1364fe7481363fe5f6'),
-        'revoke_token_url'=> '',
+        'revoke_token_url'=> 'https://slack.com/api/auth.revoke',
         
     ]
 ];

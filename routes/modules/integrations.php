@@ -23,5 +23,5 @@ Route::group(['prefix' => 'integrations'], function(){
 	Route::get('type/slack', 'IntegrationsController@getSlackCode')->name('slack.getCode');
 	Route::post('gmail/{id}', 'IntegrationsController@revokeToken')->name('gmail.revokeToken');
 	Route::post('jira/{id}', 'IntegrationsController@revokeToken')->name('jira.revokeToken');
-	Route::post('slack/{id}', 'IntegrationsController@revokeToken')->name('slack.revokeToken');
+	Route::post('slack/{id}', 'IntegrationsController@slackRevokeToken')->name('slack.slackRevokeToken');
 });
