@@ -17,4 +17,5 @@ Route::group(['prefix' => 'profile'], function(){
 	Route::get('', 'ProfileController@index')
 			->name('profile')
 			->middleware('auth');
+	Route::post('profile', 'ProfileController@update')->name('profile.update');
 	});
