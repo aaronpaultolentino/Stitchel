@@ -94,6 +94,7 @@ GlobalSearch = {
 		let resultItemClass = 'global-search-result-item';
 		if(!data.id){
 			resultItemClass = '';
+			resultItemClass.filter(x => x != null)
 		}
 		let template = '<div class="'+ resultItemClass +'" data=\''+ JSON.stringify(data) +'\'>'+
 			        '<div scope="row" class="list-rows">'+
