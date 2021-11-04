@@ -31,6 +31,7 @@
   <!-- CSS Files -->
   <link href="{{ url('argon/assets/css/argon-dashboard.css?v=1.1.0&ev_version=1&ev_version=1') }}" rel="stylesheet" />
   <link href="{{ url('argon/assets/css/main.css') }}" rel="stylesheet" />
+  <link href="{{ url('css/global.css?v='.time()) }}" rel="stylesheet" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta name="url" content="{{ url('') }}">
   <meta name="theme-color" content="#5e72e4">
@@ -167,29 +168,6 @@
       <a class="navbar-brand navbar-brand-dashboard" href="{{ url('/') }}">
         <x-logo color="#566BD9"></x-logo>
       </a>
-      <!-- User -->
-      <ul class="nav align-items-center d-md-none">
-        
-        <li class="nav-item dropdown">
-          <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <div class="media align-items-center">
-              <span class="avatar avatar-sm rounded-circle">
-                <i class="fa fa-user"></i>
-              </span>
-            </div>
-          </a>
-          <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
-            <div class=" dropdown-header noti-title">
-              <h6 class="text-overflow m-0">Welcome!</h6>
-            </div>
-            <div class="dropdown-divider"></div>
-            <a href="#!" class="dropdown-item">
-              <i class="fas fa-fw fa-sign-out-alt"></i>
-              <span>Logout</span>
-            </a>
-          </div>
-        </li>
-      </ul>
       <!-- Collapse -->
       <div class="collapse navbar-collapse" id="sidenav-collapse-main">
         <!-- Collapse header -->
