@@ -15,7 +15,7 @@
               </div>
             </div>
               <div class="tab-pane tab-example-result fade show active d-none" role="tabpanel" aria-labelledby="table-component-tab" id="global-search-result">
-               <div class="table-responsive" style="max-height: 400px;">
+               <div class="table-responsive" style="max-height: 400px;width: 351px;overflow: auto;">
                   <div>
                      <div class="table align-items-center">
                         <div id="search-list-body" style="overflow: hidden;">
@@ -80,6 +80,4 @@
    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
    <script src="{{url('js/extension/choices.js')}}"></script>
    <script type="text/javascript" src="{{ url('js/Foundation/Search.js') }}"></script>
-   <script src="{{ url('argon/assets/js/plugins/jquery/dist/jquery.min.js') }}"></script>
-   <script src="{{ url('argon/assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
     <!-- End Navbar -->

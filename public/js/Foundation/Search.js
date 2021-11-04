@@ -13,6 +13,7 @@ GlobalSearch = {
 		this.stopSearchingEvents();
 		this.searchItemRedirect();
 		this.cancelSearching();
+		this.overrideClick();
 	},
 
 	startSearchEvent: function(){
@@ -36,9 +37,8 @@ GlobalSearch = {
 		        	self.searchContainer.addClass('navbar-search-searching');
 					self.searchResultContainer.removeClass('d-none');
 					self.searchResultContainer.find('#search-list-body').html('');
-
 					if(data.length == 0){
-						self.searchResultContainer.find('#search-list-body').append(self.searchResultElementTemplate({'name': 'No results found.'}));
+						self.searchResultContainer.find('#search-list-body').append(self.searchResultElementTemplate({'body': 'No results found.', 'class': 'no-record'}));
 					}else{
 						for(let i in data){
 							self.searchResultContainer.find('#search-list-body').append(self.searchResultElementTemplate(data[i]));
@@ -98,7 +98,7 @@ GlobalSearch = {
 		}
 		let template = '<div class="'+ resultItemClass +'" data=\''+ JSON.stringify(data) +'\'>'+
 			        '<div scope="row" class="list-rows">'+
-			          '<a href="'+ data['url'] +'" style="color: #565665;" target="_blank"><div class="media align-items-center">';
+			          '<a href="'+ data['url'] +'" class="'+ data['class'] +'" style="color: #565665;" target="_blank"><div class="media align-items-center">';
 			          if(data['type'] == 'gmail'){
 			          	template += '<div class="icon icon-shape bg-danger text-white rounded-circle shadow">'+
 					              '<i class="fa fa-google" aria-hidden="true"></i>'+
@@ -133,6 +133,12 @@ GlobalSearch = {
 			}else if(data['type'] == 'event'){
 				window.location = url('admin/clients/'+ data['client_id'] +'/events/'+ data['event_id'] +'/edit');
 			}
+		})
+	},
+
+	overrideClick: function(){
+		$('body').on('click', '.no-record', function(e){
+			e.preventDefault();
 		})
 	}
 }
