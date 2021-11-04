@@ -30,12 +30,18 @@ class ProfileController extends Controller
     {
         $rules = [
             'name' => ['required'],
+            'mobile_number' => ['required'],
+            'address' => ['required'],
+            'postcode' => ['required'],
+            'area' => ['required'],
+            'country' => ['required'],
+            'state' => ['required'],
             'password' => [
                 'same:confirm_password',
             ],
         ];
 
-        $validatedData = $request->validate($rules);
+        $request->validate($rules);
 
         $user =Auth::user();
 
