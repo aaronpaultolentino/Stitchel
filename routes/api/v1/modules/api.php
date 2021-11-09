@@ -16,10 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 //User
 Route::group(['middleware' => ['auth:api'], 'prefix' => '/user', 'namespace' => 'Auth'], function(){
-	Route::get('/login', 'LoginController@login')
-		->name('api.login');
-	Route::get('/all', 'UserController@index')
-		->name('api.index');
-
+	Route::get('all', 'UserController@index')->name('api.index');
 });
 
