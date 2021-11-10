@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\API\v1\Modules\Auth;
 
-use Illuminate\Support\Facades\Validator;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 
 class UserController extends Controller
 {
@@ -13,9 +13,13 @@ class UserController extends Controller
 
     	return auth()->user();
 
+    	// return csrf_token(); 
+
     }
 
      public function signup(Request $request){
+
+     	// dd($request);
 
     	$request->validate([
             'name' => 'required',
@@ -23,13 +27,15 @@ class UserController extends Controller
             'password' => 'required|string|confirmed'
         ]);
 
-        dd($request);
+        // dd($request);
 
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
+
+        // dd($user);
 
         $user->save();
 
@@ -38,33 +44,33 @@ class UserController extends Controller
         ], 201);
     }
 
-     public function login(Request $request){
+    //  public function login(Request $request){
 
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-            'remember_me' => 'boolean'
-        ]);
+    //     $request->validate([
+    //         'email' => 'required|string|email',
+    //         'password' => 'required|string',
+    //         'remember_me' => 'boolean'
+    //     ]);
 
-        $credentials = request(['email', 'password']);
-        if(!Auth::attempt($credentials))
-            return response()->json([
-                'message' => 'Unauthorized'
-            ], 401);
+    //     $credentials = request(['email', 'password']);
+    //     if(!Auth::attempt($credentials))
+    //         return response()->json([
+    //             'message' => 'Unauthorized'
+    //         ], 401);
 
-        $user = $request->user();
+    //     $user = $request->user();
 
-        $tokenResult = $user->createToken('Personal Access Token');
-        $token = $tokenResult->token;
+    //     $tokenResult = $user->createToken('Personal Access Token');
+    //     $token = $tokenResult->token;
 
-        $token->save();
+    //     $token->save();
 
-        return response()->json([
-            'access_token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
-        ]);
+    //     return response()->json([
+    //         'access_token' => $tokenResult->accessToken,
+    //         'token_type' => 'Bearer',
+    //     ]);
 
-    }
+    // }
 
     public function logout(Request $request){
 
