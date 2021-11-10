@@ -40,8 +40,9 @@ class UserController extends Controller
         $user->save();
 
         return response()->json([
-            'message' => 'Successfully created user!'
-        ], 201);
+        	'User Info' => $user,
+            'Message' => 'Successfully created user!'
+        ], 200);
     }
 
     //  public function login(Request $request){
@@ -77,6 +78,7 @@ class UserController extends Controller
     	$request = auth()->user()->token()->revoke();
 
     	return response()->json([
+    		'revoked' => $request,
     		'message' => 'Successfully Logged Out'
     	]);
     }
