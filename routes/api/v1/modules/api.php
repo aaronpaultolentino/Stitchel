@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\Route;
 //User sign up
 Route::group(['prefix' => '/user', 'namespace' => 'Auth'], function(){
 	Route::post('signup', 'UserController@signup')->name('api.signup');
-	// Route::post('login', 'UserController@login')->name('api.login');
 });
 
 
