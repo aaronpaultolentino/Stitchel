@@ -5,7 +5,6 @@ namespace Stitchel\Services\SearchProviders\Providers;
 use App\Integrations;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 use Stitchel\Services\SearchProviders\SearchProviderFactory;
 
 /**
@@ -59,7 +58,7 @@ class MobileGmail implements SearchProviderInteface
     {
 
       $id = auth()->user()->id;
-      $user_id = Crypt::encryptString($id);
+      // $user_id = encrypt($id);
 
       // $id = '123';
 

@@ -5,7 +5,6 @@ namespace Stitchel\Services\SearchProviders\Providers;
 use App\Integrations;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 use Stitchel\Services\SearchProviders\SearchProviderFactory;
 
 /**
@@ -57,7 +56,7 @@ class MobileJira implements SearchProviderInteface
       $id = auth()->user()->id;
 
       // dd($id);
-      $user_id = Crypt::encryptString($id);
+      // $user_id = encrypt($id);
 
         return 'https://auth.atlassian.com/authorize?audience=api.atlassian.com&scope=read%3Ame%20read%3Ajira-work%20offline_access&redirect_uri='.url('api/v1/integrations/type/mobileAppJira&state='.$user_id.'&response_type=code&prompt=consent&client_id='.config('stitchel.jira.client_id'));
 

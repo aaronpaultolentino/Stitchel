@@ -4,12 +4,13 @@ namespace Stitchel\Services\SearchProviders\Providers;
 
 use App\Integrations;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 use Stitchel\Services\SearchProviders\SearchProviderFactory;
 
 /**
  *
  */
-class Slack implements SearchProviderInteface
+class MobileSlack implements SearchProviderInteface
 {
 
     const GRANT_TYPE_REFRESH_TOKEN = 'refresh_token';
@@ -18,37 +19,7 @@ class Slack implements SearchProviderInteface
 
     public function search($search): array
     {
-
-        $searchItems = [];
-
-        $slackIntegrations = Integrations::whereType('slack')->whereUserId(auth()->user()->id)->get();
-
-        foreach ($slackIntegrations as $key => $slackIntegration) {
-
-            $code = $slackIntegration->data;
-            $token = $this->getToken($slackIntegration);
-
-            $messages = Http::withHeaders([
-                'Authorization' => 'Bearer '.$token['access_token'],
-            ])->get('https://slack.com/api/search.all?query='.$search)->json();
-
-            foreach ($messages['messages']['matches'] as $key => $message) {
-                $messageBody = Http::withHeaders([
-                    'Authorization' => 'Bearer '.$token['access_token'],
-                ])->get('https://slack.com/api/search.messages?query='.$search)->json();
-
-                $searchItems[] = [
-                    'id' => $message['iid'],
-                    'body' => $message['type'].' : '.$message['text'],
-                    'type' => SearchProviderFactory::SLACK, 
-                    'url' => $message['permalink'],
-              ];
-  
-            }
-
-        }
-        
-        return $searchItems;
+        return 123;
     }
 
      public function getRefreshToken($code)
@@ -59,7 +30,7 @@ class Slack implements SearchProviderInteface
             'client_secret' => config('stitchel.slack.client_secret'),
             'code' => $code,
             'grant_type' => self::GRANT_TYPE_AUTHORIZATION_CODE,
-            'redirect_uri' => url('integrations/type/slack').'/',
+            'redirect_uri' => url('api/v1/integrations/type/mobileAppSlack').'/',
             'single_channel' => self::GRANT_TYPE_SINGLE_CHANNEL,
         ]);
 
@@ -84,9 +55,11 @@ class Slack implements SearchProviderInteface
 
     public function getCodeUrl()
     {
+        $user_id = auth()->user()->id;
+        // $user_id = encrypt($id);
 
         //localhost
-        return 'https://slack.com/oauth/v2/authorize?&user_scope=search:read,users.profile:read&client_id='.config('stitchel.slack.client_id');
+        return 'https://slack.com/oauth/v2/authorize?&user_scope=search:read,users.profile:read&state='.$user_id.'&client_id='.config('stitchel.slack.client_id');
     }
 
      public function getUserInfo($access_token)
@@ -96,12 +69,10 @@ class Slack implements SearchProviderInteface
                 'Authorization' => 'Bearer '.$access_token,
         ])->get(config('stitchel.slack.get_userinfo_url'));
 
-        dd($response->json());
-
         return $response->json();
     }
 
-    public function slackRevokeToken($slackIntegration)
+    public function revokeToken($slackIntegration)
     {
 
         $access_token = json_decode($slackIntegration->data)->authed_user->access_token;

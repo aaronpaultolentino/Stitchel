@@ -8,43 +8,46 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Stitchel\Services\SearchProviders\SearchProviderFactory;
-use Stitchel\Services\SearchProviders\Providers\MobileGmail;
+use Stitchel\Services\SearchProviders\Providers\MobileSlack;
 
 
-
-class MobileGmailIntegrationController extends Controller 
+class MobileSlackIntegrationController extends Controller 
 {
 
      public function getMobileGetUrl(Request $request)
     {
        
        // return 123;
-    $MobileGmail = new MobileGmail();
-    $gmailIntegrationUrl = $MobileGmail->getCodeUrl();
+    $MobileSlack = new MobileSlack();
+    $slackIntegrationUrl = $MobileSlack->getCodeUrl();
 
-    // dd($gmailIntegrationUrl);
+    // dd($slackIntegrationUrl);
 
-    return $gmailIntegrationUrl;
+    return $slackIntegrationUrl;
 
     }
 
-	public function getMobileGmailCode(Request $request) 
+	public function getMobileSlackCode(Request $request)
     {
-        $MobileGmail = new MobileGmail();
-        $tokens = $MobileGmail->getRefreshToken($request->code);
-        $userInfo = $MobileGmail->getUserInfo($tokens['access_token']);
+
+        $mobileslack = new MobileSlack();
+        $tokens = $mobileslack->getRefreshToken($request->code);
+        $userInfo = $mobileslack->getUserInfo($tokens['authed_user']['access_token']);
         $tokens['code'] = $request->code;
         $tokens['user_id'] = $request->state;
 
-        $integrations = Integrations::create([
+        // dd([$userInfo, $tokens]);
+
+         $integrations = Integrations::create([
             'data' => json_encode(array_merge($tokens, $userInfo)),
-            'type' => SearchProviderFactory::GMAIL,
+            'type' => SearchProviderFactory::SLACK,
             'user_id' => auth()->user()->id,
         ]);
 
         $integrations->save();
 
         return response()->json($integrations);
+        
     }
 
     public function show()
@@ -57,16 +60,16 @@ class MobileGmailIntegrationController extends Controller
     public function revokeToken($id, Request $request)
     {
         $integration = Integrations::findOrFail($id);
-        $MobileGmail = new MobileGmail();
+        $MobileSlack = new MobileSlack();
 
-        $MobileGmail->revokeToken($integration);
+        $MobileSlack->revokeToken($integration);
 
-        // dd($MobileGmail);
+        // dd($MobileSlack);
 
         $integration->delete();
 
          return response()->json([
-         'token' => $MobileGmail, 
+         'token' => $MobileSlack, 
          'message' => 'Successfully Deleted!'
         ]);
     }

@@ -31,4 +31,13 @@ Route::group(['middleware' => [], 'prefix' => '/integrations', 'namespace' => 'A
 	Route::get('jira/all', 'MobileJiraIntegrationController@show')->name('api.show');
 	Route::delete('/delete/{id}', 'MobileJiraIntegrationController@revokeToken')->name('api.revokeToken');
 });
+
+//API Integrations Slack
+Route::group(['middleware' => [], 'prefix' => '/integrations', 'namespace' => 'AppIntegration'], function(){
+
+	Route::get('code/slack', 'MobileSlackIntegrationController@getMobileGetUrl')->name('api.getUrl');
+	Route::get('type/mobileAppSlack', 'MobileSlackIntegrationController@getMobileSlackCode')->name('api.getCode'); // http://localhost/api/v1/user/type/mobileAppJira
+	Route::get('slack/all', 'MobileSlackIntegrationController@show')->name('api.show');
+	Route::delete('/delete/{id}', 'MobileSlackIntegrationController@revokeToken')->name('api.revokeToken');
+});
 	
