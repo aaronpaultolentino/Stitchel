@@ -11,9 +11,17 @@ class UserController extends Controller
 {
 	public function index(){
 
-    	return auth()->user();
+        $user =  auth()->user();
+    	$scrfToken = csrf_token(); 
 
-    	// return csrf_token(); 
+        // dd($scrfToken);
+
+        $credentials = ([
+            'scrfToken' => $scrfToken,
+            'user' => $user
+        ]);
+
+        return $credentials;
 
     }
 
@@ -47,7 +55,10 @@ class UserController extends Controller
 
     public function logout(Request $request){
 
-    	$request = auth()->user()->token()->revoke();
+    	// $request = auth()->user()->token()->revoke();
+        $request = auth()->user()->token();
+
+        dd($request);
 
     	return response()->json([
     		'revoked' => $request,

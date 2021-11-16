@@ -4,6 +4,8 @@ namespace Stitchel\Services\SearchProviders\Providers;
 
 use App\Integrations;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Stitchel\Services\SearchProviders\SearchProviderFactory;
 
 /**
@@ -19,20 +21,24 @@ class MobileGmail implements SearchProviderInteface
      */
     public function search($search): array
     {
-    	
+      return 123;
     }
 
     public function getRefreshToken($code)
     {
+
     	$response = Http::post(config('stitchel.gmail.get_token_url'), [
 		    'code' => $code,
 		    'client_id' => config('stitchel.gmail.client_id'),
 		    'client_secret' => config('stitchel.gmail.client_secret'),
-		    'redirect_uri' => url('api/v1/user/type/mobileAppGmail').'/',
+		    'redirect_uri' => url('api/v1/integrations/type/mobileAppGmail').'/',
 		    'grant_type' => self::GRANT_TYPE_AUTHORIZATION_CODE,
 		]);
 
+      // dd($response->json());
+
 		return $response->json();
+
     }
 
     public function getToken($gmailIntegration)
@@ -51,10 +57,18 @@ class MobileGmail implements SearchProviderInteface
 
     public function getCodeUrl()
     {
-    	// return 'https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com https://www.googleapis.com/auth/userinfo.email&access_type=offline&redirect_uri='.url('api/v1/user/type/mobileAppGmail/&response_type=code&client_id='.config('stitchel.gmail.client_id'));
 
-      // Paste to Google Chrome 
-      return 'https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com https://www.googleapis.com/auth/userinfo.email&access_type=offline&redirect_uri=http://localhost/api/v1/user/type/mobileAppGmail/&response_type=code&client_id=382106922048-jc5cjs40rm925vhasu1a1gcp1ee8jvc2.apps.googleusercontent.com';
+      $id = auth()->user()->id;
+      $user_id = Crypt::encryptString($id);
+
+      // $id = '123';
+
+      // Mobile App Add Button
+      return 'https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com https://www.googleapis.com/auth/userinfo.email&access_type=offline&redirect_uri='.url('api/v1/integrations/type/mobileAppGmail/&state='.$user_id.'&response_type=code&client_id='.config('stitchel.gmail.client_id'));
+
+
+      // Paste to Google Browser
+      // return 'https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com https://www.googleapis.com/auth/userinfo.email&access_type=offline&redirect_uri=http://localhost/api/v1/integrations/type/mobileAppGmail/&response_type=code&client_id=382106922048-jc5cjs40rm925vhasu1a1gcp1ee8jvc2.apps.googleusercontent.com';
     }
 
     public function getUserInfo($access_token)

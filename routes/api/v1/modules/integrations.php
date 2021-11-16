@@ -14,12 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// API Integrations Add/List/Delete
-Route::group(['middleware' => [], 'prefix' => '/user', 'namespace' => 'AppIntegration'], function(){
+// API Integrations Gmail
+Route::group(['middleware' => [], 'prefix' => '/integrations', 'namespace' => 'AppIntegration'], function(){
 
-	Route::get('type/mobileAppGmail', 'MobileIntegrationController@getMobileGmailCode')->name('api.getCode'); // http://localhost/api/v1/user/type/mobileAppGmail
-	Route::get('/list', 'MobileIntegrationController@show')->name('api.show');
-	Route::get('/delete/{id}', 'MobileIntegrationController@revokeToken')->name('api.revokeToken');
-
+	Route::get('code/gmail', 'MobileGmailIntegrationController@getMobileGetUrl')->name('api.getUrl');
+	Route::get('type/mobileAppGmail', 'MobileGmailIntegrationController@getMobileGmailCode')->name('api.getCode'); // http://localhost/api/v1/user/type/mobileAppGmail
+	Route::get('gmail/all', 'MobileGmailIntegrationController@show')->name('api.show');
+	Route::delete('/delete/{id}', 'MobileGmailIntegrationController@revokeToken')->name('api.revokeToken');
 });
 
+//API Integrations Jira
+Route::group(['middleware' => [], 'prefix' => '/integrations', 'namespace' => 'AppIntegration'], function(){
+
+	Route::get('code/jira', 'MobileJiraIntegrationController@getMobileGetUrl')->name('api.getUrl');
+	Route::get('type/mobileAppJira', 'MobileJiraIntegrationController@getMobileJiraCode')->name('api.getCode'); // http://localhost/api/v1/user/type/mobileAppJira
+	Route::get('jira/all', 'MobileJiraIntegrationController@show')->name('api.show');
+	Route::delete('/delete/{id}', 'MobileJiraIntegrationController@revokeToken')->name('api.revokeToken');
+});
+	

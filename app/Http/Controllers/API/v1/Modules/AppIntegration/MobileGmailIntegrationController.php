@@ -14,25 +14,35 @@ use Stitchel\Services\SearchProviders\Providers\MobileGmail;
 
 
 
-class MobileIntegrationController extends Controller 
+class MobileGmailIntegrationController extends Controller 
 {
 
-	public function getMobileGmailCode(Request $request)
+     public function getMobileGetUrl(Request $request)
+    {
+       
+       // return 123;
+    $MobileGmail = new MobileGmail();
+    $gmailIntegrationUrl = $MobileGmail->getCodeUrl();
+
+    // dd($gmailIntegrationUrl);
+
+    return $gmailIntegrationUrl;
+
+    }
+
+	public function getMobileGmailCode(Request $request) 
     {
         $MobileGmail = new MobileGmail();
         $tokens = $MobileGmail->getRefreshToken($request->code);
         $userInfo = $MobileGmail->getUserInfo($tokens['access_token']);
         $tokens['code'] = $request->code;
-
-        // dd($userInfo);
+        $tokens['user_id'] = $request->state;
 
         $integrations = Integrations::create([
             'data' => json_encode(array_merge($tokens, $userInfo)),
             'type' => SearchProviderFactory::GMAIL,
             'user_id' => auth()->user()->id,
         ]);
-
-        // dd($integrations);
 
         $integrations->save();
 
