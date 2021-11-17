@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 //User sign up
-Route::group(['prefix' => '/user', 'namespace' => 'Auth'], function(){
+Route::group(['middleware' => ['web'], 'prefix' => '/user', 'namespace' => 'Auth'], function(){
+	Route::get('all', 'UserController@index')->name('api.index');
 	Route::post('signup', 'UserController@signup')->name('api.signup');
 });
 
@@ -23,9 +24,6 @@ Route::group(['prefix' => '/user', 'namespace' => 'Auth'], function(){
 
 //User Find All | Logout
 Route::group(['middleware' => ['auth:api'], 'prefix' => '/user', 'namespace' => 'Auth'], function(){
-	Route::get('all', 'UserController@index')->name('api.index');
 	Route::get('logout', 'UserController@logout')->name('api.logout');
-
-
 });
 

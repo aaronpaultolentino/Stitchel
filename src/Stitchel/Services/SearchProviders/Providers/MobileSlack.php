@@ -72,10 +72,8 @@ class MobileSlack implements SearchProviderInteface
         return $response->json();
     }
 
-    public function revokeToken($slackIntegration)
+    public function slackRevokeToken($access_token)
     {
-
-        $access_token = json_decode($slackIntegration->data)->authed_user->access_token;
 
         $response = Http::withHeaders([
                 'Authorization' => 'Bearer '.$access_token,

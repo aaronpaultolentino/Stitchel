@@ -59,9 +59,9 @@ class MobileGmailIntegrationController extends Controller
         $integration = Integrations::findOrFail($id);
         $MobileGmail = new MobileGmail();
 
-        $MobileGmail->revokeToken($integration);
+        $MobileGmail->gmailRevokeToken($integration);
 
-        // dd($MobileGmail);
+        // dd([$MobileGmail, $integration]);
 
         $integration->delete();
 

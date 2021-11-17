@@ -24,7 +24,7 @@ class MobileJiraIntegrationController extends Controller
 
     // dd($jiraIntegrationUrl);
 
-    return $jiralIntegrationUrl;
+    return $jiraIntegrationUrl;
 
     }
 

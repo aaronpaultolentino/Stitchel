@@ -96,8 +96,7 @@ class RouteServiceProvider extends ServiceProvider
             $moduleName = explode('/', $filename);
             $moduleName = explode('.', end($moduleName))[0];
 
-            Route::middleware('web')
-                ->namespace($this->namespace . '\API\v1\Modules')
+            Route::namespace($this->namespace . '\API\v1\Modules')
                 ->prefix('api/v1')
                 ->group($filename);
         }

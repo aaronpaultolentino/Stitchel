@@ -62,9 +62,9 @@ class MobileSlackIntegrationController extends Controller
         $integration = Integrations::findOrFail($id);
         $MobileSlack = new MobileSlack();
 
-        $MobileSlack->revokeToken($integration);
+        $MobileSlack->slackRevokeToken($integration);
 
-        // dd($MobileSlack);
+        // dd([$MobileSlack, $integration]);
 
         $integration->delete();
 
