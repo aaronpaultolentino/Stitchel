@@ -53,7 +53,7 @@ class MobileJira implements SearchProviderInteface
     public function getCodeUrl()
     {
 
-      $id = auth()->user()->id;
+      $user_id = auth()->user()->id;
 
       // dd($id);
       // $user_id = encrypt($id);

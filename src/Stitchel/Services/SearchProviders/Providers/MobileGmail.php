@@ -57,7 +57,7 @@ class MobileGmail implements SearchProviderInteface
     public function getCodeUrl()
     {
 
-      $id = auth()->user()->id;
+      $user_id = auth()->user()->id;
       // $user_id = encrypt($id);
 
       // $id = '123';
