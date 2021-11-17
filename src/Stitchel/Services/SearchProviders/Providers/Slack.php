@@ -96,8 +96,6 @@ class Slack implements SearchProviderInteface
                 'Authorization' => 'Bearer '.$access_token,
         ])->get(config('stitchel.slack.get_userinfo_url'));
 
-        dd($response->json());
-
         return $response->json();
     }
 
