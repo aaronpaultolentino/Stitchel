@@ -49,7 +49,7 @@ class MobileGmailIntegrationController extends Controller
 
     public function show()
     {
-        $integrations = Integrations::all();
+        $integrations = Integrations::where('type','gmail')->get();
 
         return response()->json($integrations);
     }

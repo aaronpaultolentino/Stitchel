@@ -51,7 +51,7 @@ class MobileJiraIntegrationController extends Controller
 
     public function show()
     {
-        $integrations = Integrations::all();
+        $integrations = Integrations::where('type','jira')->get();
 
         return response()->json($integrations);
     }
