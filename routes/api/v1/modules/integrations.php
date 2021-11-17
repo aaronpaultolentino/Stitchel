@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//API All Integrations
+Route::group(['middleware' => ['auth:api'], 'prefix' => '/integrations', 'namespace' => 'AppIntegration'], function(){
+	Route::get('/all', 'MobileAllIntegrationController@showAll')->name('api.showAll');
+});
+
 //API Integrations Gmail
 Route::group(['middleware' => ['auth:api'], 'prefix' => '/integrations', 'namespace' => 'AppIntegration'], function(){
 
