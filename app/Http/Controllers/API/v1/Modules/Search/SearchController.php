@@ -23,4 +23,21 @@ class SearchController extends Controller
 
     	return $searchItems;
     }
+
+    /**
+     * Search By ID details.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function mobileSearch($query = '')
+    {
+        $searchItems = [];
+        $providers = SearchProviderFactory::$providers;
+
+        foreach ($providers as $key => $provider) {
+            $searchItems = array_merge($searchItems, SearchProviderFactory::make($key)->search($query));
+        }
+
+        return $searchItems;
+    }
 }
