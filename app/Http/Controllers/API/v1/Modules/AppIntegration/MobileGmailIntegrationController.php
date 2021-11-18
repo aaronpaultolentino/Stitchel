@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Stitchel\Services\SearchProviders\SearchProviderFactory;
-use Stitchel\Services\SearchProviders\MobileProviders\MobileGmail;
+use Stitchel\Services\SearchProviders\Providers\MobileGmail;
 
 
 
@@ -61,7 +61,7 @@ class MobileGmailIntegrationController extends Controller
 
     public function show()
     {
-        $integrations = Integrations::where('type','gmail')->get();
+        $integrations = Integrations::whereType('gmail')->get();
 
         return response()->json($integrations);
     }

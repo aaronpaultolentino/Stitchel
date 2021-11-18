@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Stitchel\Services\SearchProviders\SearchProviderFactory;
-use Stitchel\Services\SearchProviders\MobileProviders\MobileSlack;
+use Stitchel\Services\SearchProviders\Providers\MobileSlack;
 
 
 class MobileSlackIntegrationController extends Controller 
@@ -17,11 +17,8 @@ class MobileSlackIntegrationController extends Controller
      public function getMobileGetUrl(Request $request)
     {
        
-       // return 123;
     $MobileSlack = new MobileSlack();
     $slackIntegrationUrl = $MobileSlack->getCodeUrl();
-
-    // dd($slackIntegrationUrl);
 
     return $slackIntegrationUrl;
 
@@ -52,7 +49,7 @@ class MobileSlackIntegrationController extends Controller
 
     public function show()
     {
-        $integrations = Integrations::where('type','slack')->get();
+        $integrations = Integrations::whereType('slack')->get();
 
         return response()->json($integrations);
     }
