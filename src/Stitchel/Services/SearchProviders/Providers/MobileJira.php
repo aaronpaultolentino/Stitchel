@@ -81,6 +81,13 @@ class MobileJira implements SearchProviderInteface
         return $response->json();
     }
 
+     public function getEmail($jiraIntegration)
+    {
+        $email = json_decode($jiraIntegration->data)->email;
+
+        return $email;
+    }
+
     public function getCodeUrl()
     {
 

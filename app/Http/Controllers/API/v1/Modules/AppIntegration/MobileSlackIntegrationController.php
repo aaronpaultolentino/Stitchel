@@ -8,18 +8,32 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Stitchel\Services\SearchProviders\SearchProviderFactory;
-use Stitchel\Services\SearchProviders\MobileProviders\MobileSlack;
+use Stitchel\Services\SearchProviders\Providers\MobileSlack;
 
 
 class MobileSlackIntegrationController extends Controller 
 {
 
+    /**
+     * Show the application integrations.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+
+        $slackIntegrations = Integrations::whereType('slack')->whereUserId(auth()->user()->id)->get();
+
+        return response()->json($slackIntegrations);
+       
+    }
+
      public function getMobileGetUrl(Request $request)
     {
        
        // return 123;
-    $MobileSlack = new MobileSlack();
-    $slackIntegrationUrl = $MobileSlack->getCodeUrl();
+    $mobileSlack = new MobileSlack();
+    $slackIntegrationUrl = $mobileSlack->getCodeUrl();
 
     // dd($slackIntegrationUrl);
 
@@ -60,16 +74,14 @@ class MobileSlackIntegrationController extends Controller
     public function revokeToken($id, Request $request)
     {
         $integration = Integrations::findOrFail($id);
-        $MobileSlack = new MobileSlack();
+        $mobileSlack = new MobileSlack();
 
-        $MobileSlack->slackRevokeToken($integration);
-
-        // dd([$MobileSlack, $integration]);
+        $mobileSlack->slackRevokeToken($integration);
 
         $integration->delete();
 
          return response()->json([
-         'token' => $MobileSlack, 
+         'token' => $mobileSlack, 
          'message' => 'Successfully Deleted!'
         ]);
     }
