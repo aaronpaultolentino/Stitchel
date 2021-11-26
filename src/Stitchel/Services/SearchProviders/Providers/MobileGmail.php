@@ -20,7 +20,43 @@ class MobileGmail implements SearchProviderInteface
      */
     public function search($search): array
     {
-      return 123;
+      $searchItems = [];
+
+      $gmailIntegrations = Integrations::whereType('gmail')->whereUserId(auth()->user()->id)->get();
+
+      foreach ($gmailIntegrations as $key => $gmailIntegration) {
+
+        $code = $gmailIntegration->data;
+        $token = $this->getToken($gmailIntegration);
+        $email = $this->getEmail($gmailIntegration);
+
+        $messages = Http::withHeaders([
+          'Authorization' => 'Bearer '.$token['access_token'],
+      ])->get('https://gmail.googleapis.com/gmail/v1/users/'. $email .'/messages?q='.$search)->json();
+      if($messages['resultSizeEstimate'] == 0){
+        return [];
+      }
+
+      foreach ($messages['messages'] as $key => $message) {
+        $messageBody = Http::withHeaders([
+            'Authorization' => 'Bearer '.$token['access_token'],
+        ])->get('https://gmail.googleapis.com/gmail/v1/users/'. $email .'/messages/'.$message['id'])->json();
+
+        // dd($messageBody);
+
+        $searchItems[] = [
+          'id' => $messageBody['id'],
+          'body' => $messageBody['snippet'],
+          'type' => SearchProviderFactory::GMAIL,
+          'url' => 'https://mail.google.com/mail/u/0/#inbox/'.$messageBody['id'],
+        ];
+
+      }
+
+    }   
+        // dd($searchItems);
+        return $searchItems;
+
     }
 
     public function getRefreshToken($code)
@@ -33,8 +69,6 @@ class MobileGmail implements SearchProviderInteface
 		    'redirect_uri' => url('api/v1/integrations/type/mobileAppGmail').'/',
 		    'grant_type' => self::GRANT_TYPE_AUTHORIZATION_CODE,
 		]);
-
-      // dd($response->json());
 
 		return $response->json();
 
@@ -54,13 +88,17 @@ class MobileGmail implements SearchProviderInteface
 		return $response->json();
     }
 
+    public function getEmail($gmailIntegration)
+    {
+      $email = json_decode($gmailIntegration->data)->email;
+
+      return $email;
+    }
+
     public function getCodeUrl()
     {
 
       $user_id = auth()->user()->id;
-      // $user_id = encrypt($id);
-
-      // $id = '123';
 
       // Mobile App Add Button
       return 'https://accounts.google.com/o/oauth2/v2/auth?scope=https://mail.google.com https://www.googleapis.com/auth/userinfo.email&access_type=offline&redirect_uri='.url('api/v1/integrations/type/mobileAppGmail/&state='.$user_id.'&response_type=code&client_id='.config('stitchel.gmail.client_id'));
@@ -79,13 +117,9 @@ class MobileGmail implements SearchProviderInteface
     {
       $refresh_token = json_decode($gmailIntegration->data)->refresh_token;
 
-      // dd($access_token);
-
       $response = Http::post(config('stitchel.gmail.revoke_token_url'), [
         'token' => $refresh_token,
     ]);
-
-      // dd($response->json());
       
       $response->json();
   }

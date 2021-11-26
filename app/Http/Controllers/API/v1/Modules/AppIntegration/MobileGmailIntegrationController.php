@@ -15,26 +15,30 @@ use Stitchel\Services\SearchProviders\Providers\MobileGmail;
 class MobileGmailIntegrationController extends Controller 
 {
 
-    //  public function index()
-    // {
-    //     $mobileGmail = new MobileGmail();
-    //     $gmailIntegrations = Integrations::whereType('gmail')->whereUserId(auth()->user()->id)->get();
+    /**
+     * Show the application integrations.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
 
-    //     dd($gmailIntegrations);
+        $gmailIntegrations = Integrations::whereType('gmail')->whereUserId(auth()->user()->id)->get();
 
-    //     return response()->json($gmailIntegrations);
-
-    // }
-
-    //  public function getMobileGetUrl(Request $request)
-    // {
+        return response()->json($gmailIntegrations);
        
-    // $mobileGmail = new MobileGmail();
-    // $gmailIntegrationUrl = $mobileGmail->getCodeUrl();
+    }
 
-    // return $gmailIntegrationUrl;
+     public function getMobileGetUrl(Request $request)
+    {
+       
 
-    // }
+    $mobileGmail = new MobileGmail();
+    $gmailIntegrationUrl = $mobileGmail->getCodeUrl();
+
+    return $gmailIntegrationUrl;
+
+    }
 
 	public function getMobileGmailCode(Request $request) 
     {

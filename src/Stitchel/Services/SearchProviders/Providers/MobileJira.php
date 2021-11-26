@@ -20,7 +20,38 @@ class MobileJira implements SearchProviderInteface
      */
     public function search($search): array
     {
-      return 123;
+      $searchItems = [];
+
+        $jiraIntegrations = Integrations::whereType('jira')->whereUserId(auth()->user()->id)->get();
+
+        foreach ($jiraIntegrations as $key => $jiraIntegration) {
+
+            $code = $jiraIntegration->data;
+            $token = $this->getToken($jiraIntegration);
+            $email = $this->getEmail($jiraIntegration);
+            $appToken = config('stitchel.jira.app_token');
+            
+            $messages = Http::withHeaders([
+                'Authorization' => 'Basic '. base64_encode($email.':'.$appToken),
+            ])->get('https://stitcheljira123.atlassian.net/rest/api/3/issue/picker?query='.$search)->json();
+            if($messages == 0){
+                return [];
+            }
+
+            foreach ($messages['sections'][0]['issues'] as $key => $message) {
+                $searchItems[] = [
+                    'id' => $message['id'],
+                    'body' => $message['summaryText'],
+                    'url' => 'https://stitcheljira123.atlassian.net/browse/'.$message['key'],
+                    'type' => SearchProviderFactory::JIRA, 
+
+                ];
+  
+            }
+
+        }
+        
+        return $searchItems;
     }
 
         public function getRefreshToken($code)
@@ -48,6 +79,13 @@ class MobileJira implements SearchProviderInteface
         ]);
 
         return $response->json();
+    }
+
+     public function getEmail($jiraIntegration)
+    {
+        $email = json_decode($jiraIntegration->data)->email;
+
+        return $email;
     }
 
     public function getCodeUrl()

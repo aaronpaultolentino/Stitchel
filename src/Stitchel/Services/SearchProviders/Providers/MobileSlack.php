@@ -19,7 +19,36 @@ class MobileSlack implements SearchProviderInteface
 
     public function search($search): array
     {
-        return 123;
+         $searchItems = [];
+
+        $slackIntegrations = Integrations::whereType('slack')->whereUserId(auth()->user()->id)->get();
+
+        foreach ($slackIntegrations as $key => $slackIntegration) {
+
+            $code = $slackIntegration->data;
+            $token = $this->getToken($slackIntegration);
+
+            $messages = Http::withHeaders([
+                'Authorization' => 'Bearer '.$token['access_token'],
+            ])->get('https://slack.com/api/search.all?query='.$search)->json();
+
+            foreach ($messages['messages']['matches'] as $key => $message) {
+                $messageBody = Http::withHeaders([
+                    'Authorization' => 'Bearer '.$token['access_token'],
+                ])->get('https://slack.com/api/search.messages?query='.$search)->json();
+
+                $searchItems[] = [
+                    'id' => $message['iid'],
+                    'body' => $message['type'].' : '.$message['text'],
+                    'type' => SearchProviderFactory::SLACK, 
+                    'url' => $message['permalink'],
+              ];
+  
+            }
+
+        }
+        
+        return $searchItems;
     }
 
      public function getRefreshToken($code)
