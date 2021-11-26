@@ -15,24 +15,32 @@ use Stitchel\Services\SearchProviders\Providers\MobileGmail;
 class MobileGmailIntegrationController extends Controller 
 {
 
-     public function getMobileGetUrl(Request $request)
-    {
+    //  public function index()
+    // {
+    //     $mobileGmail = new MobileGmail();
+    //     $gmailIntegrations = Integrations::whereType('gmail')->whereUserId(auth()->user()->id)->get();
+
+    //     dd($gmailIntegrations);
+
+    //     return response()->json($gmailIntegrations);
+
+    // }
+
+    //  public function getMobileGetUrl(Request $request)
+    // {
        
-       // return 123;
-    $MobileGmail = new MobileGmail();
-    $gmailIntegrationUrl = $MobileGmail->getCodeUrl();
+    // $mobileGmail = new MobileGmail();
+    // $gmailIntegrationUrl = $mobileGmail->getCodeUrl();
 
-    // dd($gmailIntegrationUrl);
+    // return $gmailIntegrationUrl;
 
-    return $gmailIntegrationUrl;
-
-    }
+    // }
 
 	public function getMobileGmailCode(Request $request) 
     {
-        $MobileGmail = new MobileGmail();
-        $tokens = $MobileGmail->getRefreshToken($request->code);
-        $userInfo = $MobileGmail->getUserInfo($tokens['access_token']);
+        $mobileGmail = new MobileGmail();
+        $tokens = $mobileGmail->getRefreshToken($request->code);
+        $userInfo = $mobileGmail->getUserInfo($tokens['access_token']);
         $tokens['code'] = $request->code;
         $tokens['user_id'] = $request->state;
 
@@ -49,7 +57,7 @@ class MobileGmailIntegrationController extends Controller
 
     public function show()
     {
-        $integrations = Integrations::all();
+        $integrations = Integrations::where('type','gmail')->get();
 
         return response()->json($integrations);
     }
@@ -57,16 +65,14 @@ class MobileGmailIntegrationController extends Controller
     public function revokeToken($id, Request $request)
     {
         $integration = Integrations::findOrFail($id);
-        $MobileGmail = new MobileGmail();
+        $mobileGmail = new MobileGmail();
 
-        $MobileGmail->gmailRevokeToken($integration);
-
-        // dd([$MobileGmail, $integration]);
+        $mobileGmail->gmailRevokeToken($integration);
 
         $integration->delete();
 
          return response()->json([
-         'token' => $MobileGmail, 
+         'token' => $mobileGmail, 
          'message' => 'Successfully Deleted!'
         ]);
     }

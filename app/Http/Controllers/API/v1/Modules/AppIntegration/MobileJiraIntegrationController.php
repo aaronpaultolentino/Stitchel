@@ -18,11 +18,8 @@ class MobileJiraIntegrationController extends Controller
      public function getMobileGetUrl(Request $request)
     {
        
-       // return 123;
     $MobileJira = new MobileJira();
     $jiraIntegrationUrl = $MobileJira->getCodeUrl();
-
-    // dd($jiraIntegrationUrl);
 
     return $jiraIntegrationUrl;
 
@@ -35,8 +32,6 @@ class MobileJiraIntegrationController extends Controller
         $userInfo = $MobileJira->getUserInfo($tokens['access_token']);
         $tokens['code'] = $request->code;
         $tokens['user_id'] = $request->state;
-
-        // dd([$tokens, $userInfo]);
 
         $integrations = Integrations::create([
             'data' => json_encode(array_merge($tokens, $userInfo)),
@@ -51,7 +46,7 @@ class MobileJiraIntegrationController extends Controller
 
     public function show()
     {
-        $integrations = Integrations::all();
+        $integrations = Integrations::where('type','jira')->get();
 
         return response()->json($integrations);
     }
@@ -59,8 +54,6 @@ class MobileJiraIntegrationController extends Controller
     public function revokeToken($id, Request $request)
     {
         $integration = Integrations::findOrFail($id);
-
-        // dd($integration);
 
         $integration->delete();
 

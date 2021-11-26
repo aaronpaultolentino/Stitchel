@@ -14,12 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//API All Integrations
+Route::group(['middleware' => ['auth:api'], 'prefix' => '/integrations', 'namespace' => 'AppIntegration'], function(){
+	Route::get('/all', 'MobileAllIntegrationController@showAll')->name('api.showAll');
+});
+
 //API Integrations Gmail
 Route::group(['middleware' => ['auth:api'], 'prefix' => '/integrations', 'namespace' => 'AppIntegration'], function(){
 
 	Route::get('code/gmail', 'MobileGmailIntegrationController@getMobileGetUrl')->name('api.getUrl');
 	Route::get('gmail/all', 'MobileGmailIntegrationController@show')->name('api.show');
-	Route::delete('/delete/{id}', 'MobileGmailIntegrationController@revokeToken')->name('api.revokeToken');	
+	Route::delete('/delete/gmail/{id}', 'MobileGmailIntegrationController@revokeToken')->name('api.gmailRevokeToken');	
 });
 
 //API Integrations Jira
@@ -27,7 +32,7 @@ Route::group(['middleware' => ['auth:api'], 'prefix' => '/integrations', 'namesp
 
 	Route::get('code/jira', 'MobileJiraIntegrationController@getMobileGetUrl')->name('api.getUrl');
 	Route::get('jira/all', 'MobileJiraIntegrationController@show')->name('api.show');
-	Route::delete('/delete/{id}', 'MobileJiraIntegrationController@revokeToken')->name('api.revokeToken');
+	Route::delete('/delete/jira/{id}', 'MobileJiraIntegrationController@revokeToken')->name('api.jiraRevokeToken');
 });
 
 
@@ -36,7 +41,7 @@ Route::group(['middleware' => ['auth:api'], 'prefix' => '/integrations', 'namesp
 
 	Route::get('code/slack', 'MobileSlackIntegrationController@getMobileGetUrl')->name('api.getUrl');
 	Route::get('slack/all', 'MobileSlackIntegrationController@show')->name('api.show');
-	Route::delete('/delete/{id}', 'MobileSlackIntegrationController@revokeToken')->name('api.revokeToken');
+	Route::delete('/delete/slack/{id}', 'MobileSlackIntegrationController@revokeToken')->name('api.slackRevokeToken');
 });
 
 //Redirect URL
