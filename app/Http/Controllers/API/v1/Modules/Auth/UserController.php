@@ -9,22 +9,6 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-	public function index(){
-
-        $user =  auth()->user();
-    	$scrfToken = csrf_token(); 
-
-        // dd($scrfToken);
-
-        $credentials = ([
-            'scrfToken' => $scrfToken,
-            'user' => $user
-        ]);
-
-        return $credentials;
-
-    }
-
      public function signup(Request $request){
 
      	// dd($request);

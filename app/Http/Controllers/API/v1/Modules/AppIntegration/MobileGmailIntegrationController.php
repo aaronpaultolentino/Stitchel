@@ -61,7 +61,7 @@ class MobileGmailIntegrationController extends Controller
 
     public function show()
     {
-        $integrations = Integrations::where('type','gmail')->get();
+        $integrations = Integrations::whereType('gmail')->get();
 
         return response()->json($integrations);
     }

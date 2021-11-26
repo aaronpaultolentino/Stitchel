@@ -42,8 +42,6 @@ class MobileGmail implements SearchProviderInteface
             'Authorization' => 'Bearer '.$token['access_token'],
         ])->get('https://gmail.googleapis.com/gmail/v1/users/'. $email .'/messages/'.$message['id'])->json();
 
-        // dd($messageBody);
-
         $searchItems[] = [
           'id' => $messageBody['id'],
           'body' => $messageBody['snippet'],
@@ -54,7 +52,6 @@ class MobileGmail implements SearchProviderInteface
       }
 
     }   
-        // dd($searchItems);
         return $searchItems;
 
     }

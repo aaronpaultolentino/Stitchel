@@ -47,7 +47,7 @@ class MobileSlackIntegrationController extends Controller
 
     public function show()
     {
-        $integrations = Integrations::where('type','slack')->get();
+        $integrations = Integrations::whereType('slack')->get();
 
         return response()->json($integrations);
     }

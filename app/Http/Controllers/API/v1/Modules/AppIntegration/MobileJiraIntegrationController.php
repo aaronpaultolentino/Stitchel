@@ -15,6 +15,20 @@ use Stitchel\Services\SearchProviders\Providers\MobileJira;
 class MobileJiraIntegrationController extends Controller 
 {
 
+    /**
+     * Show the application integrations.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+
+        $jiraIntegrations = Integrations::whereType('jira')->whereUserId(auth()->user()->id)->get();
+
+        return response()->json($jiraIntegrations);
+       
+    }
+
      public function getMobileGetUrl(Request $request)
     {
        
@@ -46,7 +60,7 @@ class MobileJiraIntegrationController extends Controller
 
     public function show()
     {
-        $integrations = Integrations::where('type','jira')->get();
+        $integrations = Integrations::whereType('jira')->get();
 
         return response()->json($integrations);
     }
