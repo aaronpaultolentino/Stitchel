@@ -15,7 +15,7 @@ use Stitchel\Services\SearchProviders\Providers\MobileJira;
 class MobileJiraIntegrationController extends Controller 
 {
 
-     public function getMobileGetUrl(Request $request)
+     public function getMobileJiraUrl(Request $request)
     {
        
        // return 123;

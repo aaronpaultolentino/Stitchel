@@ -14,14 +14,11 @@ use Stitchel\Services\SearchProviders\Providers\MobileSlack;
 class MobileSlackIntegrationController extends Controller 
 {
 
-     public function getMobileGetUrl(Request $request)
+     public function getMobileSlackUrl(Request $request)
     {
        
-       // return 123;
     $MobileSlack = new MobileSlack();
     $slackIntegrationUrl = $MobileSlack->getCodeUrl();
-
-    // dd($slackIntegrationUrl);
 
     return $slackIntegrationUrl;
 
@@ -35,8 +32,6 @@ class MobileSlackIntegrationController extends Controller
         $userInfo = $mobileslack->getUserInfo($tokens['authed_user']['access_token']);
         $tokens['code'] = $request->code;
         $tokens['user_id'] = $request->state;
-
-        // dd([$userInfo, $tokens]);
 
          $integrations = Integrations::create([
             'data' => json_encode(array_merge($tokens, $userInfo)),
@@ -63,8 +58,6 @@ class MobileSlackIntegrationController extends Controller
         $MobileSlack = new MobileSlack();
 
         $MobileSlack->slackRevokeToken($integration);
-
-        // dd([$MobileSlack, $integration]);
 
         $integration->delete();
 

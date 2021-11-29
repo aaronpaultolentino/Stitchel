@@ -29,7 +29,7 @@ class MobileGmailIntegrationController extends Controller
        
     }
 
-     public function getMobileGetUrl(Request $request)
+     public function getMobileGmailUrl(Request $request)
     {
        
 
