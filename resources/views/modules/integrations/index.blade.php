@@ -60,8 +60,27 @@
                            <div class="accordion-body">
                            </div>
                            @if(count($slackIntegrations) == 0)
-                           <a type="button" class="btn btn-primary btn-lg btn-block add-slackIntegration" href="{{ $slackIntegrationUrl }}" target="_blank"><i class="fas fa-plus"></i> Add
-                           </a>
+                           <!-- <a type="button" class="btn btn-primary btn-lg btn-block add-slackIntegration" href="{{ $slackIntegrationUrl }}" target="_blank"><i class="fas fa-plus"></i> Add
+                           </a> -->
+                           <a type="button" class="btn btn-primary btn-lg btn-block text-white" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fas fa-plus"></i> Add</a>
+                           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-body">
+                                    <form>
+                                      <div class="form-group">
+                                        <label for="dynamic-host" class="col-form-label">Input your domain:</label>
+                                        <input type="text" class="form-control dynamicValue">
+                                      </div>
+                                    </form>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <a type="button" class="btn btn-secondary" data-dismiss="modal">Close</a>
+                                    <a type="button" class="btn btn-primary text-white add-slackIntegration" add-url="{{ $slackIntegrationUrl }}" target="_blank" >Proceed</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                            @else
                            @foreach($slackIntegrations as $key => $slackIntegration)
                             <div class="accordion-body">Slack Account ({{ json_decode($slackIntegration->data)->profile->email }})
@@ -99,6 +118,15 @@
               window.location.reload(true);
             });
         }
+      });
+      $('.add-slackIntegration').click(function(e){
+        e.preventDefault();
+        let add_url = $(this).attr('add-url');
+        let dynamic_host = $('.dynamicValue').val();
+        window.open(add_url + '&dynamicHost=' + dynamic_host)
+        window.location.reload(true);
+        // alert(add_url + '&dynamicHost=' + dynamic_host)
+
       });
      })
    </script>
