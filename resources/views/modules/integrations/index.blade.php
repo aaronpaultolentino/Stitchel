@@ -49,7 +49,7 @@
                                     <form>
                                       <div class="form-group">
                                         <label for="dynamic-host" class="col-form-label">Input your domain:</label>
-                                        <input type="text" class="form-control dynamicValue">
+                                        <input type="text" class="form-control dynamicValue" placeholder="https://example.atlassian.net">
                                       </div>
                                     </form>
                                   </div>
@@ -123,9 +123,9 @@
         e.preventDefault();
         let add_url = $(this).attr('add-url');
         let user_id = $(this).attr('user-id');
-        let dynamic_host = $('.dynamicValue').val();
-        let dhost = JSON.stringify({'user_id': user_id, 'dynamic_host': dynamic_host})
-        window.open(add_url + '&state=' + dhost);
+        let dynamic_value = $('.dynamicValue').val();
+        let dynamic_host = JSON.stringify({'user_id': user_id, 'dynamic_host': dynamic_value})
+        window.open(add_url + '&state=' + dynamic_host);
         window.location.reload(true);
       });
      })

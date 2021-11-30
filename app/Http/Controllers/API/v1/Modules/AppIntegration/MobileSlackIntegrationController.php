@@ -55,7 +55,7 @@ class MobileSlackIntegrationController extends Controller
          $integrations = Integrations::create([
             'data' => json_encode(array_merge($tokens, $userInfo)),
             'type' => SearchProviderFactory::SLACK,
-            'user_id' => auth()->user()->id,
+            'user_id' => $tokens['user_id'],
         ]);
 
         $integrations->save();
@@ -66,7 +66,7 @@ class MobileSlackIntegrationController extends Controller
 
     public function show()
     {
-        $integrations = Integrations::where('type','slack')->get();
+        $integrations = Integrations::whereType('slack')->get();
 
         return response()->json($integrations);
     }

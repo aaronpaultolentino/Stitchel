@@ -51,7 +51,7 @@ class MobileGmailIntegrationController extends Controller
         $integrations = Integrations::create([
             'data' => json_encode(array_merge($tokens, $userInfo)),
             'type' => SearchProviderFactory::GMAIL,
-            'user_id' => auth()->user()->id,
+            'user_id' => $tokens['user_id'],
         ]);
 
         $integrations->save();
@@ -61,7 +61,7 @@ class MobileGmailIntegrationController extends Controller
 
     public function show()
     {
-        $integrations = Integrations::where('type','gmail')->get();
+        $integrations = Integrations::whereType('gmail')->get();
 
         return response()->json($integrations);
     }
