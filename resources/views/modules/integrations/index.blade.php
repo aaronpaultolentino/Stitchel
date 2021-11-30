@@ -76,7 +76,7 @@
                                   </div>
                                   <div class="modal-footer">
                                     <a type="button" class="btn btn-secondary" data-dismiss="modal">Close</a>
-                                    <a type="button" class="btn btn-primary text-white add-slackIntegration" add-url="{{ $slackIntegrationUrl }}" target="_blank" >Proceed</a>
+                                    <a type="button" class="btn btn-primary text-white add-slackIntegration" add-url="{{ $slackIntegrationUrl }}" user-id="{{ auth()->user()->id }}"target="_blank" >Proceed</a>
                                   </div>
                                 </div>
                               </div>
@@ -122,11 +122,11 @@
       $('.add-slackIntegration').click(function(e){
         e.preventDefault();
         let add_url = $(this).attr('add-url');
+        let user_id = $(this).attr('user-id');
         let dynamic_host = $('.dynamicValue').val();
-        window.open(add_url + '&dynamicHost=' + dynamic_host)
+        let dhost = JSON.stringify({'user_id': user_id, 'dynamic_host': dynamic_host})
+        window.open(add_url + '&state=' + dhost);
         window.location.reload(true);
-        // alert(add_url + '&dynamicHost=' + dynamic_host)
-
       });
      })
    </script>

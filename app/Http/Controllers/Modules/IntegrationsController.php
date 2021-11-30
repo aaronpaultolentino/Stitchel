@@ -83,19 +83,19 @@ class IntegrationsController extends Controller
         $tokens = $slack->getRefreshToken($request->code);
         $userInfo = $slack->getUserInfo($tokens['authed_user']['access_token']);
         $tokens['code'] = $request->code;
-        $tokens['state'] = $request->state;
+        $state = json_decode($request['state']);
+        $tokens['user_id'] = $state->user_id;
+        $tokens['dynamic_host'] = $state->dynamic_host;
 
-        dd([$userInfo, $tokens]);
+         $integrations = Integrations::create([
+            'data' => json_encode(array_merge($tokens, $userInfo)),
+            'type' => SearchProviderFactory::SLACK,
+            'user_id' => auth()->user()->id,
+        ]);
 
-        //  $integrations = Integrations::create([
-        //     'data' => json_encode(array_merge($tokens, $userInfo)),
-        //     'type' => SearchProviderFactory::SLACK,
-        //     'user_id' => auth()->user()->id,
-        // ]);
+        $integrations->save();
 
-        // $integrations->save();
-
-        // return redirect()->route('integrations');
+        return redirect()->route('integrations');
         
     }
 

@@ -84,10 +84,9 @@ class Slack implements SearchProviderInteface
     public function getCodeUrl()
     {
 
-        $id = auth()->user()->id;
 
-        //localhost
-        return 'https://slack.com/oauth/v2/authorize?&user_scope=search:read,users.profile:read&state='.$id.'&client_id='.config('stitchel.slack.client_id');
+        // //localhost
+        return ('https://slack.com/oauth/v2/authorize?&user_scope=search:read,users.profile:read&client_id='.config('stitchel.slack.client_id'));
     }
 
      public function getUserInfo($access_token)
