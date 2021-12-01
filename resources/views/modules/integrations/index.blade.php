@@ -48,8 +48,8 @@
                                   <div class="modal-body">
                                     <form>
                                       <div class="form-group">
-                                        <label for="dynamic-host" class="col-form-label">Input your domain:</label>
-                                        <input type="text" class="form-control dynamicValue" placeholder="https://example.atlassian.net">
+                                        <label for="dynamic-host" class="col-form-label">Jira Subdomain:</label>
+                                        <input type="text" class="form-control dynamicValue" placeholder="stitcheljira123">
                                       </div>
                                     </form>
                                   </div>

@@ -17,12 +17,13 @@ class MobileJiraIntegrationController extends Controller
 
      public function getMobileGetUrl(Request $request)
     {
-       
-       // return 123;
-    $MobileJira = new MobileJira();
 
-    $jiraIntegrationUrl = $MobileJira->getCodeUrl();
+        $user_id = Auth()->user()->id;
+        $dynamic_host = $request->state;
+        $MobileJira = new MobileJira();
 
+        $jiraIntegrationUrl = $MobileJira->getCodeUrl($user_id,$dynamic_host);
+        
     return $jiraIntegrationUrl;
 
     }
@@ -33,10 +34,9 @@ class MobileJiraIntegrationController extends Controller
         $tokens = $MobileJira->getRefreshToken($request->code);
         $userInfo = $MobileJira->getUserInfo($tokens['access_token']);
         $tokens['code'] = $request->code;
-        $tokens['user_id'] = $request->state;
-        // $state = json_decode($request['state']);
-        // $tokens['user_id'] = $state->user_id;
-        // $tokens['dynamic_host'] = $state->dynamic_host;
+        $state = json_decode($request['state']);
+        $tokens['user_id'] = $state->user_id;
+        $tokens['dynamic_host'] = $state->dynamic_host;
 
         $integrations = Integrations::create([
             'data' => json_encode(array_merge($tokens, $userInfo)),

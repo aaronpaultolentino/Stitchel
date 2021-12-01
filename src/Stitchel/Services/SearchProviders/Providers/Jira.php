@@ -27,14 +27,14 @@ class Jira implements SearchProviderInteface
         foreach ($jiraIntegrations as $key => $jiraIntegration) {
 
             $code = $jiraIntegration->data;
-            $dynamicHost = $jiraIntegration->dynamic_host;
+            $dynamicHost = (json_decode($jiraIntegration->data)->dynamic_host);
             $token = $this->getToken($jiraIntegration);
             $email = $this->getEmail($jiraIntegration);
             $appToken = config('stitchel.jira.app_token');
 
             $messages = Http::withHeaders([
                 'Authorization' => 'Basic '. base64_encode($email.':'.$appToken),
-            ])->get($dynamicHost.'/rest/api/3/issue/picker?query='.$search)->json();
+            ])->get('https://'.$dynamicHost.'.atlassian.net/rest/api/3/issue/picker?query='.$search)->json();
             if($messages == 0){
                 return [];
             }
@@ -42,7 +42,7 @@ class Jira implements SearchProviderInteface
                 $searchItems[] = [
                     'id' => $message['id'],
                     'body' => $message['summaryText'],
-                    'url' => $dynamicHost.'/browse/'.$message['key'],
+                    'url' => 'https://'.$dynamicHost.'.atlassian.net/browse/'.$message['key'],
                     'type' => SearchProviderFactory::JIRA, 
 
                 ];
