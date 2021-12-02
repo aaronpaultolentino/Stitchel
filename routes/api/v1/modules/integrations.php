@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth:api'], 'prefix' => '/integrations', 'namesp
 //API Integrations Jira
 Route::group(['middleware' => ['auth:api'], 'prefix' => '/integrations', 'namespace' => 'AppIntegration'], function(){
 
-	Route::get('code/jira', 'MobileJiraIntegrationController@getMobileGetUrl')->name('api.getUrl');
+	Route::get('code/jira/{state}', 'MobileJiraIntegrationController@getMobileGetUrl')->name('api.getUrl');
 	Route::get('jira/all', 'MobileJiraIntegrationController@show')->name('api.show');
 	Route::delete('/delete/jira/{id}', 'MobileJiraIntegrationController@revokeToken')->name('api.jiraRevokeToken');
 });

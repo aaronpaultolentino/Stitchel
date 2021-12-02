@@ -27,13 +27,15 @@ class MobileJira implements SearchProviderInteface
         foreach ($jiraIntegrations as $key => $jiraIntegration) {
 
             $code = $jiraIntegration->data;
+            $dynamicHost = (json_decode($jiraIntegration->data)->dynamic_host);
+            
             $token = $this->getToken($jiraIntegration);
             $email = $this->getEmail($jiraIntegration);
             $appToken = config('stitchel.jira.app_token');
             
             $messages = Http::withHeaders([
                 'Authorization' => 'Basic '. base64_encode($email.':'.$appToken),
-            ])->get('https://stitcheljira123.atlassian.net/rest/api/3/issue/picker?query='.$search)->json();
+            ])->get('https://'.$dynamicHost.'.atlassian.net/rest/api/3/issue/picker?query='.$search)->json();
             if($messages == 0){
                 return [];
             }
@@ -42,7 +44,7 @@ class MobileJira implements SearchProviderInteface
                 $searchItems[] = [
                     'id' => $message['id'],
                     'body' => $message['summaryText'],
-                    'url' => 'https://stitcheljira123.atlassian.net/browse/'.$message['key'],
+                    'url' => 'https://'.$dynamicHost.'.atlassian.net/browse/'.$message['key'],
                     'type' => SearchProviderFactory::JIRA, 
 
                 ];
@@ -88,17 +90,10 @@ class MobileJira implements SearchProviderInteface
         return $email;
     }
 
-    public function getCodeUrl()
+    public function getCodeUrl($user_id, $dynamic_host)
     {
 
-      $user_id = auth()->user()->id;
-
-      // dd($id);
-      // $user_id = encrypt($id);
-
-        return 'https://auth.atlassian.com/authorize?audience=api.atlassian.com&scope=read%3Ame%20read%3Ajira-work%20offline_access&redirect_uri='.url('api/v1/integrations/type/mobileAppJira&state='.$user_id.'&response_type=code&prompt=consent&client_id='.config('stitchel.jira.client_id'));
-
-        //auth.atlassian.com/authorize?audience=api.atlassian.com&scope=read%3Ame%20read%3Aaccount&redirect_uri=http%3A%2F%2Flocalhost%2Fapi%2Fv1%2Fintegrations%2Ftype%2FmobileAppJira&state=${YOUR_USER_BOUND_VALUE}&response_type=code&prompt=consent
+        return 'https://auth.atlassian.com/authorize?audience=api.atlassian.com&scope=read%3Ame%20read%3Ajira-work%20offline_access&redirect_uri='.url('api/v1/integrations/type/mobileAppJira&state={"dynamic_host":"'.$dynamic_host.'","user_id":"'.$user_id.'"}&response_type=code&prompt=consent&client_id='.config('stitchel.jira.client_id'));
         
     }
 

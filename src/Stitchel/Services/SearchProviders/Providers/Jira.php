@@ -27,29 +27,22 @@ class Jira implements SearchProviderInteface
         foreach ($jiraIntegrations as $key => $jiraIntegration) {
 
             $code = $jiraIntegration->data;
+            $dynamicHost = (json_decode($jiraIntegration->data)->dynamic_host);
             $token = $this->getToken($jiraIntegration);
             $email = $this->getEmail($jiraIntegration);
             $appToken = config('stitchel.jira.app_token');
-                // $search = 'test';
+
             $messages = Http::withHeaders([
                 'Authorization' => 'Basic '. base64_encode($email.':'.$appToken),
-            ])->get('https://stitcheljira123.atlassian.net/rest/api/3/issue/picker?query='.$search)->json();
+            ])->get('https://'.$dynamicHost.'.atlassian.net/rest/api/3/issue/picker?query='.$search)->json();
             if($messages == 0){
                 return [];
             }
-            // dd($messages);
             foreach ($messages['sections'][0]['issues'] as $key => $message) {
-                // $messageBody = Http::withHeaders([
-                //     'Accept' => 'application/json',
-                //     'Authorization' => 'Basic '. base64_encode($email.':'.$appToken),
-                // ])->get('https://stitcheljira123.atlassian.net/rest/api/3/issue/'.$message['id'])->json();
-
-            // echo json_encode($message);exit;
                 $searchItems[] = [
                     'id' => $message['id'],
-                    // 'body' => $messageBody['fields']['issuetype']['name'].' : '.$messageBody['fields']['summary'],
                     'body' => $message['summaryText'],
-                    'url' => 'https://stitcheljira123.atlassian.net/browse/'.$message['key'],
+                    'url' => 'https://'.$dynamicHost.'.atlassian.net/browse/'.$message['key'],
                     'type' => SearchProviderFactory::JIRA, 
 
                 ];
@@ -98,12 +91,7 @@ class Jira implements SearchProviderInteface
 
     public function getCodeUrl()
     {
-        return 'https://auth.atlassian.com/authorize?audience=api.atlassian.com&scope=read%3Ame%20read%3Ajira-work%20offline_access&redirect_uri='.url('integrations%2Ftype%2Fjira%2F&state=${YOUR_USER_BOUND_VALUE}&response_type=code&prompt=consent&client_id='.config('stitchel.jira.client_id'));
-        
-        //For localhost
-        // return 'https://auth.atlassian.com/authorize?audience=api.atlassian.com&scope=read%3Ame%20read%3Ajira-work%20offline_access&redirect_uri=http://localhost/integrations/type/jira/&state=${YOUR_USER_BOUND_VALUE}&response_type=code&prompt=consent&client_id='.config('stitchel.jira.client_id');
-
-        // https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=ZG9PdjJf5QEeTOyBUEakMmKCnHwiLt0B&scope=read%3Ame%20read%3Ajira-work%20offline_access&redirect_uri=http%3A%2F%2Flocalhost%2Fintegrations%2Ftype%2Fjira%2F&state=${YOUR_USER_BOUND_VALUE}&response_type=code&prompt=consent
+        return 'https://auth.atlassian.com/authorize?audience=api.atlassian.com&scope=read%3Ame%20read%3Ajira-work%20offline_access&redirect_uri='.url('integrations/type/jira&response_type=code&prompt=consent&client_id='.config('stitchel.jira.client_id'));
     }
 
     public function getUserInfo($access_token)

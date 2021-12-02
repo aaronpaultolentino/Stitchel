@@ -62,7 +62,6 @@ class Slack implements SearchProviderInteface
             'redirect_uri' => url('integrations/type/slack').'/',
             'single_channel' => self::GRANT_TYPE_SINGLE_CHANNEL,
         ]);
-
         return $response->json();
     }
 
@@ -85,8 +84,9 @@ class Slack implements SearchProviderInteface
     public function getCodeUrl()
     {
 
-        //localhost
-        return 'https://slack.com/oauth/v2/authorize?&user_scope=search:read,users.profile:read&client_id='.config('stitchel.slack.client_id');
+
+        // //localhost
+        return ('https://slack.com/oauth/v2/authorize?&user_scope=search:read,users.profile:read&client_id='.config('stitchel.slack.client_id'));
     }
 
      public function getUserInfo($access_token)

@@ -39,8 +39,27 @@
                         <br>
                         <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                            @if(count($jiraIntegrations) == 0)
-                          <a type="button" class="btn btn-primary btn-lg btn-block add-jiraIntegration" href="{{ $jiraIntegrationUrl }}" target="_blank"><i class="fas fa-plus"></i> Add
-                           </a>
+                          <!-- <a type="button" class="btn btn-primary btn-lg btn-block add-jiraIntegration" href="{{ $jiraIntegrationUrl }}" target="_blank"><i class="fas fa-plus"></i> Add
+                           </a> -->
+                           <a type="button" class="btn btn-primary btn-lg btn-block text-white" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fas fa-plus"></i> Add</a>
+                           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-body">
+                                    <form>
+                                      <div class="form-group">
+                                        <label for="dynamic-host" class="col-form-label">Jira Subdomain:</label>
+                                        <input type="text" class="form-control dynamicValue" placeholder="stitcheljira123">
+                                      </div>
+                                    </form>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <a type="button" class="btn btn-secondary" data-dismiss="modal">Close</a>
+                                    <a type="button" class="btn btn-primary text-white add-jiraIntegration" add-url="{{ $jiraIntegrationUrl }}" user-id="{{ auth()->user()->id }}"target="_blank" >Proceed</a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           @else
                            @foreach($jiraIntegrations as $key => $jiraIntegration)
                             <div class="accordion-body">Jira Account ({{ json_decode($jiraIntegration->data)->email }})
@@ -99,6 +118,15 @@
               window.location.reload(true);
             });
         }
+      });
+      $('.add-jiraIntegration').click(function(e){
+        e.preventDefault();
+        let add_url = $(this).attr('add-url');
+        let user_id = $(this).attr('user-id');
+        let dynamic_value = $('.dynamicValue').val();
+        let dynamic_host = JSON.stringify({'user_id': user_id, 'dynamic_host': dynamic_value})
+        window.open(add_url + '&state=' + dynamic_host);
+        window.location.reload(true);
       });
      })
    </script>
