@@ -14,28 +14,11 @@ use Stitchel\Services\SearchProviders\Providers\MobileSlack;
 class MobileSlackIntegrationController extends Controller 
 {
 
-    /**
-     * Show the application integrations.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-
-        $slackIntegrations = Integrations::whereType('slack')->whereUserId(auth()->user()->id)->get();
-
-        return response()->json($slackIntegrations);
-       
-    }
-
      public function getMobileGetUrl(Request $request)
     {
        
-       // return 123;
-    $mobileSlack = new MobileSlack();
-    $slackIntegrationUrl = $mobileSlack->getCodeUrl();
-
-    // dd($slackIntegrationUrl);
+    $MobileSlack = new MobileSlack();
+    $slackIntegrationUrl = $MobileSlack->getCodeUrl();
 
     return $slackIntegrationUrl;
 
@@ -49,8 +32,6 @@ class MobileSlackIntegrationController extends Controller
         $userInfo = $mobileslack->getUserInfo($tokens['authed_user']['access_token']);
         $tokens['code'] = $request->code;
         $tokens['user_id'] = $request->state;
-
-        // dd([$userInfo, $tokens]);
 
          $integrations = Integrations::create([
             'data' => json_encode(array_merge($tokens, $userInfo)),
@@ -74,14 +55,14 @@ class MobileSlackIntegrationController extends Controller
     public function revokeToken($id, Request $request)
     {
         $integration = Integrations::findOrFail($id);
-        $mobileSlack = new MobileSlack();
+        $MobileSlack = new MobileSlack();
 
-        $mobileSlack->slackRevokeToken($integration);
+        $MobileSlack->slackRevokeToken($integration);
 
         $integration->delete();
 
          return response()->json([
-         'token' => $mobileSlack, 
+         'token' => $MobileSlack, 
          'message' => 'Successfully Deleted!'
         ]);
     }
