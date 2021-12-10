@@ -9,25 +9,9 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-	public function index(){
 
-        $user =  auth()->user();
-    	$scrfToken = csrf_token(); 
-
-        // dd($scrfToken);
-
-        $credentials = ([
-            'scrfToken' => $scrfToken,
-            'user' => $user
-        ]);
-
-        return $credentials;
-
-    }
-
-     public function signup(Request $request){
-
-     	// dd($request);
+     public function signup(Request $request)
+     {
 
     	$request->validate([
             'name' => 'required',
@@ -35,15 +19,11 @@ class UserController extends Controller
             'password' => 'required|string|confirmed'
         ]);
 
-        // dd($request);
-
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
-
-        // dd($user);
 
         $user->save();
 
