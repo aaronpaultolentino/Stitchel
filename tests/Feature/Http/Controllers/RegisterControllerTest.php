@@ -42,7 +42,6 @@ class RegisterControllerTest extends TestCase
     public function is_successful_registration()
     {
          $userTest = factory(User::class)->create([
-            'email' => 'test7@gmail.com',
             'password' => bcrypt($password = '123123123')
         ]);
 

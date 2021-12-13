@@ -11,12 +11,16 @@ class DatabaseController extends TestCase
     /**
      * A basic feature test example.
      *
-     * @return void
+     * @test *
+     * @group database *
      */
     public function is_database_exist()
     {
-        $this->assertDatabaseHas('users', [
+        $response = $this->assertDatabaseHas('users', [
             'email' => 'test1@example.com'
         ]);
+
+        $response->assertStatus(200);
+
     }
 }

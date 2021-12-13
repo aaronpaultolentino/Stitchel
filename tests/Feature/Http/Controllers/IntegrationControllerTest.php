@@ -2,22 +2,104 @@
 
 namespace Tests\Feature\Http\Controllers;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\User;
 use Tests\TestCase;
+use App\Integrations;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Stitchel\Services\SearchProviders\Providers\Jira;
+use Stitchel\Services\SearchProviders\Providers\Slack;
+use Stitchel\Services\SearchProviders\Providers\Gmail;
 
 class IntegrationControllerTest extends TestCase
 {
+
+
     /**
      * A basic feature test example.
      *
      * @test *
-     * @group integration *
+     * @group integrations *
      */
-    public function is_integration_gmail_add()
-    {
-        $response = $this->get('/');
+    public function is_integration_index_gmail()
+    {   
 
-        $response->assertStatus(302);
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user)->get('/integrations')
+            ->assertStatus(200);
+    }
+
+     /**
+     * A basic feature test example.
+     *
+     * @test *
+     * @group integrations *
+     */
+    public function is_add_integration_gmail_data()
+    {   
+        $this->withoutExceptionHandling();
+        $user = factory(User::class)->create();
+
+         $data = [
+            'user_id' => $user->id,
+            'type' => "gmail",
+            'data' => "Gmail Data Test"
+        ];
+
+        $integration = Integrations::create([
+            'user_id' => $data['user_id'],
+            'type' => $data['type'],
+            'data' => $data['data'],
+        ]);
+
+        $this->actingAs($user);
+    }
+
+     /**
+     * A basic feature test example.
+     *
+     * @test *
+     * @group integrations *
+     */
+    public function is_get_integration_gmail_data()
+    {   
+        $user = factory(User::class)->create();
+
+        $integrations = Integrations::whereType('gmail')->get();
+
+        $this->actingAs($user);
+
+    }
+
+     /**
+     * A basic feature test example.
+     *
+     * @test *
+     * @group integrations *
+     */
+    public function is_integration_index_jira()
+    {   
+
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user)->get('/integrations')
+            ->assertStatus(200);
+    }
+
+     /**
+     * A basic feature test example.
+     *
+     * @test *
+     * @group integrations *
+     */
+    public function is_integration_index_slack()
+    {   
+
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user)->get('/integrations')
+            ->assertStatus(200);
     }
 }

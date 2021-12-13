@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LoginControllerTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
     /**
      * A basic feature MustEnterEmailAndPassword test.
      *
@@ -52,7 +52,8 @@ class LoginControllerTest extends TestCase
     public function is_user_can_login_with_correct_credentials()
     {
         $user = factory(User::class)->create([
-            'password' => bcrypt($password = '123123123'),
+            'email' => 'test1@gmail.com',
+            'password' => bcrypt($password = '123123'),
         ]);
 
         $response = $this->post('/login', [
@@ -62,48 +63,5 @@ class LoginControllerTest extends TestCase
 
         $response->assertRedirect('/');
         $this->assertAuthenticatedAs($user);
-    }
-
-     /**
-     * A basic feature RememerMeFunctionality test.
-     *
-     * @test *
-     * @group login *
-     */
-    public function is_remember_me_functionality()
-    {
-        $user = factory(User::class)->create([
-            'id' => random_int(1, 100),
-            'password' => bcrypt($password = '123123123'),
-        ]);
-        
-        $response = $this->post('/login', [
-            'email' => $user->email,
-            'password' => $password,
-            'remember' => 'on',
-        ]);
-        
-        $response->assertRedirect('/');
-        // cookie assertion goes here
-        $this->assertAuthenticatedAs($user);
-    }
-
-     /**
-     * A basic feature DestroyUser  test.
-     *
-     * @test *
-     * @group login *
-     */
-    public function is_destroy_user()
-    {
-        $user = factory(User::class)->make();
-
-        $user = User::first();
-
-        if ($user) {
-                $user->delete();
-        }
-
-        $this->assertTrue(true);
     }
 }
