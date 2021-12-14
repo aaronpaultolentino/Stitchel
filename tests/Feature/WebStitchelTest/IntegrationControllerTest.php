@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers;
+namespace Tests\Feature\WebStitchelTest;
 
 use App\User;
 use Tests\TestCase;
@@ -39,7 +39,6 @@ class IntegrationControllerTest extends TestCase
      */
     public function is_add_integration_gmail_data()
     {   
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create();
 
          $data = [
@@ -55,6 +54,7 @@ class IntegrationControllerTest extends TestCase
         ]);
 
         $this->actingAs($user);
+        $this->expectNotToPerformAssertions();
     }
 
      /**
@@ -70,6 +70,7 @@ class IntegrationControllerTest extends TestCase
         $integrations = Integrations::whereType('gmail')->get();
 
         $this->actingAs($user);
+        $this->expectNotToPerformAssertions();
 
     }
 
