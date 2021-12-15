@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class RegisterControllerTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use WithFaker;
 
     /**
      * A basic feature RequiredFieldsForRegistration test.

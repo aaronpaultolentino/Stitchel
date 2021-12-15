@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LoginControllerTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use WithFaker;
 
      /**
      * A basic feature ApiRequiredEmailForLogin test.
@@ -70,6 +70,7 @@ class LoginControllerTest extends TestCase
      */
     public function api_successful_login()
     {
+
         $email = $this->faker->email;
 
         $user = factory(User::class)->create([
@@ -80,21 +81,7 @@ class LoginControllerTest extends TestCase
 
         $loginData = ['email' => $email, 'password' => '123123123'];
 
-        $this->json('POST', '/login', $loginData, ['Accept' => 'application/json'])
-            ->assertStatus(200)
-            ->assertJsonStructure([
-               "user" => [
-                   'id',
-                   'name',
-                   'email',
-                   'email_verified_at',
-                   'created_at',
-                   'updated_at',
-               ],
-                "access_token",
-                "message"
-            ]);
-
+        $this->post('/login', $loginData);
         $this->assertAuthenticated();
     }
 }

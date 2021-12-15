@@ -14,7 +14,7 @@ use Stitchel\Services\SearchProviders\Providers\Gmail;
 
 class IntegrationControllerTest extends TestCase
 {
-
+    use RefreshDatabase, WithFaker;
 
     /**
      * A basic feature test example.
@@ -40,21 +40,11 @@ class IntegrationControllerTest extends TestCase
     public function is_add_integration_gmail_data()
     {   
         $user = factory(User::class)->create();
-
-         $data = [
-            'user_id' => $user->id,
-            'type' => "gmail",
-            'data' => "Gmail Data Test"
-        ];
-
-        $integration = Integrations::create([
-            'user_id' => $data['user_id'],
-            'type' => $data['type'],
-            'data' => $data['data'],
-        ]);
+        $integration = factory(Integrations::class)->create();
 
         $this->actingAs($user);
-        $this->expectNotToPerformAssertions();
+        $this->assertCount(1, Integrations::all());
+
     }
 
      /**
@@ -70,7 +60,27 @@ class IntegrationControllerTest extends TestCase
         $integrations = Integrations::whereType('gmail')->get();
 
         $this->actingAs($user);
-        $this->expectNotToPerformAssertions();
+        $this->assertCount(0, Integrations::all());
+
+    }
+
+     /**
+     * A basic feature test example.
+     *
+     * @test *
+     * @group integrations *
+     */
+    public function is_user_can_delete_integration_gmail_data()
+    {   
+        $user = factory(User::class)->create();
+        $Integration = factory(Integrations::class)->create();
+
+        $this->actingAs($user);
+
+        $gmailintegration = Integrations::first();
+
+        $response = $this->delete('integrations/gmail/'. $gmailintegration->id);
+        $this->assertCount(1, Integrations::all());
 
     }
 
