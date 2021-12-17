@@ -34,11 +34,9 @@ class LoginControllerTest extends TestCase
      */
       public function login_email_is_required()
     {
-        $password = $this->faker->password;
 
         $user = factory(User::class)->make([
           'email' => null,
-          'password' => $password
       ]);
 
         $response = $this->post('/login', $user->toArray())->assertSessionHasErrors(('email'));
@@ -52,11 +50,9 @@ class LoginControllerTest extends TestCase
      */
       public function login_password_is_required()
     {
-        $email = $this->faker->email;
 
         $user = factory(User::class)->make([
-          'email' => $email,
-          'password' => null
+          'password' => null,
       ]);
 
         $response = $this->post('/login', $user->toArray())->assertSessionHasErrors(('password'));

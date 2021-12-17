@@ -8,11 +8,11 @@ use App\Integrations;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Stitchel\Services\SearchProviders\Providers\Jira;
-use Stitchel\Services\SearchProviders\Providers\Slack;
-use Stitchel\Services\SearchProviders\Providers\Gmail;
+use Stitchel\Services\SearchProviders\Providers\MobileJira;
+use Stitchel\Services\SearchProviders\Providers\MobileSlack;
+use Stitchel\Services\SearchProviders\Providers\MobileGmail;
 
-class IntegrationControllerTest extends TestCase
+class ApiIntegrationControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -22,12 +22,12 @@ class IntegrationControllerTest extends TestCase
      * @test *
      * @group integrations *
      */
-    public function is_integration_index_gmail()
+    public function api_integration_index_gmail()
     {   
 
         $user = factory(User::class)->create();
 
-        $this->actingAs($user)->get('/integrations')
+        $this->actingAs($user, 'api')->get('/integrations')
             ->assertStatus(200);
     }
 
@@ -35,19 +35,18 @@ class IntegrationControllerTest extends TestCase
      * A basic feature test example.
      *
      * @test *
-     * @group integrations *
+     * @group apiintegrations *
      */
-    public function is_add_integration_gmail_data()
+    public function api_add_integration_gmail_data()
     {   
         $user = factory(User::class)->create();
         $gmailIntegration = factory(Integrations::class)->create([
             'type' => 'gmail',
         ]);
         
-        $this->actingAs($user);
+        $this->actingAs($user, 'api');
         $this->assertTrue($gmailIntegration->save());
         $this->assertCount(1, Integrations::all());
-
 
     }
 
@@ -55,9 +54,9 @@ class IntegrationControllerTest extends TestCase
      * A basic feature test example.
      *
      * @test *
-     * @group integrations *
+     * @group apiintegrations *
      */
-    public function is_get_integration_gmail_data()
+    public function api_get_integration_gmail_data()
     {   
         $user = factory(User::class)->create();
         $gmailIntegration = factory(Integrations::class)->create([
@@ -66,7 +65,7 @@ class IntegrationControllerTest extends TestCase
 
         $gmailIntegration = Integrations::whereType('gmail')->get();
 
-        $this->actingAs($user);
+        $this->actingAs($user, 'api');
         $this->assertCount(1, Integrations::all());
 
     }
@@ -75,20 +74,19 @@ class IntegrationControllerTest extends TestCase
      * A basic feature test example.
      *
      * @test *
-     * @group integrations *
+     * @group apiintegrations *
      */
-    public function is_user_can_delete_integration_gmail_data()
+    public function api_user_can_delete_integration_gmail_data()
     {   
         $user = factory(User::class)->create();
         $Integration = factory(Integrations::class)->create();
 
-        $this->actingAs($user);
+        $this->actingAs($user, 'api');
 
         $gmailintegration = Integrations::first();
 
-        $this->delete('integrations/gmail/'. $gmailintegration->id);
-        $this->assertCount(1, Integrations::all());
-
+        $this->delete('api/v1/integrations/delete/'. $gmailintegration->id);
+        $this->assertCount(0, Integrations::all());
     }
 
      /**
@@ -97,12 +95,12 @@ class IntegrationControllerTest extends TestCase
      * @test *
      * @group integrations *
      */
-    public function is_integration_index_jira()
+    public function api_integration_index_jira()
     {   
 
         $user = factory(User::class)->create();
 
-        $this->actingAs($user)->get('/integrations')
+        $this->actingAs($user, 'api')->get('/integrations')
             ->assertStatus(200);
     }
 
@@ -110,38 +108,37 @@ class IntegrationControllerTest extends TestCase
      * A basic feature test example.
      *
      * @test *
-     * @group integrations *
+     * @group apiintegrations *
      */
-    public function is_add_integration_jira_data()
+    public function api_add_integration_jira_data()
     {   
         $user = factory(User::class)->create();
         $jiraIntegration = factory(Integrations::class)->create([
             'type' => 'jira',
         ]);
         
-        $this->actingAs($user);
+        $this->actingAs($user, 'api');
         $this->assertTrue($jiraIntegration->save());
         $this->assertCount(1, Integrations::all());
 
-
     }
 
      /**
      * A basic feature test example.
      *
      * @test *
-     * @group integrations *
+     * @group apiintegrations *
      */
-    public function is_get_integration_jira_data()
+    public function api_get_integration_jira_data()
     {   
         $user = factory(User::class)->create();
-        $integration = factory(Integrations::class)->create([
+        $jiraIntegration = factory(Integrations::class)->create([
             'type' => 'jira',
         ]);
 
-        $integrations = Integrations::whereType('jira')->get();
+        $jiraIntegration = Integrations::whereType('jira')->get();
 
-        $this->actingAs($user);
+        $this->actingAs($user, 'api');
         $this->assertCount(1, Integrations::all());
 
     }
@@ -150,51 +147,50 @@ class IntegrationControllerTest extends TestCase
      * A basic feature test example.
      *
      * @test *
-     * @group integrations *
+     * @group apiintegrations *
      */
-    public function is_user_can_delete_integration_jira_data()
+    public function api_user_can_delete_integration_jira_data()
     {   
         $user = factory(User::class)->create();
         $Integration = factory(Integrations::class)->create();
 
-        $this->actingAs($user);
+        $this->actingAs($user, 'api');
 
         $jiraintegration = Integrations::first();
 
-        $this->delete('integrations/jira/'. $jiraintegration->id);
-        $this->assertCount(1, Integrations::all());
+        $this->delete('api/v1/integrations/delete/'. $jiraintegration->id);
+        $this->assertCount(0, Integrations::all());
+    }
 
+    /**
+     * A basic feature test example.
+     *
+     * @test *
+     * @group integrations *
+     */
+    public function api_integration_index_slack()
+    {   
+
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user, 'api')->get('/integrations')
+            ->assertStatus(200);
     }
 
      /**
      * A basic feature test example.
      *
      * @test *
-     * @group integrations *
+     * @group apiintegrations *
      */
-    public function is_integration_index_slack()
-    {   
-
-        $user = factory(User::class)->create();
-
-        $this->actingAs($user)->get('/integrations')
-            ->assertStatus(200);
-    }
-
-       /**
-     * A basic feature test example.
-     *
-     * @test *
-     * @group integrations *
-     */
-    public function is_add_integration_slack_data()
+    public function api_add_integration_slack_data()
     {   
         $user = factory(User::class)->create();
         $slackIntegration = factory(Integrations::class)->create([
             'type' => 'slack',
         ]);
-
-        $this->actingAs($user);
+        
+        $this->actingAs($user, 'api');
         $this->assertTrue($slackIntegration->save());
         $this->assertCount(1, Integrations::all());
 
@@ -204,18 +200,18 @@ class IntegrationControllerTest extends TestCase
      * A basic feature test example.
      *
      * @test *
-     * @group integrations *
+     * @group apiintegrations *
      */
-    public function is_get_integration_slack_data()
+    public function api_get_integration_slack_data()
     {   
         $user = factory(User::class)->create();
-        $integration = factory(Integrations::class)->create([
+        $slackIntegration = factory(Integrations::class)->create([
             'type' => 'slack',
         ]);
 
-        $integrations = Integrations::whereType('slack')->get();
+        $slackIntegration = Integrations::whereType('slack')->get();
 
-        $this->actingAs($user);
+        $this->actingAs($user, 'api');
         $this->assertCount(1, Integrations::all());
 
     }
@@ -224,19 +220,18 @@ class IntegrationControllerTest extends TestCase
      * A basic feature test example.
      *
      * @test *
-     * @group integrations *
+     * @group apiintegrations *
      */
-    public function is_user_can_delete_integration_slack_data()
+    public function api_user_can_delete_integration_slack_data()
     {   
         $user = factory(User::class)->create();
         $Integration = factory(Integrations::class)->create();
 
-        $this->actingAs($user);
+        $this->actingAs($user, 'api');
 
         $slackintegration = Integrations::first();
 
-        $this->delete('integrations/slack/'. $slackintegration->id);
-        $this->assertCount(1, Integrations::all());
-
+        $this->delete('api/v1/integrations/delete/'. $slackintegration->id);
+        $this->assertCount(0, Integrations::all());
     }
 }

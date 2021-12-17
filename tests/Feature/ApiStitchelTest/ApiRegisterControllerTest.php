@@ -20,11 +20,9 @@ class RegisterControllerTest extends TestCase
      */
       public function api_user_name_is_required()
     {
-        $email = $this->faker->email;
 
         $user = factory(User::class)->make([
           'name' => null,
-          'email' => $email
       ]);
 
         $response = $this->post('api/v1/user/signup', $user->toArray())->assertSessionHasErrors(('name'));
@@ -38,11 +36,9 @@ class RegisterControllerTest extends TestCase
      */
       public function api_user_email_is_required()
     {
-        $name = $this->faker->name;
 
         $user = factory(User::class)->make([
-          'name' => $name,
-          'email' => null
+          'email' => null,
       ]);
 
         $response = $this->post('api/v1/user/signup', $user->toArray())->assertSessionHasErrors(('email'));
@@ -57,11 +53,9 @@ class RegisterControllerTest extends TestCase
      */
       public function api_user_password_is_required()
     {
-        $password = $this->faker->password;
 
         $user = factory(User::class)->make([
           'password' => null,
-          'password_confirmation' => $password
       ]);
 
         $response = $this->post('api/v1/user/signup', $user->toArray())->assertSessionHasErrors(('password'));
@@ -105,15 +99,8 @@ class RegisterControllerTest extends TestCase
      */
     public function api_successful_registration()
     {
-        $name = $this->faker->name;
-        $email = $this->faker->email;
-        $password = $this->faker->password;
 
-         $user = User::Create([
-            "name" => $name,
-            "email" => $email,
-            "password" => $password
-        ]);
+        $user = factory(User::class)->create();
 
         $this->post('api/v1/user/signup', $user->toArray());
         $this->expectNotToPerformAssertions();
