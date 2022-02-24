@@ -56,7 +56,9 @@ class MobileGmailIntegrationController extends Controller
 
         $integrations->save();
 
-        return response()->json($integrations);
+        return response()->json([
+         'message' => 'Success! You may now closed this window.'
+        ], 200);
     }
 
     public function show()
@@ -66,7 +68,7 @@ class MobileGmailIntegrationController extends Controller
         return response()->json($integrations);
     }
 
-    public function revokeToken($id, Request $request)
+    public function revokeGmailToken($id, Request $request)
     {
         $integration = Integrations::findOrFail($id);
         $mobileGmail = new MobileGmail();

@@ -19,6 +19,14 @@ Route::group(['prefix' => '/user', 'namespace' => 'Auth'], function(){
 	Route::post('signup', 'UserController@signup')->name('api.signup');
 });
 
+Route::group(['prefix' => '/user', 'namespace' => 'Auth'], function(){
+	Route::post('login', 'UserController@login')->name('api.login');
+});
+
+// Update Profile
+Route::group(['middleware' => ['auth:api'], 'prefix' => '/user', 'namespace' => 'Auth'], function(){
+	Route::post('updateprofile', 'UserController@updateProfile')->name('api.update');
+});
 
 
 //User Find All | Logout
