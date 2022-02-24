@@ -46,7 +46,9 @@ class MobileJiraIntegrationController extends Controller
 
         $integrations->save();
 
-        return response()->json($integrations);
+         return response()->json([
+         'message' => 'Success! You may now closed this window.'
+        ], 200);
     }
 
     public function show()
@@ -56,7 +58,7 @@ class MobileJiraIntegrationController extends Controller
         return response()->json($integrations);
     }
 
-    public function revokeToken($id, Request $request)
+    public function revokeJiraToken($id, Request $request)
     {
         $integration = Integrations::findOrFail($id);
 
