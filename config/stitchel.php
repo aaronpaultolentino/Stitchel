@@ -11,7 +11,7 @@ return [
     ],
 
     'jira' => [
-        'app_token' => 'DEu9mt06TzMYKrm5WmLW7CEA',
+        'app_token' => '1KJs0MFufT54seEPM0gI3181',
         'get_token_url' => 'https://auth.atlassian.com/oauth/token',
         'get_userinfo_url' => 'https://api.atlassian.com/me',
     	'client_id' => env('JIRA_CLIENT_ID', 'Vv7sUP85YMR5GFonZKi81NKZxlLSSNdg'),
@@ -23,8 +23,8 @@ return [
      'slack' => [
         'get_token_url' => 'https://slack.com/api/oauth.v2.access',
         'get_userinfo_url' => 'https://slack.com/api/users.profile.get',
-        'client_id' => env('SLACK_CLIENT_ID', '2295220621542.2643163578183'),
-        'client_secret' => env('SLACK_CLIENT_SECRET', '90863d2f7e379f1364fe7481363fe5f6'),
+        'client_id' => env('SLACK_CLIENT_ID', '4384088872133.4372498059079'),
+        'client_secret' => env('SLACK_CLIENT_SECRET', 'ccb346a0919a369d229b80d9a31776f8'),
         'revoke_token_url'=> 'https://slack.com/api/auth.revoke',
         
     ]
