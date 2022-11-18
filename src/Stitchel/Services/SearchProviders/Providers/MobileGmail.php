@@ -112,12 +112,14 @@ class MobileGmail implements SearchProviderInteface
 
     public function gmailRevokeToken($gmailIntegration)
     {
-      $refresh_token = json_decode($gmailIntegration->data)->refresh_token;
+      if(isset(json_decode($gmailIntegration->data)->refresh_token)){
+        $refresh_token = json_decode($gmailIntegration->data)->refresh_token;
 
-      $response = Http::post(config('stitchel.gmail.revoke_token_url'), [
-        'token' => $refresh_token,
-    ]);
-      
-      $response->json();
+        $response = Http::post(config('stitchel.gmail.revoke_token_url'), [
+            'token' => $refresh_token,
+        ]);
+        
+        $response->json();
+      }
   }
 }

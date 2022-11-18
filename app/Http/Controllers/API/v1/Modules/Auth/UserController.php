@@ -52,8 +52,7 @@ class UserController extends Controller
             ], 401);
 
         $user = $request->user();
-        $tokenResult = $user->createToken('Stitchel Personal Access Clien
-t]');
+        $tokenResult = $user->createToken('Stitchel Personal Access Client');
         $token = $tokenResult->token;
         if ($request->remember_me)
             $token->expires_at = Carbon::now()->addWeeks(1);
