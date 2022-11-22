@@ -49,7 +49,7 @@
                                     <form>
                                       <div class="form-group">
                                         <label for="dynamic-host" class="col-form-label">Jira Subdomain:</label>
-                                        <input type="text" class="form-control dynamicValue" placeholder="stitcheljira123">
+                                        <input type="text" class="form-control dynamicValue" placeholder="stitchelproject">
                                       </div>
                                     </form>
                                   </div>

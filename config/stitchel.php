@@ -6,16 +6,16 @@ return [
         'get_token_url' => 'https://accounts.google.com/o/oauth2/token',
         'get_userinfo_url' => 'https://www.googleapis.com/oauth2/v1/userinfo',
         'revoke_token_url'=> 'https://oauth2.googleapis.com/revoke',
-        'client_id' => env('GMAIL_CLIENT_ID', '382106922048-jc5cjs40rm925vhasu1a1gcp1ee8jvc2.apps.googleusercontent.com'),
-        'client_secret' => env('GMAIL_CLIENT_ID', 'TGouv1LfMh_ORVOJ2C5xIRL6'),
+        'client_id' => env('GMAIL_CLIENT_ID', '612282034411-ojom6d0mbd7qfjhbjji8rmesjscqhsp2.apps.googleusercontent.com'),
+        'client_secret' => env('GMAIL_CLIENT_ID', 'TzAwgOJWOKQCfyrndYsi4gML'),
     ],
 
     'jira' => [
-        'app_token' => 'wCax8OkadKFVzp1J30oG31ED',
+        'app_token' => '1KJs0MFufT54seEPM0gI3181',
         'get_token_url' => 'https://auth.atlassian.com/oauth/token',
         'get_userinfo_url' => 'https://api.atlassian.com/me',
-    	'client_id' => env('JIRA_CLIENT_ID', 'ZG9PdjJf5QEeTOyBUEakMmKCnHwiLt0B'),
-        'client_secret' => env('JIRA_CLIENT_SECRET', '34Q-PPn8BIPjqwzcmypJUHQ2AKsQ4tevb1GciLPRCWuFg5Q5XI6TiXMax9jlqvh5'),
+    	'client_id' => env('JIRA_CLIENT_ID', 'Vv7sUP85YMR5GFonZKi81NKZxlLSSNdg'),
+        'client_secret' => env('JIRA_CLIENT_SECRET', 'ATOAnTZlBGgfVQhdplqF-ffbETlDFhebfSRjD-aqIGF5XSpMtOd8d-791NC-va11sq_z97D01FCD'),
         'revoke_token_url'=> '',
     	
     ],
@@ -23,8 +23,8 @@ return [
      'slack' => [
         'get_token_url' => 'https://slack.com/api/oauth.v2.access',
         'get_userinfo_url' => 'https://slack.com/api/users.profile.get',
-        'client_id' => env('SLACK_CLIENT_ID', '2295220621542.2643163578183'),
-        'client_secret' => env('SLACK_CLIENT_SECRET', '90863d2f7e379f1364fe7481363fe5f6'),
+        'client_id' => env('SLACK_CLIENT_ID', '4384088872133.4372498059079'),
+        'client_secret' => env('SLACK_CLIENT_SECRET', 'ccb346a0919a369d229b80d9a31776f8'),
         'revoke_token_url'=> 'https://slack.com/api/auth.revoke',
         
     ]
