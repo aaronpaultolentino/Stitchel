@@ -88,7 +88,7 @@ class MobileSlack implements SearchProviderInteface
         // $user_id = encrypt($id);
 
         //localhost
-        return 'https://slack.com/oauth/v2/authorize?&user_scope=search:read,users.profile:read&state='.$user_id.'&client_id='.config('stitchel.slack.client_id');
+        return 'https://slack.com/oauth/v2/authorize?scope=&user_scope=search:read,users.profile:read&state='.$user_id.'&client_id='.config('stitchel.slack.client_id');
     }
 
      public function getUserInfo($access_token)

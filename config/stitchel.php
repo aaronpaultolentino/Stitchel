@@ -7,7 +7,7 @@ return [
         'get_userinfo_url' => 'https://www.googleapis.com/oauth2/v1/userinfo',
         'revoke_token_url'=> 'https://oauth2.googleapis.com/revoke',
         'client_id' => env('GMAIL_CLIENT_ID', '612282034411-ojom6d0mbd7qfjhbjji8rmesjscqhsp2.apps.googleusercontent.com'),
-        'client_secret' => env('GMAIL_CLIENT_ID', 'TzAwgOJWOKQCfyrndYsi4gML'),
+        'client_secret' => env('GMAIL_CLIENT_SECRET', 'TzAwgOJWOKQCfyrndYsi4gML'),
     ],
 
     'jira' => [
