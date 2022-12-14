@@ -27,6 +27,21 @@ class UpdateProfileControllerTest extends TestCase
             ->assertStatus(200);
     }
 
+    /**
+     * A basic feature test example.
+     *
+     * @test *
+     * @group integrations *
+     */
+    public function user_cannot_view_update_profile()
+    {   
+
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user)->get('/profile')
+            ->assertStatus(404);
+    }
+
       /**
      * A basic feature RequiredMoileNumber test.
      *

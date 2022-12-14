@@ -31,6 +31,21 @@ class IntegrationControllerTest extends TestCase
             ->assertStatus(200);
     }
 
+    /**
+     * A basic feature test example.
+     *
+     * @test *
+     * @group integrations *
+     */
+    public function is_404_integration_index_gmail()
+    {   
+
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user)->get('/integrations')
+            ->assertStatus(404);
+    }
+
      /**
      * A basic feature test example.
      *
@@ -48,6 +63,24 @@ class IntegrationControllerTest extends TestCase
         $this->assertTrue($gmailIntegration->save());
         $this->assertCount(1, Integrations::all());
 
+
+    }
+
+     /**
+     * A basic feature test example.
+     *
+     * @test *
+     * @group integrations *
+     */
+    public function is_add_integration_gmail_data_failed()
+    {   
+        $user = factory(User::class)->create();
+        $gmailIntegration = factory(Integrations::class)->create([
+            'type' => 'gmail',
+        ]);
+        
+        $this->actingAs($user);
+        $this->assertFalse(['messages' => 'Gmail Integration Failed!']);
 
     }
 
@@ -106,6 +139,21 @@ class IntegrationControllerTest extends TestCase
             ->assertStatus(200);
     }
 
+    /**
+     * A basic feature test example.
+     *
+     * @test *
+     * @group integrations *
+     */
+    public function is_404_integration_index_jira()
+    {   
+
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user)->get('/integrations')
+            ->assertStatus(404);
+    }
+
      /**
      * A basic feature test example.
      *
@@ -123,6 +171,24 @@ class IntegrationControllerTest extends TestCase
         $this->assertTrue($jiraIntegration->save());
         $this->assertCount(1, Integrations::all());
 
+
+    }
+
+     /**
+     * A basic feature test example.
+     *
+     * @test *
+     * @group integrations *
+     */
+    public function is_add_integration_jira_data_failed()
+    {   
+        $user = factory(User::class)->create();
+        $gmailIntegration = factory(Integrations::class)->create([
+            'type' => 'jira',
+        ]);
+        
+        $this->actingAs($user);
+        $this->assertFalse(['messages' => 'Jira Integration Failed!']);
 
     }
 
@@ -181,6 +247,21 @@ class IntegrationControllerTest extends TestCase
             ->assertStatus(200);
     }
 
+    /**
+     * A basic feature test example.
+     *
+     * @test *
+     * @group integrations *
+     */
+    public function is_404_integration_index_slack()
+    {   
+
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user)->get('/integrations')
+            ->assertStatus(404);
+    }
+
        /**
      * A basic feature test example.
      *
@@ -197,6 +278,24 @@ class IntegrationControllerTest extends TestCase
         $this->actingAs($user);
         $this->assertTrue($slackIntegration->save());
         $this->assertCount(1, Integrations::all());
+
+    }
+
+     /**
+     * A basic feature test example.
+     *
+     * @test *
+     * @group integrations *
+     */
+    public function is_add_integration_slack_data_failed()
+    {   
+        $user = factory(User::class)->create();
+        $gmailIntegration = factory(Integrations::class)->create([
+            'type' => 'slack',
+        ]);
+        
+        $this->actingAs($user);
+        $this->assertFalse(['messages' => 'Slack Integration Failed!']);
 
     }
 

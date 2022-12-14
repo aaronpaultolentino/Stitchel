@@ -80,4 +80,48 @@ class LoginControllerTest extends TestCase
         $response->assertRedirect('/');
         $this->assertAuthenticatedAs($user);
     }
+
+     /**
+     * A basic feature Incorrect Login test.
+     *
+     * @test *
+     * @group login *
+     */
+    public function is_user_cannot_login_with_incorrect_password_credentials()
+    {
+        
+        $user = factory(User::class)->create([
+            'email' => 'test@gmail.com',
+            'password' => bcrypt($password = '1231231111'),
+        ]);
+
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => $password,
+        ]);
+
+        $response = $this->post('/login', $user->toArray())->assertSessionHasErrors(('password'));
+    }
+
+     /**
+     * A basic feature Incorrect Login test.
+     *
+     * @test *
+     * @group login *
+     */
+    public function is_user_cannot_login_with_incorrect_email_credentials()
+    {
+        
+        $user = factory(User::class)->create([
+            'email' => 'test@gmail111.com',
+            'password' => bcrypt($password = '123123'),
+        ]);
+
+        $response = $this->post('/login', [
+            'email' => $user->email,
+            'password' => $password,
+        ]);
+
+        $response = $this->post('/login', $user->toArray())->assertSessionHasErrors(('email'));
+    }
 }
